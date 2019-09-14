@@ -10,13 +10,13 @@ const mockingSideMenu: IMenuItem[] = [
     },
     {
         title: "选课",
-        key: "Choose",
+        key: "Course",
         route: "/course",
         icon: "container",
         children: [
             {
                 title: "选课页",
-                key: "Choose",
+                key: "Course",
                 route: "/course/choose",
                 icon: "home",
                 children: []

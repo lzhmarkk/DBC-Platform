@@ -3,4 +3,5 @@ export interface IMenuItem {
     route: string
     key: string
     icon: string
+    children: Array<IMenuItem>
 }

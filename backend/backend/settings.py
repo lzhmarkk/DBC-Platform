@@ -25,12 +25,13 @@ SECRET_KEY = 'spq3hnjj6rjrf+_&4np0wfw!!lg!*!_5gcy2=p@yi#s6dh4^!$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'dbc2019.apps.Dbc2019Config',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +76,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dbc2019',
+        'USER': 'root',
+        'PASSWORD': 'dbc2019',
+        'HOST': '123.57.128.111',
+        'PORT': '3306'
     }
 }
 

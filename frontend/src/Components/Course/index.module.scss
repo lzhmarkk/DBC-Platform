@@ -1,0 +1,29 @@
+h1,h2{
+    text-align: center;
+}
+
+.imgbox {
+    width: 100%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+
+    }
+    p{
+        width: 100%;
+        text-align: center;
+
+
+    }
+}
+
+.hbox{
+    display: flex;
+    justify-content: space-around;
+}
+
+.resultItem{
+    width: 45%;
+}

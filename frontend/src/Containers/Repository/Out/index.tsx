@@ -1,63 +1,62 @@
 import React, {ReactNode, useState} from 'react'
-import ISearchPanel from "../../SearchPanel";
+import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "../index.module.scss"
 import {Table, Button, Modal} from 'antd';
-import mockingCourses from "./MockingCourses";
+import mockingRepoMessages from "../../../Assets/mockings/mockingRepoMessages";
 import {useDispatch} from "react-redux";
-import GenColumns, {ICourseRecord} from "../index";
+import GenColumns from "../../../Components/Repository/out";
 
-const PageChoose = () => {
+const PageRepositoryOut = () => {
+    const mockingData = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("OUT") != -1);
     const dispatch = useDispatch();
-    const [data, setData] = useState(mockingCourses);
-    const [window, setWindowOpen] = useState(false);
-    const [currentCourse, setCurrentCourse] = useState(undefined);
-    const [currentCourseName, setCurrentCourseName] = useState(undefined);
+    const [data, setData] = useState(mockingData);
+    const [windowOpen, setWindowOpen] = useState(false);
+    const [curRepoMess, setCurRepoMess] = useState(undefined);
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         <Button onClick={() => {
-            setCurrentCourse(props.record);
-            setCurrentCourseName(props.record.valueOf()["Name"]);
+            setCurRepoMess(props.record);
             setWindowOpen(true);
         }}
                 icon={'search'}
                 type={'primary'}
-        >选择课程</Button>
+        >修改转出状态</Button>
     </div>;
     const columns = GenColumns(Action);
     return (
         <div>
             <ISearchPanel
                 field={{
-                    "Name": "课程名称",
-                    "Id": "课程编号"
+                    "repo_mess_id": "转出编号",
+                    "repo_mess_info": "转出详情",
+                    "repo_id": "仓库号",
+                    "prod_id": "产品号",
+                    "order_id": "订单号",
                 }}
-                onSearch={(e) => !e.content ? setData(mockingCourses) :
+                onSearch={(e) => !e.content ? setData(mockingData) :
                     setData(data.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
             />
             <Table
                 columns={columns}
                 dataSource={data}
             />
-            <Modal title="确认选择"
-                   visible={window}
+            <Modal title="修改状态"
+                   visible={windowOpen}
                    onCancel={() => {
                        setWindowOpen(false);
-                       setCurrentCourse(undefined);
-                       setCurrentCourseName(undefined);
+                       setCurRepoMess(undefined);
                    }}
                    onOk={() => {
                        setWindowOpen(false);
-                       setCurrentCourse(undefined);
-                       setCurrentCourseName(undefined);
+                       setCurRepoMess(undefined);
                    }}
                    okText="确定"
                    cancelText="取消"
             >
                 <span>
                     是否选择
-                    <strong> {currentCourseName}</strong>
                 </span>
             </Modal>
         </div>
     )
 };
-export default PageChoose;
+export default PageRepositoryOut;

@@ -3,7 +3,7 @@ import {Menu, Icon, Button} from "antd"
 import {Link} from "react-router-dom";
 import React from "react";
 import styles from "./index.module.scss"
-import mockingSideMenu from "./MockingSideMenu";
+import sideMenuItems from "./sideMenuItems";
 
 const {SubMenu, Item} = Menu;
 
@@ -40,7 +40,7 @@ const generateMenu = (items: IMenuItem[]) => items.reduce((accu: any[], cur) => 
 const SideMenu = (props: any) => {
     return (
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
-            {generateMenu(mockingSideMenu)}
+            {generateMenu(sideMenuItems)}
         </Menu>
     )
 };

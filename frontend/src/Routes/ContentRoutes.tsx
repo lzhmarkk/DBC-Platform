@@ -2,12 +2,12 @@ import React from "react";
 import {Switch, Route} from 'react-router'
 import PageDashBoard from '../Containers/DashBoard';
 import NotFound from '../Containers/NotFound';
-import PageChoose from "../Components/Course/Choose";
-import PageChooseRoute from "../Containers/Choose";
+import PageRepository from "../Containers/Repository";
 
 const ContentRoutes = () => <Switch>
     <Route exact path="/" render={PageDashBoard}/>
-    <Route path="/course/" render={PageChooseRoute}/>
+    <Route path="/index" render={PageDashBoard}/>
+    <Route path="/repository/" render={PageRepository}/>
     <Route component={NotFound}/>
 </Switch>;
 

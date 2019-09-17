@@ -5,13 +5,13 @@ lzh && qs 专用
 ------------------------
 
 <h4>主题</h4>
-学生选课换课系统
+仓库管理系统
 
 <h4>前端</h4>
-react + redux
+react + redux   --typescript
 
 <h4>后端</h4>
-django + mysql
+django + mysql      --python
 
 <h4>部署地址</h4>
 123.57.128.111/dbc2019

@@ -28,3 +28,16 @@ export interface IWorkMessRecord {
     prod_id: string
     order_id: string
 }
+
+export interface IProduct {
+    prod_id: string
+    prod_name: string
+    prod_desc: string
+}
+
+export interface IOrder {
+    order_id: string
+    order_date: string
+    cust_id: string
+    state: string
+}

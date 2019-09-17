@@ -3,20 +3,13 @@ import ISearchPanel from "../../../Components/SearchPanel";
 import INewRepoInPanel, {IFormPayload} from "../../../Components/Repository/in/form";
 import styles from "../index.module.scss"
 import {Table, Button, Modal, Drawer} from 'antd';
-import mockingRepoMessages from "../../../Assets/mockings/mockingRepoMessages";
 import {useDispatch} from "react-redux";
 import GenColumns, {id2Name} from "../../../Components/Repository/in";
-import mockingProds from "../../../Assets/mockings/mockingProds";
-import mockingRepos from "../../../Assets/mockings/mockingRepos";
-import mockingOrders from "../../../Assets/mockings/mockingOrders";
 import {IRepositoryMessRecord} from "../../../Components/Repository/interface";
+import {repoMessIn, repoMessOut, prods, repos, orders} from "../index";
+
 
 const PageRepositoryIn = () => {
-    const repoMessIn = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
-    const prods = mockingProds;
-    const repos = mockingRepos;
-    const orders = mockingOrders;
-
     const dispatch = useDispatch();
     const [data, setData] = useState(repoMessIn);
     const [modelOpen, setModelOpen] = useState(false);

@@ -18,3 +18,13 @@ export interface IRepositoryMessRecord {
     prod_id: string
     order_id: string
 }
+
+export interface IWorkMessRecord {
+    work_mess_id: string
+    work_mess_info: string
+    admin_id: string
+    direction: string
+    quantity: string
+    prod_id: string
+    order_id: string
+}

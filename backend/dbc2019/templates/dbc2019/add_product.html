@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends "dbc2019/base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <form action="{% url 'dbc2019:deal_add_product' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="input-group md-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">ProductName</span>
+            </div>
+            <input id="prodname" name="prodname" type="text" class="form-control" placeholder="ProductName" aria-describedby="basic-addon1">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

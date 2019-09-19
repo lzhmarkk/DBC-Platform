@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "dbc2019/base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <h4>All products:</h4><br>
+    <ul class="list-group-flush">
+        {% for product in products %}
+        <li class="list-group-item">
+            {{ product.prod_name }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

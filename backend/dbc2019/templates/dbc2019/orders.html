@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends "dbc2019/base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <h4>All orders:</h4><br>
+    <div class="list-group">
+        {% for order in orders %}
+            <a href="{% url 'dbc2019:order_info' order.order_id %}" class="list-group-item list-group-item-action">
+                {{ order.order_date }}  
+            </a>
+            <a class="badge badge-pill badge-danger right" href="{% url 'dbc2019:delete_order' order.order_id %}">Delete</a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

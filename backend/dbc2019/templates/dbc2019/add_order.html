@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends "dbc2019/base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <form id="form" action="{% url 'dbc2019:deal_add_order' %}" method="POST">
+        {% csrf_token %}
+
+        <div id="input-group" class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Products</span>
+            </div>
+            <select name="product" class="custom-select">
+                <option selected>Choose..</option>
+                {% for product in products %}
+                <option value="{{ product.prod_id }}">{{ product.prod_name }}</option>
+                {% endfor %}
+            </select>
+            <div class="input-group-prepend">
+                <span class="input-group-text">Quantity</span>
+            </div>
+            <input name="quantity" type="number" class="form-control">
+        </div>
+        <button id="btn" type="button" class="btn btn-success">add</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

@@ -32,3 +32,24 @@ h1,h2{
     justify-content: space-between;
 
 }
+
+.root{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+
+
+}
+.stepForm{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.formArea{
+    width: 50%;
+    max-width: 35em;
+    min-width: 20em;
+
+
+
+}

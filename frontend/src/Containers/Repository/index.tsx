@@ -8,6 +8,7 @@ import mockingRepoMessages from "../../Assets/mockings/mockingRepoMessages";
 import mockingProds from "../../Assets/mockings/mockingProds";
 import mockingRepos from "../../Assets/mockings/mockingRepos";
 import mockingOrders from "../../Assets/mockings/mockingOrders";
+import mockingRepoItems from "../../Assets/mockings/mockingRepoItems";
 
 
 export const repoMessIn = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
@@ -15,6 +16,7 @@ export const repoMessOut = mockingRepoMessages.filter((k: any) => (k["direction"
 export const prods = mockingProds;
 export const repos = mockingRepos;
 export const orders = mockingOrders;
+export const repoItems = mockingRepoItems;
 
 const PageRepository = () => {
     return (

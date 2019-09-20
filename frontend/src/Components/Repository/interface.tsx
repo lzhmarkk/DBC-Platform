@@ -41,3 +41,10 @@ export interface IOrder {
     cust_id: string
     state: string
 }
+
+export interface IRepositoryItems {
+    repo_item: string,
+    repo_id: string
+    prod_id: string
+    quantity: string
+}

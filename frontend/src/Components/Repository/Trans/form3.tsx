@@ -1,5 +1,5 @@
 import React from "react";
-import {IRepositoryRecord} from "../interface";
+import {IRepo} from "../interface";
 import {Button, Form, Input, Select} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 
@@ -9,7 +9,7 @@ export interface IFormPayload {
 
 export interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IFormPayload) => void,
-    repos: IRepositoryRecord[]
+    repos: IRepo[]
 }
 
 const Form3 = (props: IFormProps) => {

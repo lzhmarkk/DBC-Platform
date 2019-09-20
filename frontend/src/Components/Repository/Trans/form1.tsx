@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {IProduct, IRepositoryItems, IRepositoryRecord} from "../interface";
+import {IProd, IRepoItem, IRepo} from "../interface";
 import {Button, Form, Input, Select} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 
@@ -13,8 +13,8 @@ export interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IFormPayload) => void,
     onBack: () => void,
     repo_out_id: string,
-    prods: IProduct[],//这里是所有与该repos相关的prod
-    repo_prods: IRepositoryItems[]//揭示了存货信息
+    prods: IProd[],//这里是所有与该repos相关的prod
+    repo_prods: IRepoItem[]//揭示了存货信息
 }
 
 const Form1 = (props: IFormProps) => {

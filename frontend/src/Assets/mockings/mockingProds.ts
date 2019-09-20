@@ -1,4 +1,6 @@
-const mockingProds = [
+import {IProd} from "../../Components/Repository/interface";
+
+const mockingProds: IProd[] = [
     ["1", "苹果", "红富士"],
     ["2", "西瓜", "无籽"],
     ["3", "iPad", "2018款"],

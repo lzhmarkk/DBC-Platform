@@ -5,21 +5,21 @@ import getOption from "../../../Components/Repository/dashboard";
 import mockingRepos from "../../../Assets/mockings/mockingRepos";
 import {Tabs} from "antd";
 import RepoDetailTabs from "../../../Components/Repository/dashboard/Tabs/conf";
-import {IRepositoryMessRecord, IRepositoryRecord, IWorkMessRecord} from "../../../Components/Repository/interface";
+import {IRepoMess, IRepo, IWorkMess} from "../../../Components/Repository/interface";
 import mockingWorkMessages from "../../../Assets/mockings/mockingWorkMessages";
 import mockingRepoMessages from "../../../Assets/mockings/mockingRepoMessages";
 
 const {TabPane} = Tabs;
 
 export interface IDetailData {
-    Messages: IWorkMessRecord[]
-    RepoMessIn: IRepositoryMessRecord[]
-    RepoMessOut: IRepositoryMessRecord[]
+    Messages: IWorkMess[]
+    RepoMessIn: IRepoMess[]
+    RepoMessOut: IRepoMess[]
     RepoMessTrans: any
 }
 
 const PageRepositoryDashboard = () => {
-    const data: IRepositoryRecord[] = mockingRepos;
+    const data: IRepo[] = mockingRepos;
     const tabData: IDetailData = {
             "Messages": mockingWorkMessages,
             "RepoMessIn": mockingRepoMessages,

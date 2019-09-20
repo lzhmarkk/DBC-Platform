@@ -1,4 +1,6 @@
-const mockingRepoMessages = [
+import {IRepoMess} from "../../Components/Repository/interface";
+
+const mockingRepoMessages:IRepoMess[] = [
     ["001", "购入100箱苹果", "2", "IN", "100", "1", "4267138719"],
     ["002", "卖出50箱西瓜", "2", "OUT", "50", "2", "9712034961"],
     ["003", "欠货10台iPad", "2", "OUT", "1", "3", "5479321354"],

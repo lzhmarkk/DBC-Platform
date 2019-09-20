@@ -1,4 +1,6 @@
-const mockingWorkMessages = [
+import {IWorkMess} from "../../Components/Repository/interface";
+
+const mockingWorkMessages: IWorkMess[] = [
     ["1", "开飞机", "1", "IN", "100", "3", "5"],
     ["2", "开坦克", "2", "IN", "300", "2", "1"],
     ["3", "开汽车", "1", "OUT", "100", "2", "2"],

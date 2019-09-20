@@ -1,4 +1,6 @@
-const mockingRepos = [
+import {IRepo} from "../../Components/Repository/interface";
+
+const mockingRepos:IRepo[] = [
     ["1", "东配楼负一层", "一号仓", "4", "10000", "500"],
     ["2", "东配楼一层", "二号仓", "1", "15000", "15000"],
     ["3", "主楼负一层", "三号仓", "3", "10000", "8000"],

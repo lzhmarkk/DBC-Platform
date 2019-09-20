@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface IRepositoryRecord {
+export interface IRepo {
     repo_id: string
     place: string
     name: string
@@ -9,7 +9,7 @@ export interface IRepositoryRecord {
     repo_occupy: string
 }
 
-export interface IRepositoryMessRecord {
+export interface IRepoMess {
     repo_mess_id: string
     repo_mess_info: string
     repo_id: string
@@ -19,7 +19,7 @@ export interface IRepositoryMessRecord {
     order_id: string
 }
 
-export interface IWorkMessRecord {
+export interface IWorkMess {
     work_mess_id: string
     work_mess_info: string
     admin_id: string
@@ -29,7 +29,7 @@ export interface IWorkMessRecord {
     order_id: string
 }
 
-export interface IProduct {
+export interface IProd {
     prod_id: string
     prod_name: string
     prod_desc: string
@@ -42,7 +42,7 @@ export interface IOrder {
     state: string
 }
 
-export interface IRepositoryItems {
+export interface IRepoItem {
     repo_item: string,
     repo_id: string
     prod_id: string

@@ -1,7 +1,7 @@
 import React from "react";
 import {Collapse} from 'antd';
 import {IDetailData} from "../../../../Containers/Repository/Dashboard";
-import {IWorkMessRecord} from "../../interface";
+import {IWorkMess} from "../../interface";
 
 interface IProps {
     data: IDetailData
@@ -9,7 +9,7 @@ interface IProps {
 
 const {Panel} = Collapse;
 const MessageBox = (props: IProps) => {
-    const data: IWorkMessRecord[] = props.data.Messages;
+    const data: IWorkMess[] = props.data.Messages;
 
     const items = data.map(e =>
         <Panel header={e.admin_id} key={e.work_mess_id}>

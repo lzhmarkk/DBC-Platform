@@ -1,6 +1,6 @@
 import React from "react";
 import {IDetailData} from "../../../../Containers/Repository/Dashboard";
-import {IRepositoryMessRecord, IWorkMessRecord} from "../../interface";
+import {IRepoMess, IWorkMess} from "../../interface";
 import {Table} from "antd";
 import GenColumns, {id2Name} from "../../in";
 import {prods, repos} from "../../../../Containers/Repository";
@@ -11,10 +11,10 @@ interface IProps {
 
 const MessagesShow = 5;
 const RepoMessIn = (props: IProps) => {
-    const data: IRepositoryMessRecord[] = props.data.RepoMessIn.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1).slice(0, MessagesShow);
+    const data: IRepoMess[] = props.data.RepoMessIn.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1).slice(0, MessagesShow);
     const columns = GenColumns((props: { record: any }) => <div></div>).slice(0, 5);
 
-    const refinedData = (data: IRepositoryMessRecord[]) => {
+    const refinedData = (data: IRepoMess[]) => {
         return data.map(e => ({
             ...e,
             "repo_name": id2Name(e.repo_id, repos, "repo_id", "name"),

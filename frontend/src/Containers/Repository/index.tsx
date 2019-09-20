@@ -9,14 +9,21 @@ import mockingProds from "../../Assets/mockings/mockingProds";
 import mockingRepos from "../../Assets/mockings/mockingRepos";
 import mockingOrders from "../../Assets/mockings/mockingOrders";
 import mockingRepoItems from "../../Assets/mockings/mockingRepoItems";
+import {
+    IOrder,
+    IProd,
+    IRepoItem,
+    IRepoMess,
+    IRepo
+} from "../../Components/Repository/interface";
 
 
-export const repoMessIn = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
-export const repoMessOut = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
-export const prods = mockingProds;
-export const repos = mockingRepos;
-export const orders = mockingOrders;
-export const repoItems = mockingRepoItems;
+export const repoMessIn: IRepoMess[] = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
+export const repoMessOut: IRepoMess[] = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
+export const prods: IProd[] = mockingProds;
+export const repos: IRepo[] = mockingRepos;
+export const orders: IOrder[] = mockingOrders;
+export const repoItems: IRepoItem[] = mockingRepoItems;
 
 const PageRepository = () => {
     return (

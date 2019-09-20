@@ -5,7 +5,7 @@ import styles from "../index.module.scss"
 import {Table, Button, Modal, Drawer} from 'antd';
 import {useDispatch} from "react-redux";
 import GenColumns, {id2Name} from "../../../Components/Repository/in";
-import {IRepositoryMessRecord} from "../../../Components/Repository/interface";
+import {IRepoMess} from "../../../Components/Repository/interface";
 import {repoMessIn, repoMessOut, prods, repos, orders} from "../index";
 
 
@@ -17,7 +17,7 @@ const PageRepositoryIn = () => {
     const [curRepoMess, setCurRepoMess] = useState(undefined);
     const [curRepoName, setCurRepoName] = useState(undefined);
 
-    const refinedData = (data: IRepositoryMessRecord[]) => {
+    const refinedData = (data: IRepoMess[]) => {
         return data.map(e => ({
             ...e,
             "repo_name": id2Name(e.repo_id, repos, "repo_id", "name"),

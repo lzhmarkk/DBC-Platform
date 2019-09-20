@@ -1,4 +1,6 @@
-const mockingRepoItems = [
+import {IRepoItem} from "../../Components/Repository/interface";
+
+const mockingRepoItems:IRepoItem[] = [
     ["1", "1", "1", "1111"],
     ["2", "1", "2", "2222"],
     ["3", "1", "3", "3333"],

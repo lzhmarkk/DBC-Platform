@@ -5,10 +5,10 @@ import pyodbc
 
 # Create your models here.
 db = pyodbc.connect("""Driver={MySQL ODBC 8.0 ANSI Driver};
-                       Server=123.57.128.111:3306;
+                       Server=localhost;
                        Database=dbc_task_1;
                        User=root;
-                       Password=dbc2019;
+                       Password=qushuo;
                        Charset=utf8;
                     """)
 cursor = db.cursor()

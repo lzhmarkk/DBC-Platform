@@ -33,7 +33,7 @@ const MainLayout = (props: { children: ReactElement }) => {
                             <img src={Avatar} alt={"avatar"}/>
                         </div>
                         <div>
-                            <span>曲硕nb</span>
+                            <span>lzhnb</span>
                         </div>
                         <div>
                             <Button icon={"logout"} ghost onClick={() => setLogout(true)}/>

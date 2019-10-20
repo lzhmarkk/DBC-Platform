@@ -40,6 +40,7 @@ export interface IOrder {
     order_date: string
     cust_id: string
     state: string
+    order_info:string
 }
 
 export interface IRepoItem {

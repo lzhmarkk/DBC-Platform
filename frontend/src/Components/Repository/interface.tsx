@@ -40,6 +40,7 @@ export interface IOrder {
     order_date: string
     cust_id: string
     state: string
+    order_info: string
 }
 
 export interface IRepoItem {
@@ -47,4 +48,11 @@ export interface IRepoItem {
     repo_id: string
     prod_id: string
     quantity: string
+}
+
+export interface ICustomer {
+    cust_id: string
+    cust_name: string
+    cust_email: string
+    cust_address: string
 }

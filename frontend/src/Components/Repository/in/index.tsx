@@ -6,7 +6,6 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
         sorter: (a: any, b: any) => parseInt(a.repo_mess_id) - parseInt(b.repo_mess_id),
     },
     {dataIndex: "repo_mess_info", title: "转入详情", key: "repo_mess_info"},
-
     {
         dataIndex: "prod_name", title: "产品", key: "prod_name",
         sorter: (a: any, b: any) => parseInt(a.prod_id) - parseInt(b.prod_id),

@@ -43,7 +43,9 @@ const dashboardApiData = {
             "direction": "IN",
             "quantity": "100",
             "prod_name": "西瓜",
-            "repo_name": "零号仓库"
+            "prod_id": "6",
+            "repo_name": "零号仓库",
+            "repo_id": "1",
         },
         {
             "repo_mess_id": "2",
@@ -51,7 +53,9 @@ const dashboardApiData = {
             "direction": "IN",
             "quantity": "100",
             "prod_name": "坦克",
-            "repo_name": "三号仓库"
+            "prod_id": "9",
+            "repo_name": "三号仓库",
+            "repo_id": "4"
         },
         {
             "repo_mess_id": "3",
@@ -59,7 +63,9 @@ const dashboardApiData = {
             "direction": "IN",
             "quantity": "223",
             "prod_name": "iPad",
-            "repo_name": "二号仓库"
+            "prod_id": "3",
+            "repo_name": "二号仓库",
+            "repo_id": "3"
         }
     ],
     "RepoMessOut": [
@@ -69,7 +75,9 @@ const dashboardApiData = {
             "direction": "OUT",
             "quantity": "100",
             "prod_name": "水壶",
-            "repo_name": "三号仓库"
+            "prod_id": "1",
+            "repo_name": "三号仓库",
+            "repo_id": "4"
         },
         {
             "repo_mess_id": "5",
@@ -77,7 +85,9 @@ const dashboardApiData = {
             "direction": "OUT",
             "quantity": "666",
             "prod_name": "巧克力",
-            "repo_name": "二号仓库"
+            "prod_id": "4",
+            "repo_name": "二号仓库",
+            "repo_id": "3"
         }
     ],
     "RepoMessTrans": []

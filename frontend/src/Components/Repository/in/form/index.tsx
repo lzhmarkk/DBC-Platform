@@ -28,9 +28,9 @@ const form = (props: IFormProps) => {
         })
     };
     const {getFieldDecorator} = props.form;
-    const prodOptions = props.prods.map(e => <Select key={e.key} value={e.key}>{e.value}</Select>);
-    const repoOptions = props.repos.map(e => <Select key={e.key} value={e.key}>{e.value}</Select>);
-    const orderOptions = props.orders.map(e => <Select key={e.key} value={e.key}>{e.value}</Select>);
+    const prodOptions = props.prods.map(e => <Select.Option key={e.key} value={e.key}>{e.value}</Select.Option>);
+    const repoOptions = props.repos.map(e => <Select.Option key={e.key} value={e.key}>{e.value}</Select.Option>);
+    const orderOptions = props.orders.map(e => <Select.Option key={e.key} value={e.key}>{e.value}</Select.Option>);
     return (
         <Form
               style={{background: "white"}}>

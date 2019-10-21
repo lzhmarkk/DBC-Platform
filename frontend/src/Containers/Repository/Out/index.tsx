@@ -1,21 +1,27 @@
 import React, {ReactNode, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "../index.module.scss"
-import {Table, Button, Modal} from 'antd';
-import mockingRepoMessages from "../../../Assets/mockings/mockingRepoMessages";
+import {Table, Button, Modal, Drawer} from 'antd';
 import {useDispatch} from "react-redux";
 import GenColumns from "../../../Components/Repository/out";
+import outApiData from "../../../Assets/mockingApiData/Repository/out";
+import INewRepoOutPanel, {IFormPayload} from "../../../Components/Repository/out/form";
 
 const PageRepositoryOut = () => {
-    const mockingData = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("OUT") != -1);
+    const apiData = outApiData;
+    const repoMessOut = apiData.RepoMessOut;
+    const prods = apiData.Prod.map(e => ({"key": e.prod_id, "value": e.prod_name}));
+    const repos = apiData.Repo.map(e => ({"key": e.repo_id, "value": e.repo_name}));
+    const orders = apiData.Order.map(e => ({"key": e.order_id, "value": e.order_id}));
     const dispatch = useDispatch();
-    const [data, setData] = useState(mockingData);
-    const [windowOpen, setWindowOpen] = useState(false);
+    const [data, setData] = useState(repoMessOut);
+    const [modelOpen, setModelOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         <Button onClick={() => {
             setCurRepoMess(props.record);
-            setWindowOpen(true);
+            setModelOpen(true);
         }}
                 icon={'search'}
                 type={'primary'}
@@ -24,29 +30,32 @@ const PageRepositoryOut = () => {
     const columns = GenColumns(Action);
     return (
         <div>
-            <ISearchPanel
-                field={{
-                    "repo_mess_id": "转出编号",
-                    "repo_mess_info": "转出详情",
-                    "repo_id": "仓库号",
-                    "prod_id": "产品号",
-                    "order_id": "订单号",
-                }}
-                onSearch={(e) => !e.content ? setData(mockingData) :
-                    setData(data.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
-            />
+            <div className={styles.ControlPanel}>
+                <ISearchPanel
+                    field={{
+                        "repo_mess_id": "转出编号",
+                        "repo_mess_info": "转出详情",
+                        "repo_name": "仓库名",
+                        "prod_name": "产品名",
+                        "order_id": "订单号",
+                    }}
+                    onSearch={(e) => !e.content ? setData(repoMessOut) :
+                        setData(repoMessOut.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                />
+                <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新增转出</Button>
+            </div>
             <Table
                 columns={columns}
                 dataSource={data}
             />
             <Modal title="修改状态"
-                   visible={windowOpen}
+                   visible={modelOpen}
                    onCancel={() => {
-                       setWindowOpen(false);
+                       setModelOpen(false);
                        setCurRepoMess(undefined);
                    }}
                    onOk={() => {
-                       setWindowOpen(false);
+                       setModelOpen(false);
                        setCurRepoMess(undefined);
                    }}
                    okText="确定"
@@ -56,6 +65,40 @@ const PageRepositoryOut = () => {
                     是否选择
                 </span>
             </Modal>
+            <Drawer title={"新建转出记录"}
+                    width={720}
+                    onClose={() => setDrawerOpen(false)}
+                    visible={drawerOpen}>
+                <INewRepoOutPanel prods={prods}
+                                  repos={repos}
+                                  orders={orders}
+                                  onSubmit={(e: IFormPayload) => {
+                                      setDrawerOpen(false);
+                                      const tmp = {
+                                          "repo_mess_id": "666",
+                                          "repo_mess_info": e.repo_mess_info,
+                                          "direction": "OUT",
+                                          "quantity": e.quantity,
+                                          "order_id": e.order_id,
+                                          "repo_name": repos.filter(k => k["key"] == e.repo_id).map(e => e["value"])[0],
+                                          "prod_name": prods.filter(k => k["key"] == e.prod_id).map(e => e["value"])[0],
+                                          "repo_id": e.repo_id,
+                                          "prod_id": e.prod_id,
+                                      };
+                                      setData(data.concat(tmp));
+                                      const newRepoMess = {
+                                          "type": "NEW_MESS_OUT",
+                                          "data": {
+                                              "repo_mess_info": e.repo_mess_info,
+                                              "prod_id": e.prod_id,
+                                              "quantity": e.quantity,
+                                              "repo_id": e.prod_id,
+                                              "order_id": e.order_id
+                                          }
+                                      };
+                                      //console.log(newRepoMess);
+                                  }}/>
+            </Drawer>
         </div>
     )
 };

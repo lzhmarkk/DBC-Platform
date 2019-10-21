@@ -14,8 +14,7 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
         sorter: (a: IRepoMess, b: IRepoMess) => parseInt(a.quantity) - parseInt(b.quantity),
     },
     {
-        dataIndex: "repo_name", title: "仓库名", key: "repo_name",
-        sorter: (a: IRepoMess, b: IRepoMess) => parseInt(a.repo_id) - parseInt(b.repo_id),
+        dataIndex: "name", title: "仓库名", key: "name"
     },
     {
         dataIndex: "order_id", title: "订单号", key: "order_id",
@@ -27,10 +26,3 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     },
 ];
 export default GenColumns;
-
-
-//这个函数负责从source中按照srcKey找到值为id的项目，并且把它的tarKey值取出
-export const id2Name = (id: string, source: any[], srcKey: string, tarKey: string) => {
-    const names = source.filter((k: any) => (k[srcKey] as string) == id).map(e => e[tarKey]);
-    return names.length == 1 ? names[0] : "undefined";
-};

@@ -8,14 +8,13 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     },
     {dataIndex: "repo_mess_info", title: "转出详情", key: "repo_mess_info"},
 
-    {dataIndex: "prod_id", title: "产品", key: "prod_id"},
+    {dataIndex: "prod_name", title: "产品", key: "prod_name"},
     {
         dataIndex: "quantity", title: "数量", key: "quantity",
         sorter: (a: IRepoMess, b: IRepoMess) => parseInt(a.quantity) - parseInt(b.quantity),
     },
     {
-        dataIndex: "repo_id", title: "仓库编号", key: "repo_id",
-        sorter: (a: IRepoMess, b: IRepoMess) => parseInt(a.repo_id) - parseInt(b.repo_id),
+        dataIndex: "name", title: "仓库名", key: "name"
     },
     {
         dataIndex: "order_id", title: "订单号", key: "order_id",

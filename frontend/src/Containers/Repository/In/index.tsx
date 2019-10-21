@@ -4,7 +4,7 @@ import INewRepoInPanel, {IFormPayload} from "../../../Components/Repository/in/f
 import styles from "../index.module.scss"
 import {Table, Button, Modal, Drawer} from 'antd';
 import {useDispatch} from "react-redux";
-import GenColumns, {id2Name} from "../../../Components/Repository/in";
+import GenColumns from "../../../Components/Repository/in";
 import {IRepoMess} from "../../../Components/Repository/interface";
 import {repoMessIn, repoMessOut, prods, repos, orders} from "../index";
 
@@ -16,14 +16,6 @@ const PageRepositoryIn = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
     const [curRepoName, setCurRepoName] = useState(undefined);
-
-    const refinedData = (data: IRepoMess[]) => {
-        return data.map(e => ({
-            ...e,
-            "repo_name": id2Name(e.repo_id, repos, "repo_id", "name"),
-            "prod_name": id2Name(e.prod_id, prods, "prod_id", "prod_name")
-        }))
-    };
 
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         <Button icon={'search'}
@@ -55,7 +47,7 @@ const PageRepositoryIn = () => {
             </div>
             <Table
                 columns={columns}
-                dataSource={refinedData(data)}
+                dataSource={data}
             />
 
             <Modal title="修改状态"

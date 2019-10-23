@@ -5,6 +5,6 @@ from . import views
 app_name = 'dbc2019'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('repo/', views.repo)
+    path('add_example/', views.add_example, name='add_example'),
+    path('serializer_foreignkey', views.serializer_foreignkey, name='serializer_foreignkey')
 ]

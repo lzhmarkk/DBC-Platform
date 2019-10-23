@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -76,10 +76,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbc2019',
+        'NAME': 'dbc2019_test',
         'USER': 'root',
-        'PASSWORD': 'dbc2019',
-        'HOST': '123.57.128.111',
+        'PASSWORD': 'qushuo',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }

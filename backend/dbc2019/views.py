@@ -1,17 +1,33 @@
-from django.shortcuts import render
-from django.http import *
-import json
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from rest_framework import status
+
+from .models import *
+from .serializers import *
 
 
-# Create your views here.
+# Create your tests here.
+def add_example(request):
+    product = Product.objects.create(prod_name='ipad')
+    order = Order.objects.create()
+    orderitem = OrderItem.objects.create(quantity=30, product=product, order=order)
 
-def index(request):
-    return render(request, 'dbc2019/index.html')
+    return JsonResponse({})
 
 
-def repo(request):
-    print(request)
-    res = {
-        'status': "hello world"
-    }
-    return HttpResponse(json.dumps(res), content_type='application/json')
+@csrf_exempt
+def serializer_foreignkey(request):
+    if request.method == 'GET':
+        orderitem = OrderItem.objects.all()
+        serializer = OrderItemSerializer(orderitem, many=True)
+
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = OrderItemSerializer(data=data.get('data'))
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

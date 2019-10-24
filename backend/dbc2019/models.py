@@ -18,6 +18,8 @@ class Order(models.Model):
     order_date = models.DateTimeField(auto_now=True)
     state = models.IntegerField(default=0)
 
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
 
 class Product(models.Model):
     prod_id = models.AutoField(primary_key=True)
@@ -35,8 +37,8 @@ class OrderItem(models.Model):
 
 class Repository(models.Model):
     repo_id = models.AutoField(primary_key=True)
-    place = models.CharField(max_length=50)
-    name = models.CharField(max_length=50, null=True)
+    repo_place = models.CharField(max_length=50)
+    repo_name = models.CharField(max_length=50, null=True)
     repo_capacity = models.IntegerField()
     repo_occupy = models.IntegerField(default=0)
 
@@ -47,8 +49,8 @@ class RepositoryItem(models.Model):
     repo_item_id = models.AutoField(primary_key=True)
     quantity = models.IntegerField()
 
-    repository = models.ForeignKey(Repository, on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    repository = models.ForeignKey(Repository, related_name='repo_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 class RepoMessage(models.Model):

@@ -57,13 +57,13 @@ GET:
     "Repo":[
         {
         	"repo_id":"1", //仓库id
-        	"name":"零号仓库",//仓库名
+        	"repo_name":"零号仓库",//仓库名
         	"repo_capacity":"120",//容量
         	"repo_occupy":"10"//已使用
         },
         {
         	"repo_id":"2",
-        	"name":"一号仓库",
+        	"repo_name":"一号仓库",
         	"repo_capacity":"100",
         	"repo_occupy":"105"
         }
@@ -177,7 +177,7 @@ POST:
 	"data":{
 		"repo_out_id":"3",//被调出的仓库id
 		"prod_out_id":"4",//被调动的产品id
-		"quantity_out":"3334",//数量
+		"quantity":"3334",//数量
 		"repo_mess_info":"我是描述",//描述
 		"repo_in_id":"5",//被调入的仓库id
 		"direction":"TRANS"//方向
@@ -188,8 +188,8 @@ GET:
 	"Repo":[
         {
 			"repo_id":"1",//仓库id
-			"name":"秘密仓库",//仓库名
-			"PepoItem":[//仓库中含有的产品的信息
+			"repo_name":"秘密仓库",//仓库名
+			"RepoItem":[//仓库中含有的产品的信息
                 {
 					"prod_id":"3",//产品id
 					"prod_name": "A380",//产品名字

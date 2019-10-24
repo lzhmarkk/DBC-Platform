@@ -52,6 +52,13 @@ class RepoMessSerializer(serializers.ModelSerializer):
                   'prod_name', 'prod_id', 'repo_name', 'repo_id', 'order_id']
 
     def create(self, validated_data):
+        product = Product.objects.get(pk=validated_data.get('prod_id'))
+        order = Order.objects.get(pk=validated_data.get('order_id'))
+        repository = Repository.objects.get(pk=validated_data.get('repo_id'))
+        admin = repository.admin
+        work_mess = WorkMessage.objects.create(quantity=validated_data.get('quantity'),
+                                               direction=validated_data.get('direction'),
+                                               product=product, order=order, )
         return RepoMessage.objects.create(**validated_data)
 
 

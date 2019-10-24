@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactEcharts from "echarts-for-react";
 import styles from "./index.module.scss"
 import getOption from "../../../Components/Repository/dashboard";
-import {Tabs} from "antd";
+import {message, Tabs} from "antd";
 import RepoDetailTabs from "../../../Components/Repository/dashboard/Tabs/conf";
 import dashboardApiData from "../../../Assets/mockingApiData/Repository/dashboard";
+import {APIList} from "../../../API";
+import Axios from 'axios'
 
 const {TabPane} = Tabs;
 
@@ -16,7 +18,7 @@ export interface IDetailData {
 }
 
 const PageRepositoryDashboard = () => {
-    const data = dashboardApiData;
+    const [data,setData]=useState(dashboardApiData);
     const repo=data.Repo;
     const tabData: IDetailData = {
             "Messages": data.Messages,
@@ -47,6 +49,17 @@ const PageRepositoryDashboard = () => {
     const tabpanes = RepoDetailTabs.map(e => <TabPane tab={e.name} key={e.name}>
         <e.component data={tabData}/>
     </TabPane>);
+
+    useEffect(()=>{
+        Axios.get(APIList.dashboard)
+            .then(res => {
+                console.log("api的返回值：");
+                console.log(res);
+                console.log("返回值结束");
+                setData(res.data);
+            })
+            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+    },[]);
     return (
         <div>
             <div className={styles.root}>

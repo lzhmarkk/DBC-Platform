@@ -18,8 +18,8 @@ export interface IDetailData {
 }
 
 const PageRepositoryDashboard = () => {
-    const [data,setData]=useState(dashboardApiData);
-    const repo=data.Repo;
+    const [data, setData] = useState(dashboardApiData);
+    const repo = data.Repo;
     const tabData: IDetailData = {
             "Messages": data.Messages,
             "RepoMessIn": data.RepoMessIn,
@@ -50,8 +50,8 @@ const PageRepositoryDashboard = () => {
         <e.component data={tabData}/>
     </TabPane>);
 
-    useEffect(()=>{
-        Axios.get(APIList.dashboard)
+    useEffect(() => {
+        Axios.get(APIList.repoDashboard)
             .then(res => {
                 console.log("api的返回值：");
                 console.log(res);
@@ -59,7 +59,7 @@ const PageRepositoryDashboard = () => {
                 setData(res.data);
             })
             .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
-    },[]);
+    }, []);
     return (
         <div>
             <div className={styles.root}>

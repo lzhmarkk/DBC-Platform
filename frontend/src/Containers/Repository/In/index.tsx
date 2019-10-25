@@ -45,6 +45,7 @@ const PageRepositoryIn = () => {
                     }}
                     onSearch={(e) => !e.content ? setData(repoMessIn) :
                         setData(repoMessIn.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                    onClear={()=>setData(repoMessIn)}
                 />
                 <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新增转入</Button>
             </div>

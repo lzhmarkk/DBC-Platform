@@ -41,6 +41,7 @@ const PageRepositoryOut = () => {
                     }}
                     onSearch={(e) => !e.content ? setData(repoMessOut) :
                         setData(repoMessOut.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                    onClear={() => setData(repoMessOut)}
                 />
                 <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新增转出</Button>
             </div>

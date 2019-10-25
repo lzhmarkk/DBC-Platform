@@ -38,6 +38,7 @@ const PageOrder = () => {
                     }}
                     onSearch={(e) => !e.content ? setData(orders) :
                         setData(orders.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                    onClear={()=>setData(orders)}
                 />
                 <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新建订单</Button>
             </div>

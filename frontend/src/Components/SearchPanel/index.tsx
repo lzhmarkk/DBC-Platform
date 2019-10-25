@@ -10,6 +10,7 @@ export interface IFormPayload {
 
 interface IFormProps extends FormComponentProps {
     onSearch: (payload: IFormPayload) => void,
+    onClear:()=>void,
     field: { [key: string]: string }
 
 }
@@ -22,6 +23,9 @@ const SearchForm = (props: IFormProps) => {
                 return;
             props.onSearch(value);
         })
+    };
+    const handleClear=()=>{
+        props.onClear();
     };
     const options = Object.keys(props.field).map(e => <Select key={e} value={e}>{props.field[e]}</Select>);
     const {getFieldDecorator} = props.form;
@@ -42,7 +46,8 @@ const SearchForm = (props: IFormProps) => {
                 })(<Input placeholder="搜索内容"/>)}
             </Form.Item>
             <Form.Item>
-                <Button onClick={handleSubmit} icon={"search"}>搜索</Button>
+                <Button onClick={handleSubmit} icon={"search"} type={"primary"}>搜索</Button>
+                <Button onClick={handleClear} icon={"redo"}>重置</Button>
             </Form.Item>
         </Form>
     )

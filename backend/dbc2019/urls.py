@@ -1,13 +1,15 @@
 from django.urls import path
 
 from . import views
-from . import tests
 
 
 app_name = 'dbc2019'
 
 urlpatterns = [
-    # test
-    path('test_add_example/', tests.test_add_example, name='test_add_example'),
-    path('test_serializer_foreignkey/', tests.test_serializer_foreignkey, name='test_serializer_foreignkey')
+    path('api/repository/dashboard/', views.api_repository_dashboard, name='api_repository_dashboard'),
+    path('api/repository/in/', views.api_repository_in, name='api_repository_in'),
+    path('api/repository/out/', views.api_repository_out, name='api_repository_out'),
+    path('api/repository/trans/', views.api_repository_trans, name='api_repository_trans'),
+    path('add_example/', views.add_example, name='add_example')
+
 ]

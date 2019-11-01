@@ -1,11 +1,13 @@
-import React, {ReactNode, useState} from 'react'
+import React, {ReactNode, useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "../index.module.scss"
-import {Table, Button, Modal, Drawer} from 'antd';
+import {Table, Button, Modal, Drawer, message} from 'antd';
 import {useDispatch} from "react-redux";
 import GenColumns from "../../../Components/Repository/out";
 import outApiData from "../../../Assets/mockingApiData/Repository/out";
 import INewRepoOutPanel, {IFormPayload} from "../../../Components/Repository/out/form";
+import Axios from "axios";
+import {APIList} from "../../../API";
 
 const PageRepositoryOut = () => {
     const apiData = outApiData;
@@ -28,6 +30,17 @@ const PageRepositoryOut = () => {
         >修改转出状态</Button>
     </div>;
     const columns = GenColumns(Action);
+
+    useEffect(() => {
+        Axios.get(APIList.repoOut)
+            .then(res => {
+                console.log("api的返回值：");
+                console.log(res);
+                console.log("返回值结束");
+                setData(res.data);
+            })
+            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+    }, []);
     return (
         <div>
             <div className={styles.ControlPanel}>
@@ -41,6 +54,7 @@ const PageRepositoryOut = () => {
                     }}
                     onSearch={(e) => !e.content ? setData(repoMessOut) :
                         setData(repoMessOut.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                    onClear={() => setData(repoMessOut)}
                 />
                 <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新增转出</Button>
             </div>

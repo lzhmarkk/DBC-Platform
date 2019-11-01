@@ -1,11 +1,13 @@
-import React, {ReactNode, useState} from 'react'
+import React, {ReactNode, useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import INewRepoInPanel, {IFormPayload} from "../../../Components/Repository/in/form";
 import styles from "../index.module.scss"
-import {Table, Button, Modal, Drawer} from 'antd';
+import {Table, Button, Modal, Drawer, message} from 'antd';
 import {useDispatch} from "react-redux";
 import GenColumns from "../../../Components/Repository/in";
 import inApiData from "../../../Assets/mockingApiData/Repository/in";
+import Axios from "axios";
+import {APIList} from "../../../API";
 
 const PageRepositoryIn = () => {
     const apiData = inApiData;
@@ -30,8 +32,28 @@ const PageRepositoryIn = () => {
             修改转入状态
         </Button>
     </div>;
-
+    const handlePost = (prop: any) => {
+        console.log("开始post");
+        Axios.post(APIList.repoIn, prop)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(() => message.error("获取post的后台返回结果失败"));
+        console.log("post完成");
+    };
     const columns = GenColumns(Action);
+
+    useEffect(() => {
+        Axios.get(APIList.repoIn)
+            .then(res => {
+                console.log("api的返回值：");
+                console.log(res);
+                console.log("返回值结束");
+                setData(res.data);
+            })
+            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+    }, []);
+
     return (
         <div>
             <div className={styles.ControlPanel}>
@@ -45,6 +67,7 @@ const PageRepositoryIn = () => {
                     }}
                     onSearch={(e) => !e.content ? setData(repoMessIn) :
                         setData(repoMessIn.filter((k: any) => (k[e.field] as string).indexOf(e.content) !== -1))}
+                    onClear={() => setData(repoMessIn)}
                 />
                 <Button icon={"plus-circle"} type={"primary"} onClick={() => setDrawerOpen(true)}>新增转入</Button>
             </div>
@@ -101,7 +124,9 @@ const PageRepositoryIn = () => {
                                              "order_id": e.order_id
                                          }
                                      };
-                                     //console.log(newRepoMess);
+                                     console.log("表单数据");
+                                     console.log(newRepoMess);
+                                     handlePost(newRepoMess);
                                  }}/>
             </Drawer>
         </div>

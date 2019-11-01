@@ -1,5 +1,4 @@
 import React from "react";
-import {IRepo} from "../interface";
 import {Button, Form, Input, Select} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 
@@ -9,7 +8,7 @@ export interface IFormPayload {
 
 export interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IFormPayload) => void,
-    repos: IRepo[]
+    repos: any[]
 }
 
 const Form0 = (props: IFormProps) => {
@@ -23,7 +22,7 @@ const Form0 = (props: IFormProps) => {
         })
     };
     const {getFieldDecorator} = props.form;
-    const selectOption = props.repos.map(e => <Select.Option key={e.repo_id} value={e.repo_id}>{e.name}</Select.Option>);
+    const selectOption = props.repos.map(e => <Select.Option key={e.repo_id} value={e.repo_id}>{e.repo_name}</Select.Option>);
     return (
         <Form>
             <Form.Item label={"选择转出仓库"}>

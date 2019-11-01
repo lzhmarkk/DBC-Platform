@@ -13,8 +13,7 @@ export interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IFormPayload) => void,
     onBack: () => void,
     repo_out_id: string,
-    prods: IProd[],//这里是所有与该repos相关的prod
-    repo_prods: IRepoItem[]//揭示了存货信息
+    prods: any[]
 }
 
 const Form1 = (props: IFormProps) => {
@@ -36,7 +35,7 @@ const Form1 = (props: IFormProps) => {
     const selectOption = props.prods.map(e => <Select.Option key={e.prod_id} value={e.prod_id}>
         {e.prod_name}</Select.Option>);
     const getNumber = (id: string) => {
-        const item = props.repo_prods.filter(k => k.prod_id == id).pop();
+        const item = props.prods.filter(k => k.prod_id == id).pop();
         return item == undefined ? 0 : item.quantity;
     };
     const handleChange = (value: string) => {
@@ -52,7 +51,7 @@ const Form1 = (props: IFormProps) => {
                 </Select>)}
             </Form.Item>
             <Form.Item label={"转出数量"}>
-                {getFieldDecorator('quantity_out', {
+                {getFieldDecorator('quantity', {
                     rules: [{
                         type: "string", required: true,
                         validator: (_, b, c) => {

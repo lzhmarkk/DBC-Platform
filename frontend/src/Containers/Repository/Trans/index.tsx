@@ -5,22 +5,15 @@ import Step1form from "../../../Components/Repository/Trans/form1";
 import Step2form from "../../../Components/Repository/Trans/form2";
 import Step3form from "../../../Components/Repository/Trans/form3";
 import styles from "../index.module.scss"
-import {prods, repoItems, repos} from "../index";
+import transApiData from "../../../Assets/mockingApiData/Repository/trans";
 
 const {Step} = Steps;
 
 const PageRepositoryTrans = () => {
+    const repos = transApiData.Repo;
     const [step, setStep] = useState(0);
     const [formInfo, setFormInfo] = useState<any>({});
-    const [repoOutId, setRepoOutId] = useState("");
-    const getName = (id: string) => {
-        const name = repos.filter(k => k.repo_id == id).pop();
-        return name == undefined ? "" : name.name;
-    };
-    const getName2 = (id: string) => {
-        const name = prods.filter(k => k.prod_id == id).pop();
-        return name == undefined ? "" : name.prod_name;
-    };
+    const [repoOut, setRepoOut] = useState<any>(repos[0]);
 
     const step0Form = <div className={styles.stepForm}>
         <Step0form
@@ -28,14 +21,13 @@ const PageRepositoryTrans = () => {
             onSubmit={(e) => {
                 setStep(1);
                 setFormInfo({...formInfo, ...e});
-                setRepoOutId(e.repo_out_id);
+                setRepoOut(repos.filter(k => k.repo_id == e.repo_out_id)[0]);
             }}/>
     </div>;
     const step1Form = <div className={styles.stepForm}>
         <Step1form
-            repo_out_id={repoOutId}
-            prods={prods.filter(s => repoItems.filter(k => k.repo_id == repoOutId).map(e => e.prod_id).indexOf(s.prod_id) != -1)}
-            repo_prods={repoItems.filter(k => k.repo_id == repoOutId)}
+            repo_out_id={repoOut.repo_id}
+            prods={repoOut.RepoItem}
             onBack={() => setStep(0)}
             onSubmit={(e) => {
                 setStep(2);
@@ -45,20 +37,24 @@ const PageRepositoryTrans = () => {
     const step2Form = <div className={styles.stepForm}>
         <Step2form
             repos={repos}
-            repo_out_id={repoOutId}
+            repo_out_id={repoOut.repo_id}
             onSubmit={(e) => {
                 setStep(3);
-                setFormInfo({...formInfo, ...e});
+                setFormInfo({...formInfo, ...e, "direction": "TRANS"});
             }}/>
     </div>;
     const step3Form = <div className={styles.stepForm}>
         <Result
             status="success"
             title="成功发起调库申请"
-            subTitle={`从${getName(formInfo.repo_out_id)}调动${formInfo.quantity_out}个/箱${getName2(formInfo.prod_out_id)}到${getName(formInfo.repo_in_id)}`}
+            subTitle={`从${formInfo.repo_out_id}调动${formInfo.quantity}个/箱${formInfo.prod_out_id}到${formInfo.repo_in_id}`}
             extra={[
-                <Button type="primary" key="console"> 查看转入管理 </Button>,
-                <Button key="continue" onClick={() => setStep(0)}> 继续</Button>,
+                <Button type="primary" key="console" onClick={() => console.log(formInfo)}>
+                    查看转入管理
+                </Button>,
+                <Button key="continue" onClick={() => setStep(0)}>
+                    继续
+                </Button>,
             ]}
         />
     </div>;

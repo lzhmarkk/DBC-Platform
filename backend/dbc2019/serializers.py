@@ -22,8 +22,8 @@ class DashboardWorkMessSerializer(serializers.ModelSerializer):
 class DashboardRepoMessSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all())
     repo_id = serializers.PrimaryKeyRelatedField(source='repository', queryset=Repository.objects.all())
-    prod_name = serializers.CharField(source='product.prod_name')
-    repo_name = serializers.CharField(source='repository.name')
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
 
     class Meta:
         model = RepoMessage
@@ -31,19 +31,19 @@ class DashboardRepoMessSerializer(serializers.ModelSerializer):
                   'prod_name', 'prod_id', 'repo_name', 'repo_id']
 
 
-class DashboardSerializer(serializers.ModelSerializer):
-    Repo = DashboardRepositorySerializer(many=True)
-    Messages = DashboardWorkMessSerializer(many=True)
-    RepoMessIn = DashboardRepoMessSerializer(many=True)
-    RepoMessOut = DashboardRepoMessSerializer(many=True)
+class DashboardSerializer(serializers.Serializer):
+    Repo = DashboardRepositorySerializer(source='repo', many=True)
+    Messages = DashboardWorkMessSerializer(source='work_mess', many=True)
+    RepoMessIn = DashboardRepoMessSerializer(source='repo_mess_in', many=True)
+    RepoMessOut = DashboardRepoMessSerializer(source='repo_mess_out', many=True)
 
 
 # url api/repository/in,out
 class RepoMessSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all())
     repo_id = serializers.PrimaryKeyRelatedField(source='repository', queryset=Repository.objects.all())
-    prod_name = serializers.CharField(source='product.prod_name')
-    repo_name = serializers.CharField(source='repository.name')
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
     order_id = serializers.PrimaryKeyRelatedField(source='order', queryset=Order.objects.all())
 
     class Meta:
@@ -52,7 +52,16 @@ class RepoMessSerializer(serializers.ModelSerializer):
                   'prod_name', 'prod_id', 'repo_name', 'repo_id', 'order_id']
 
     def create(self, validated_data):
-        return RepoMessage.objects.create(**validated_data)
+        repo_mess = RepoMessage.objects.create(**validated_data)
+
+        # add a work_mess when add repo_mess
+        product = validated_data.get('product')
+        repository = validated_data.get('repository')
+        admin = repository.admin
+        WorkMessage.objects.create(quantity=validated_data.get('quantity'),
+                                   direction=validated_data.get('direction'),
+                                   product=product, admin=admin, repo_message=repo_mess)
+        return repo_mess
 
 
 class RepositorySerializer(serializers.ModelSerializer):
@@ -73,18 +82,18 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['order_id']
 
 
-class InSerializer(serializers.ModelSerializer):
-    RepoMessIn = RepoMessSerializer(many=True)
-    Repo = RepositorySerializer(many=True)
-    Prod = ProductSerializer(many=True)
-    Order = OrderSerializer(many=True)
+class InSerializer(serializers.Serializer):
+    RepoMessIn = RepoMessSerializer(source='repo_mess_in', many=True)
+    Repo = RepositorySerializer(source='repo', many=True)
+    Prod = ProductSerializer(source='prod', many=True)
+    Order = OrderSerializer(source='order', many=True)
 
 
-class OutSerializer(serializers.ModelSerializer):
-    RepoMessOut = RepoMessSerializer(many=True)
-    Repo = RepositorySerializer(many=True)
-    Prod = ProductSerializer(many=True)
-    Order = OrderSerializer(many=True)
+class OutSerializer(serializers.Serializer):
+    RepoMessOut = RepoMessSerializer(source='repo_mess_in', many=True)
+    Repo = RepositorySerializer(source='repo', many=True)
+    Prod = ProductSerializer(source='prod', many=True)
+    Order = OrderSerializer(source='order', many=True)
 
 
 # url api/repository/trans

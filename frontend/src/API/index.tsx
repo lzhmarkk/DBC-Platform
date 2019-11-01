@@ -1,4 +1,4 @@
-const BASE = "http://localhost:8888";
+const BASE = "http://localhost:8000";
 export const APIList = {
     repoDashboard: `${BASE}/api/repository/dashboard/`,
     repoIn:`${BASE}/api/repository/in/`,

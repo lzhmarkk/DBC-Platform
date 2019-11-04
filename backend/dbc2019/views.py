@@ -18,7 +18,7 @@ def api_repository_dashboard(request):
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT')
     }
     serializer = DashboardSerializer(data)
-    print(serializer.data)
+
     return JsonResponse(serializer.data)
 
 

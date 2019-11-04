@@ -37,7 +37,7 @@ const PageRepositoryOut = () => {
                 console.log("api的返回值：");
                 console.log(res);
                 console.log("返回值结束");
-                setData(res.data);
+                setData(res.data.RepoMessOut);
             })
             .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
     }, []);

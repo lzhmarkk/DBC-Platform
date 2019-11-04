@@ -33,7 +33,7 @@ const form = (props: IFormProps) => {
     const orderOptions = props.orders.map(e => <Select.Option key={e.key} value={e.key}>{e.value}</Select.Option>);
     return (
         <Form
-              style={{background: "white"}}>
+            style={{background: "white"}}>
             <Form.Item label="转出详情">
                 {getFieldDecorator('repo_mess_info', {
                     rules: [{type: "string", required: true, message: "请输入文字描述"}],
@@ -46,9 +46,10 @@ const form = (props: IFormProps) => {
                     {prodOptions}
                 </Select>)}
             </Form.Item>
-            <Form.Item label="数量">
+            <Form.Item label="数量" hasFeedback>
                 {getFieldDecorator('quantity', {
-                    rules: [{type: "string", required: true, message: "请输入转入数量"}],
+                    rules: [{required: true, message: "请输入转入数量"},
+                        {pattern: /^\d+$/, message: "请输入整数"}],
                 })(<Input placeholder={"请输入数量"}/>)}
             </Form.Item>
             <Form.Item label="仓库">

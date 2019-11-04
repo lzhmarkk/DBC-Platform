@@ -18,7 +18,7 @@ def api_repository_dashboard(request):
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT')
     }
     serializer = DashboardSerializer(data)
-    print(serializer.data)
+
     return JsonResponse(serializer.data)
 
 
@@ -66,15 +66,18 @@ def api_repository_out(request):
     return JsonResponse(serializer.data)
 
 
+@csrf_exempt
 def api_repository_trans(request):
     if request.method == 'POST':
-        data = JSONParser().parse(request.body.data)
+        data = JSONParser().parse(request).get('data')
         serializer = TransMessSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
 
-    repo = Repository.objects.all()
-    serializer = TransSerializer(repo)
+    data = {
+        'repo': Repository.objects.all()
+    }
+    serializer = TransSerializer(data)
     return JsonResponse(serializer.data)
 
 

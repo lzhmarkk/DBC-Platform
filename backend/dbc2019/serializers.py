@@ -4,6 +4,15 @@ from rest_framework import serializers
 from .models import *
 
 
+# util func
+def get_out_work_mess_info(prod_name, quantity):
+    return '出库' + prod_name + str(quantity)
+
+
+def get_in_work_mess_info(prod_name, quantity):
+    return '入库' + prod_name + str(quantity)
+
+
 # url api/repository/dashboard
 class DashboardRepositorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,9 +67,17 @@ class RepoMessSerializer(serializers.ModelSerializer):
         product = validated_data.get('product')
         repository = validated_data.get('repository')
         admin = repository.admin
-        WorkMessage.objects.create(quantity=validated_data.get('quantity'),
-                                   direction=validated_data.get('direction'),
-                                   product=product, admin=admin, repo_message=repo_mess)
+        quantity = validated_data.get('quantity')
+        direction = validated_data.get('direction')
+        if direction == 'IN':
+            work_mess_info = get_in_work_mess_info(product.prod_name, quantity)
+        else:
+            work_mess_info = get_out_work_mess_info(product.prod_name, quantity)
+        WorkMessage.objects.create(quantity=quantity,
+                                   direction=direction,
+                                   work_mess_info=work_mess_info,
+                                   product=product, admin=admin,
+                                   repo_message=repo_mess)
         return repo_mess
 
 
@@ -104,7 +121,35 @@ class TransMessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TransMessage
-        fields = ['repo_out_id', 'repo_in_id', 'prod_out_id', 'quantity', 'repo_mess_info']
+        fields = ['repo_out_id', 'repo_in_id', 'prod_out_id', 'quantity', 'trans_mess_info']
+
+    def create(self, validated_data):
+        trans_mess = TransMessage.objects.create(**validated_data)
+
+        # add two work_mess point to trans_mess
+        repository_out = validated_data.get('from_repository')
+        repository_in = validated_data.get('to_repository')
+        quantity = validated_data.get('quantity')
+        product = validated_data.get('product')
+        admin_out = repository_out.admin
+        admin_in = repository_in.admin
+        work_mess_info_out = get_out_work_mess_info(product.prod_name, quantity)
+        work_mess_info_in = get_in_work_mess_info(product.prod_name, quantity)
+
+        WorkMessage.objects.create(work_mess_info=work_mess_info_out,
+                                   quantity=quantity,
+                                   direction='OUT',
+                                   admin=admin_out,
+                                   product=product,
+                                   trans_message=trans_mess)
+        WorkMessage.objects.create(work_mess_info=work_mess_info_in,
+                                   quantity=quantity,
+                                   direction='IN',
+                                   admin=admin_in,
+                                   product=product,
+                                   trans_message=trans_mess)
+
+        return trans_mess
 
 
 class TransRepoItemSerializer(serializers.ModelSerializer):
@@ -124,5 +169,5 @@ class TransRepositorySerializer(serializers.ModelSerializer):
         fields = ['repo_id', 'repo_name', 'RepoItem']
 
 
-class TransSerializer(serializers.ModelSerializer):
-    Repo = TransRepositorySerializer(many=True)
+class TransSerializer(serializers.Serializer):
+    Repo = TransRepositorySerializer(source='repo', many=True)

@@ -34,14 +34,14 @@ const form = (props: IFormProps) => {
     return (
         <Form
             style={{background: "white"}}>
-            <Form.Item label="转出详情">
+            <Form.Item label="转出详情" hasFeedback>
                 {getFieldDecorator('repo_mess_info', {
                     rules: [{type: "string", required: true, message: "请输入文字描述"}],
                 })(<Input placeholder={"请输入转出描述"}/>)}
             </Form.Item>
-            <Form.Item label="产品类型">
+            <Form.Item label="产品类型" hasFeedback>
                 {getFieldDecorator('prod_id', {
-                    rules: [{type: "string", required: true, message: "请选择相关产品"}],
+                    rules: [{required: true, message: "请选择相关产品"}],
                 })(<Select style={{minWidth: "160px"}}>
                     {prodOptions}
                 </Select>)}
@@ -52,16 +52,16 @@ const form = (props: IFormProps) => {
                         {pattern: /^\d+$/, message: "请输入整数"}],
                 })(<Input placeholder={"请输入数量"}/>)}
             </Form.Item>
-            <Form.Item label="仓库">
+            <Form.Item label="仓库" hasFeedback>
                 {getFieldDecorator('repo_id', {
-                    rules: [{type: "string", required: true, message: "请选择仓库"}],
+                    rules: [{required: true, message: "请选择仓库"}],
                 })(<Select style={{minWidth: "160px"}}>
                     {repoOptions}
                 </Select>)}
             </Form.Item>
-            <Form.Item label="订单">
+            <Form.Item label="订单" hasFeedback>
                 {getFieldDecorator('order_id', {
-                    rules: [{type: "string", required: true, message: "请选择订单"}],
+                    rules: [{required: true, message: "请选择订单"}],
                 })(<Select>
                     {orderOptions}
                 </Select>)}

@@ -206,3 +206,78 @@ GET:
 }
 ```
 
+
+
+```json
+url:"/api/order"
+//订单
+POST:
+{
+	"type":"NEW_ORDER",
+	"data":{
+		"cust_id":"12",
+		"order_info":"新订单",
+		"order_date":"20190304",
+		"state":"1"
+	}
+}
+或者
+{
+	"type":"CHANGE_ORDER_STATE",
+	"data":{
+		"order_id":"11111",
+		"state":"3"
+	}
+}
+GET:
+{
+    "Order":[
+        {
+            "order_id":"121212",
+            "order_date":"20191001",
+            "cust_name":"张三",
+            "cust_co":"BUAA",
+            "state":"3",
+            "order_info":"订单1"
+        },
+        {
+            "order_id":"33243424",
+            "order_date":"20191231",
+            "cust_name":"李四",
+            "cust_co":"BUDD",
+            "state":"1",
+            "order_info":"订单2"
+        }
+    ],
+    "Cust":[
+        {
+            "cust_id":"1",
+            "cust_name":"张三",
+            "cust_co":"BUAA"
+        },
+        {
+            "cust_id":"2",
+            "cust_name":"李四",
+            "cust_co":"BUBB"
+        },
+    ]
+}
+```
+
+```json
+url:"/api/client"
+GET:
+{
+	"Cust":[
+		{
+			"cust_id":"1",
+			"cust_name":"张三",
+			"cust_email":"bub@bucc.edu.cn",
+			"cust_co":"东方红公司",
+			"cust_address":"院学路",
+			"cust_phone":"16763197268"
+		}
+	]
+}
+```
+

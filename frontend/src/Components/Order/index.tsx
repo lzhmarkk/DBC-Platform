@@ -1,21 +1,18 @@
-import {IOrder} from "../Repository/interface";
 import React from "react";
 import {Button, Radio} from "antd";
 
 const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
         dataIndex: "order_id", title: "订单编号", key: "order_id",
-        sorter: (a: IOrder, b: IOrder) => parseInt(a.order_id) - parseInt(b.order_id),
+        sorter: (a: any, b: any) => parseInt(a.order_id) - parseInt(b.order_id),
     },
     {dataIndex: "order_info", title: "订单详情", key: "order_info"},
     {
         dataIndex: "order_date", title: "订单时间", key: "order_date",
-        sorter: (a: IOrder, b: IOrder) => parseInt(a.order_date) - parseInt(b.order_date),
+        sorter: (a: any, b: any) => parseInt(a.order_date) - parseInt(b.order_date),
     },
-    {
-        dataIndex: "cust_id", title: "客户号", key: "cust_id",
-        sorter: (a: IOrder, b: IOrder) => parseInt(a.cust_id) - parseInt(b.cust_id),
-    },
+    {dataIndex: "cust_name", title: "客户名", key: "cust_name",},
+    {dataIndex: "cust_co", title: "公司名", key: "cust_co",},
     {
         dataIndex: "Action", title: "订单状态", key: "Action",
         render: (_: any, record: any, ___: any) => <Action record={record}/>

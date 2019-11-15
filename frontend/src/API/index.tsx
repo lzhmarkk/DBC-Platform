@@ -3,5 +3,8 @@ export const APIList = {
     repoDashboard: `${BASE}/api/repository/dashboard/`,
     repoIn:`${BASE}/api/repository/in/`,
     repoOut:`${BASE}/api/repository/out/`,
-    repoTrans:`${BASE}/api/repository/trans/`
+    repoTrans:`${BASE}/api/repository/trans/`,
+    order:`${BASE}/api/order/`,
+    client:`${BASE}/api/client/`,
+    userInfo:`${BASE}/api/userInfo/`,
 };

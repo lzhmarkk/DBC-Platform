@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Form, Input, Button, Modal, Col} from 'antd';
+import {Form, Input, Button, Modal, Col, Drawer} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 
 export interface IFormPayload {
@@ -18,7 +18,7 @@ interface IFormProps extends FormComponentProps {
     setCurClient: (a: any) => void,
 }
 
-const IForm = (props: IFormProps) => {
+const IEditForm = (props: IFormProps) => {
     const initValue = props.customer;
     const [changeName, setChangeName] = useState(false);
     const [changeEmail, setChangeEmail] = useState(false);
@@ -96,6 +96,6 @@ const IForm = (props: IFormProps) => {
     )
 };
 
-const IEditClientModel = Form.create<IFormProps>()(IForm);
+const IEditClientModel = Form.create<IFormProps>()(IEditForm);
 
 export default IEditClientModel;

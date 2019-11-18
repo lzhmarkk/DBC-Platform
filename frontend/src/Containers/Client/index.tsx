@@ -9,6 +9,7 @@ import IEditClientPanel, {IFormPayload} from "../../Components/Client/form";
 import {genButtons} from "../../Components/Order";
 import GenColumns, {getButton} from "../../Components/Client";
 import IEditClientModel from "../../Components/Client/form";
+import INewClientForm from "../../Components/Client/form/newClientForm";
 
 const PageClient = () => {
     const [apiData, setApiData] = useState(clientApiData);
@@ -84,11 +85,31 @@ const PageClient = () => {
                                           "cust_phone": e.cust_phone
                                       }
                                   };
-                                  console.log("表单数据");
+                                  console.log("修改表单数据");
                                   console.log(editClient);
                                   handlePost(editClient);
                               }}
                               customer={curClient}
+            />
+            <INewClientForm
+                drawerOpen={drawerOpen}
+                setDrawerOpen={setDrawerOpen}
+                onSubmit={(e: IFormPayload) => {
+                                  setDrawerOpen(false);
+                                  const newClient = {
+                                      "type": "NEW_CUST",
+                                      "data": {
+                                          "cust_name": e.cust_name,
+                                          "cust_email": e.cust_email,
+                                          "cust_co": e.cust_co,
+                                          "cust_address": e.cust_address,
+                                          "cust_phone": e.cust_phone
+                                      }
+                                  };
+                                  console.log("新建表单数据");
+                                  console.log(newClient);
+                                  handlePost(newClient);
+                              }}
             />
         </div>
     )

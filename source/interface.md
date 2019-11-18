@@ -266,6 +266,28 @@ GET:
 
 ```json
 url:"/api/client"
+POST:
+{
+    "type": "EDIT_CUST",//编辑已有的顾客
+    "data": {
+        "cust_name": "小红",
+        "cust_email": "xiaohong@xh.com",
+        "cust_co": "小绿有限公司",
+        "cust_address": "小黄他楼上",
+        "cust_phone": "16666666666"
+    }
+}
+或者
+{
+    "type": "NEW_CUST",//新顾客
+    "data": {
+        "cust_name": "小黄",
+        "cust_email": "xiaohuangg@xh.com",
+        "cust_co": "小蓝有限公司",
+        "cust_address": "小红她楼下",
+        "cust_phone": "19999999999"
+    }
+}
 GET:
 {
 	"Cust":[

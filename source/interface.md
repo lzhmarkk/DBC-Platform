@@ -302,4 +302,22 @@ GET:
 	]
 }
 ```
-
+```json
+url:"/api/account"
+GET:
+{
+	"Account": {
+			"admin_id":"001",
+			"name": "lzh",
+	}
+}
+POST:
+{
+	"type": "EDIT_ACCOUNT",
+		"data": {
+			"admin_id": "001",
+			"name": "qs",
+			"password": "adminadmin"
+		}
+}
+```

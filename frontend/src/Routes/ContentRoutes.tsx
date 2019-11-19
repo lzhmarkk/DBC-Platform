@@ -7,6 +7,7 @@ import PageOrder from "../Containers/Order";
 import PageHelp from "../Containers/Help";
 import PageRepositoryDashboard from "../Containers/Repository/Dashboard";
 import PageClient from "../Containers/Client";
+import PageAccount from "../Containers/Account";
 
 const ContentRoutes = () => <Switch>
     <Route exact path="/" render={() => <PageRepositoryDashboard/>}/>
@@ -14,6 +15,7 @@ const ContentRoutes = () => <Switch>
     <Route path="/repository/" render={PageRepository}/>
     <Route path="/order" render={() => <PageOrder/>}/>
     <Route path="/client" render={() => <PageClient/>}/>
+    <Route path="/account" render={() => <PageAccount/>}/>
     <Route path="/help" render={() => <PageHelp/>}/>
     <Route component={NotFound}/>
 </Switch>;

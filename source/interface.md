@@ -180,7 +180,6 @@ POST:
 		"quantity":"3334",//数量
 		"repo_mess_info":"我是描述",//描述
 		"repo_in_id":"5",//被调入的仓库id
-		"direction":"TRANS"//方向
 	}
 }
 GET:

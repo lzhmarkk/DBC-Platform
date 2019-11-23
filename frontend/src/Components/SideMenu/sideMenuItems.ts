@@ -36,7 +36,7 @@ const sideMenuItems: IMenuItem[] = [
                 children: []
             },
             {
-                title: "调库",
+                title: "调配",
                 key: "repositoryTrans",
                 route: "/repository/trans",
                 icon: "home",

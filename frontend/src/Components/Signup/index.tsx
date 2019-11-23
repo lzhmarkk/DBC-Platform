@@ -65,7 +65,7 @@ const SignupPanel = (props: IFormProps) => {
                         {getFieldDecorator("phone_num", {
                             rules: [
                                 {required: true, message: "手机号必填"},
-                                {pattern: /\d{11}/, message: "请输入正确的手机号"},
+                                {pattern: /^\d{11}$/, message: "请输入正确的手机号"},
                             ]
                         })(<Input/>)}
                     </Form.Item>

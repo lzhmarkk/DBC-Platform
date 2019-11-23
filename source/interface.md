@@ -321,3 +321,22 @@ POST:
 		}
 }
 ```
+```json
+url:"/api/login"
+POST:
+{
+    "username":"admin",
+    "password":"admin",
+    "remember":true
+}
+```
+```json
+url:"/api/signup"
+POST:
+{
+    "email":"lzhmark@buaa.edu.cn",
+    "username":"lzhmark",
+    "phone_num":"15377766667",
+    "password":"admin"
+}
+```

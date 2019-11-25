@@ -1,17 +1,21 @@
 import React, {useState, ReactElement} from "react"
-import {Layout, Button, Modal} from 'antd';
+import {Layout, Button, Modal, message} from 'antd';
 import styles from "./index.module.scss"
 import Avatar from "../../Assets/logo.jpeg"
 import './index.css'
 import SideMenu from "../SideMenu";
 import {Redirect} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {IRootStore} from "../../@types/store";
+import {logout} from "../../Containers/Login/actions";
 
 const {Header, Content, Sider} = Layout;
 
 const MainLayout = (props: { children: ReactElement }) => {
-    const [loginState, setLoginState] = useState(true);
+    const dispatch = useDispatch();
+    const isLogin = useSelector<IRootStore, any>(e => e.login.loginState);
     const [collapsed, setCollapsed] = useState(false);
-    const [logout, setLogout] = useState(false);
+    const [logoutModel, setLogoutModel] = useState(false);
 
     const layout = <Layout style={{minHeight: '100vh'}}>
         <Sider collapsible collapsed={collapsed} theme="light"
@@ -32,10 +36,10 @@ const MainLayout = (props: { children: ReactElement }) => {
                         <img src={Avatar} alt={"avatar"}/>
                     </div>
                     <div>
-                        <span>lzhnb</span>
+                        <span>userName</span>
                     </div>
                     <div>
-                        <Button icon={"logout"} ghost onClick={() => setLogout(true)}/>
+                        <Button icon={"logout"} ghost onClick={() => setLogoutModel(true)}/>
                     </div>
                 </div>
             </Header>
@@ -43,14 +47,13 @@ const MainLayout = (props: { children: ReactElement }) => {
                 {props.children}
             </Content>
             <Modal title=""
-                   visible={logout}
+                   visible={logoutModel}
                    onCancel={() => {
-                       setLogout(false);
+                       setLogoutModel(false);
                    }}
                    onOk={() => {
-                       console.log("正在退出");
-                       setLogout(false);
-                       setLoginState(false);
+                       setLogoutModel(false);
+                       dispatch(logout());
                    }}
                    okText="退出"
                    cancelText="取消"
@@ -63,6 +66,6 @@ const MainLayout = (props: { children: ReactElement }) => {
     </Layout>;
     const jump = <Redirect to="/login"/>;
 
-    return loginState ? layout : jump;
+    return isLogin ? layout : jump;
 };
 export default MainLayout;

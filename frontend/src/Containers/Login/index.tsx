@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ILoginForm, {IFormPayLoad} from "../../Components/Login";
 import Axios from "axios";
-import {APIList, getAuthToken} from "../../API";
+import {APIList, getAuthToken, setAuthToken} from "../../API";
 import {message, Spin} from "antd";
 import {Redirect} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
@@ -31,9 +31,10 @@ const PageLogin = () => {
 
     const handlePost = (prop: any) => {
         console.log("开始post");
-        Axios.post(APIList.order, prop)
+        Axios.post(APIList.login, prop)
             .then(res => {
                 console.log(res);
+                setAuthToken(res.data.token);
                 dispatch(setLoginState(true));
             })
             .catch(() => {
@@ -48,7 +49,7 @@ const PageLogin = () => {
             handlePost(e);
         }}/>;
     const jump = <Redirect to="/index"/>;
-    const loading = <div className={styles.root}><Spin/></div>;
+    const loading = <div className={styles.root}><Spin tip={"正在确认登录状态"}/></div>;
     return isCheckLoading ? loading : isLogin ? jump : Form;
 };
 

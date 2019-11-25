@@ -8,10 +8,11 @@ import {orderStates} from "../../Components/Order";
 import orderApiData from "../../Assets/mockingApiData/order";
 import Axios from "axios";
 import {APIList} from "../../API";
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
 const {Title} = Typography;
 
-const PageOrder = () => {
+const Page = () => {
     const [apiData, setApiData] = useState(orderApiData);
     const [listData, setListData] = useState(orderApiData.Order);
 
@@ -129,4 +130,6 @@ const PageOrder = () => {
         </div>
     )
 };
+
+const PageOrder = withAuth(Page);
 export default PageOrder;

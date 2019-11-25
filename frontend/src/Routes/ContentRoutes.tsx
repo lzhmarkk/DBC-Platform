@@ -10,8 +10,8 @@ import PageClient from "../Containers/Client";
 import PageAccount from "../Containers/Account";
 
 const ContentRoutes = () => <Switch>
-    <Route exact path="/" render={() => <PageRepositoryDashboard/>}/>
-    <Route path="/index" render={() => <PageRepositoryDashboard/>}/>
+    <Route exact path="/" render={() => <PageDashBoard/>}/>
+    <Route path="/index" render={() => <PageDashBoard/>}/>
     <Route path="/repository/" render={PageRepository}/>
     <Route path="/order" render={() => <PageOrder/>}/>
     <Route path="/client" render={() => <PageClient/>}/>

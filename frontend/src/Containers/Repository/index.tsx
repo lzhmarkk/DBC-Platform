@@ -16,6 +16,7 @@ import {
     IRepoMess,
     IRepo
 } from "../../Components/Repository/interface";
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
 
 export const repoMessIn: IRepoMess[] = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
@@ -25,7 +26,7 @@ export const repos: IRepo[] = mockingRepos;
 export const orders: IOrder[] = mockingOrders;
 export const repoItems: IRepoItem[] = mockingRepoItems;
 
-const PageRepository = () => {
+const Page = () => {
     return (
         <Switch>
             <Route exact path={"/repository"} render={() => <PageRepositoryDashboard/>}/>
@@ -35,4 +36,5 @@ const PageRepository = () => {
             <Route path={"/repository/trans/"} render={() => <PageRepositoryTrans/>}/>
         </Switch>)
 };
+const PageRepository = withAuth(Page);
 export default PageRepository;

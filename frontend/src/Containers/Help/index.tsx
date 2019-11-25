@@ -1,6 +1,7 @@
 import React from "react";
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
-const PageHelp = () => {
+const Page = () => {
     return (
         <div>
             <h3>联系</h3>
@@ -9,4 +10,6 @@ const PageHelp = () => {
         </div>
     )
 };
+
+const PageHelp = withAuth(Page);
 export default PageHelp;

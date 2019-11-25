@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './index.module.scss'
 import {Icon} from "antd"
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
-const NotFound = () => {
+const Page = () => {
     return (
         <div className={styles.root}>
             <div className={styles.content}>
@@ -17,4 +18,5 @@ const NotFound = () => {
     )
 };
 
+const NotFound = withAuth(Page);
 export default NotFound;

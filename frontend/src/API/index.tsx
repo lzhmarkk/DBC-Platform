@@ -12,10 +12,10 @@ export const APIList = {
     checkLogin: `${BASE}/api/checkLogin/`
 };
 
-export const getAuthToken = (): object => {
+export const getAuthToken = (): [string | null, { Authorization: string } | {}] => {
     const token = sessionStorage.getItem('DBCToken');
     console.log("DBCToken:", token);
-    return token !== undefined ? {Authorization: `Token ${token}`} : {}
+    return [token, token !== undefined ? {Authorization: `Token ${token}`} : {}]
 };
 
 export const setAuthToken = (token: string) => {

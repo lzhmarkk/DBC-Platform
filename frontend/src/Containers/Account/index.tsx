@@ -4,8 +4,9 @@ import Axios from "axios";
 import {APIList} from "../../API";
 import {message} from "antd";
 import accountApiData from "../../Assets/mockingApiData/account";
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
-const PageAccount = () => {
+const Page = () => {
     const [adminData, setAdminData] = useState(accountApiData);
 
     useEffect(() => {
@@ -48,4 +49,5 @@ const PageAccount = () => {
         </div>
     )
 };
+const PageAccount = withAuth(Page);
 export default PageAccount;

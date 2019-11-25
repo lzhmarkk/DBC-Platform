@@ -10,8 +10,9 @@ import {genButtons} from "../../Components/Order";
 import GenColumns, {getButton} from "../../Components/Client";
 import IEditClientModel from "../../Components/Client/form";
 import INewClientForm from "../../Components/Client/form/newClientForm";
+import {withAuth} from "../../Components/Common/AuthWrapper";
 
-const PageClient = () => {
+const Page = () => {
     const [apiData, setApiData] = useState(clientApiData);
     const [listData, setListData] = useState(clientApiData.Cust);
 
@@ -95,23 +96,25 @@ const PageClient = () => {
                 drawerOpen={drawerOpen}
                 setDrawerOpen={setDrawerOpen}
                 onSubmit={(e: IFormPayload) => {
-                                  setDrawerOpen(false);
-                                  const newClient = {
-                                      "type": "NEW_CUST",
-                                      "data": {
-                                          "cust_name": e.cust_name,
-                                          "cust_email": e.cust_email,
-                                          "cust_co": e.cust_co,
-                                          "cust_address": e.cust_address,
-                                          "cust_phone": e.cust_phone
-                                      }
-                                  };
-                                  console.log("新建表单数据");
-                                  console.log(newClient);
-                                  handlePost(newClient);
-                              }}
+                    setDrawerOpen(false);
+                    const newClient = {
+                        "type": "NEW_CUST",
+                        "data": {
+                            "cust_name": e.cust_name,
+                            "cust_email": e.cust_email,
+                            "cust_co": e.cust_co,
+                            "cust_address": e.cust_address,
+                            "cust_phone": e.cust_phone
+                        }
+                    };
+                    console.log("新建表单数据");
+                    console.log(newClient);
+                    handlePost(newClient);
+                }}
             />
         </div>
     )
 };
+
+const PageClient = withAuth(Page);
 export default PageClient;

@@ -328,6 +328,10 @@ POST:
     "password":"admin",
     "remember":true
 }
+返回:
+{
+    "token":"3b9878a1bfc192f13c1ac90b"
+}
 ```
 ```json
 url:"/api/signup"

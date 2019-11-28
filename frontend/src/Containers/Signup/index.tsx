@@ -5,10 +5,9 @@ import {APIList} from "../../API";
 import {message} from "antd";
 
 const PageSignup = () => {
-    const [form, setForm] = useState();
     const handlePost = (prop: any) => {
         console.log("开始post");
-        Axios.post(APIList.order, prop)
+        Axios.post(APIList.signup, prop)
             .then(res => {
                 console.log(res);
             })

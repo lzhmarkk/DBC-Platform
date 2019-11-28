@@ -129,3 +129,49 @@ def add_example(request):
             RepositoryItem.objects.create(quantity=100, repository=repo, product=prod)
 
     return HttpResponse(status=status.HTTP_200_OK)
+
+
+from django.contrib.auth import login, logout, authenticate
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
+import rest_framework.status as code
+from rest_framework.authtoken.models import Token
+
+
+@action(methods=["POST"], detail=False)
+def api_login(self, req: Request):
+    data = req.data
+    try:
+        obj = Admin.objects.get(username=data.get('username'))
+    except Admin.DoesNotExist:
+        print("auth fail not exists")
+        return Response(status=code.HTTP_404_NOT_FOUND, data={"Msg": "用户不存在"})
+
+    user = authenticate(req, username=obj.username, password=data.get('password'))
+    if user is not None:
+        login(req, user)
+        token, _ = Token.objects.get_or_create(user=user)
+        print("auth successful! name:{0},token:{1}".format(user.Name, token.key))
+        return Response(status=code.HTTP_200_OK, data={"token": token.key})
+    print("auth fail password incorrect")
+    return Response(status=code.HTTP_403_FORBIDDEN, data={"Msg": "密码错误"})
+
+
+@action(methods=["POST"], detail=False)
+def api_checkLogin(self, req: Request):
+    # 请求的headers是`token`，data为空
+    # $$如果headers不好处理的话我就把token写到data里返回$$
+    # $$token_string = req.data.get("token")$$
+    user = req.user  # todo这里我还不知道能不能直接得到user，有人这么写过
+    if user is not None:
+        print("check ok {0}".format(user.Name))
+        return Response(status=code.HTTP_200_OK)
+    else:
+        print("check fail")
+        return Response(status=code.HTTP_403_FORBIDDEN)
+
+
+@action(methods=["POST"], detail=False)
+def api_signup(self, req: Request):
+    pass

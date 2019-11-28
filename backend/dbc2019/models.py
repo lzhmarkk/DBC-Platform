@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 
 # class Admin
 # replaced with User
+class Admin(models.Model):
+    pass
+
 
 class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)

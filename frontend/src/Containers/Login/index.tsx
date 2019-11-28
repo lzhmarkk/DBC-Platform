@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ILoginForm, {IFormPayLoad} from "../../Components/Login";
 import Axios from "axios";
-import {APIList, getAuthToken, setAuthToken} from "../../API";
+import {APIList, getAuthHeaders, setAuthToken} from "../../API";
 import {message, Spin} from "antd";
 import {Redirect} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,7 +16,8 @@ const PageLogin = () => {
     const [isCheckLoading, setCheckLoading] = useState(true);
 
     useEffect(() => {
-        axios.post(APIList.checkLogin, {}, {headers: getAuthToken()})
+        const authHeaders = getAuthHeaders();
+        axios.post(APIList.checkLogin, {}, {headers: authHeaders})
             .then((res) => {
                 dispatch(setLoginState(true));
                 setCheckLoading(false);

@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {IRootStore} from "../../../@types/store";
-import APIList, {getAuthToken} from "../../../API";
+import APIList, {getAuthHeaders} from "../../../API";
 import {setLoginState} from "../../../Containers/Login/actions";
 import {message, Spin} from "antd";
 import axios from 'axios'
@@ -11,9 +11,9 @@ const PageAuthWrapper = (props: { children: JSX.Element }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const [_, authHeaders] = getAuthToken();
+        const authHeaders = getAuthHeaders();
         console.log("Checking login");
-        const a = axios.post(APIList.checkLogin, {}, {headers: authHeaders})
+        axios.post(APIList.checkLogin, {}, {headers: authHeaders})
             .then((res) => {
                 console.log("checklogin success");
                 dispatch(setLoginState(true))

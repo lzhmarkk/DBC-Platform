@@ -330,7 +330,7 @@ POST:
 }
 返回:
 {
-    "token":"3b9878a1bfc192f13c1ac90b"
+    "token":"3b9878a1bfc192f13c1ac90b"//用户的唯一标志符
 }
 ```
 ```json
@@ -342,4 +342,12 @@ POST:
     "phone_num":"15377766667",
     "password":"admin"
 }
+```
+```json
+url:"/api/checkLogin"
+POST:
+{
+    "headers":"3b9878a1bfc192f13c1ac90b"
+}
+返回:http 403 or 200
 ```

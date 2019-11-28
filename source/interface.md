@@ -339,3 +339,43 @@ POST:
     "password":"admin"
 }
 ```
+```json
+url:"api/dashboard"
+GET:
+{
+    "Messages": [
+        {
+            "admin_id": "3",
+            "work_mess_info": "mess1"
+        }
+    ],
+    "Repo": [
+        {
+            "name": "零号仓库",
+            "repo_capacity": "120",
+            "repo_occupy": "10"
+        }
+    ],
+    "RepoMessIn": [
+        {
+            "repo_mess_info": "购入100个西瓜",
+            "quantity": "100",
+            "repo_name": "零号仓库",
+        }
+    ],
+    "RepoMessOut": [
+        {
+            "repo_mess_info": "售出100个水壶",
+            "quantity": "100",
+            "repo_name": "三号仓库",
+        }
+    ],
+    "RepoMessTrans": [],
+    "Cust": [
+        {
+            "cust_name": "张三",
+            "cust_co": "东方红公司",
+        }
+    ]
+}
+```

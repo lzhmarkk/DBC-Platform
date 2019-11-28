@@ -1,5 +1,6 @@
 const BASE = "http://localhost:8000";
 export const APIList = {
+    dashboard: `${BASE}/api/dashboard/`,
     repoDashboard: `${BASE}/api/repository/dashboard/`,
     repoIn: `${BASE}/api/repository/in/`,
     repoOut: `${BASE}/api/repository/out/`,

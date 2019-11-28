@@ -81,19 +81,19 @@ class RepoMessSerializer(serializers.ModelSerializer):
         return repo_mess
 
 
-class RepositorySerializer(serializers.ModelSerializer):
+class InOutRepositorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Repository
         fields = ['repo_id', 'repo_name']
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class InOutProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['prod_id', 'prod_name']
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class InOutOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['order_id']
@@ -101,16 +101,16 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class InSerializer(serializers.Serializer):
     RepoMessIn = RepoMessSerializer(source='repo_mess_in', many=True)
-    Repo = RepositorySerializer(source='repo', many=True)
-    Prod = ProductSerializer(source='prod', many=True)
-    Order = OrderSerializer(source='order', many=True)
+    Repo = InOutRepositorySerializer(source='repo', many=True)
+    Prod = InOutProductSerializer(source='prod', many=True)
+    Order = InOutOrderSerializer(source='order', many=True)
 
 
 class OutSerializer(serializers.Serializer):
     RepoMessOut = RepoMessSerializer(source='repo_mess_in', many=True)
-    Repo = RepositorySerializer(source='repo', many=True)
-    Prod = ProductSerializer(source='prod', many=True)
-    Order = OrderSerializer(source='order', many=True)
+    Repo = InOutRepositorySerializer(source='repo', many=True)
+    Prod = InOutProductSerializer(source='prod', many=True)
+    Order = InOutOrderSerializer(source='order', many=True)
 
 
 # url api/repository/trans
@@ -171,3 +171,40 @@ class TransRepositorySerializer(serializers.ModelSerializer):
 
 class TransSerializer(serializers.Serializer):
     Repo = TransRepositorySerializer(source='repo', many=True)
+
+
+# url api/order
+class OrderOrderSerializer(serializers.ModelSerializer):
+    cust_name = serializers.SlugRelatedField(source='customer', slug_field='cust_name', read_only=True)
+    cust_co = serializers.SlugRelatedField(source='customer', slug_field='cust_co', read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ['order_id', 'order_info', 'state', 'order_date', 'cust_name', 'state', 'cust_co']
+
+
+class OrderCustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['cust_id', 'cust_name', 'cust_co']
+
+
+class ApiOrderGetSerializer(serializers.Serializer):
+    Order = OrderOrderSerializer()
+    Cust = OrderCustomerSerializer()
+
+
+class ApiOrderPostSerializer(serializers.ModelSerializer):
+    cust_id = serializers.SlugRelatedField(source='customer', slug_field='cust_id', queryset=Customer.objects.all())
+
+    class Meta:
+        model = Customer
+        fields = ['cust_id', 'order_info', 'state']
+
+    def create(self, validated_data):
+        return Order.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.state = validated_data.get('state', instance.state)
+        instance.save()
+        return instance

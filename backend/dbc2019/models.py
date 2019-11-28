@@ -14,12 +14,15 @@ class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)
     cust_name = models.CharField(max_length=50)
     cust_address = models.CharField(max_length=50)
+    cust_co = models.TextField(null=True)
+    cust_phone = models.TextField(null=True)
 
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     order_date = models.DateTimeField(auto_now=True)
     state = models.IntegerField(default=0)
+    order_info = models.TextField(null=True)
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 

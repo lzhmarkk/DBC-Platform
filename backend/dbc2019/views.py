@@ -81,6 +81,28 @@ def api_repository_trans(request):
     return JsonResponse(serializer.data)
 
 
+@csrf_exempt
+def api_order(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request).get('data')
+        serializer = ApiOrderPostSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        order = Order.objects.get(order_id=data.get('order_id'))
+        serializer = ApiOrderPostSerializer(order, data=data)
+        if serializer.is_valid():
+            serializer.save()
+
+    data = {
+        'Order': Order.objects.all(),
+        'Cust': Customer.objects.all()
+    }
+    serializer = ApiOrderGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
 def add_example(request):
     # admin
     admin_1 = User.objects.create(username='bob', password='123456')

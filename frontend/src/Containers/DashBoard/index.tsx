@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import {getOption, ICardPanel} from "../../Components/Dashboard";
+import {getGraph, getOption, ICardPanel} from "../../Components/Dashboard";
 import ReactEcharts from "echarts-for-react";
-import {Calendar, Card, Col, Icon, message, Row, Tabs} from "antd";
+import {Affix, Calendar, Card, Col, Icon, message, Row, Tabs} from "antd";
 import styles from './index.module.scss'
 import {IDetailData} from "../../Components/Dashboard/Tabs";
 import RepoDetailTabs from "../../Components/Dashboard/Tabs/conf";
@@ -25,6 +25,13 @@ const PageDashBoard = (props: any) => {
         return data.Repo.slice(line * 2, line * 2 + 2).map(e => (
             <ReactEcharts style={{height: '150px', width: '50%'}}
                           option={getOption(e.repo_occupy, e.repo_capacity, e.name)}/>));
+    };
+    const genGraph = () => {
+        const name = data.Graph.map(e => e.cust_name);
+        const orders = data.Graph.map(e => e.cust_orders);
+        return (
+            <ReactEcharts option={getGraph(name, orders)}/>
+        )
     };
     const genCards = (line: number) => {
         return data.Cust.slice(line * 4, line * 4 + 4).map(e =>
@@ -70,9 +77,8 @@ const PageDashBoard = (props: any) => {
                 </Tabs>
             </Col>
             <Col span={10} className={styles.card}>
-                <Card title={"客户"} type={"inner"}>
-                    {genCards(0)}
-                    {genCards(1)}
+                <Card title={"合作伙伴"} type={"inner"}>
+                    {genGraph()}
                 </Card>
             </Col>
             <Col span={6} className={styles.card}>

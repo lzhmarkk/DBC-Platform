@@ -9,7 +9,6 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {dataIndex: "order_info", title: "订单详情", key: "order_info"},
     {
         dataIndex: "order_date", title: "订单时间", key: "order_date",
-        sorter: (a: any, b: any) => parseInt(a.order_date) - parseInt(b.order_date),
     },
     {dataIndex: "cust_name", title: "客户名", key: "cust_name",},
     {dataIndex: "cust_co", title: "公司名", key: "cust_co",},
@@ -64,11 +63,71 @@ export const genButtons = (cur: any, setNextState: (index: string) => void) => {
     )
 };
 
-export const genFormButtons =
+export const genFormButtons = (
     <Radio.Group>
         <Radio.Button value="1">{orderStates["1"]}</Radio.Button>
         <Radio.Button value="2">{orderStates["2"]}</Radio.Button>
         <Radio.Button value="3">{orderStates["3"]}</Radio.Button>
         <Radio.Button value="4">{orderStates["4"]}</Radio.Button>
         <Radio.Button value="5" disabled={true}>{orderStates["5"]}</Radio.Button>
-    </Radio.Group>;
+    </Radio.Group>);
+
+export const getGraph = (x: string[], y: string[],max:number) => {
+    return ({
+        title: {
+            text: '订单数量图',
+            subtext: '数据自动生成',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        legend: {
+            data: ['订单量'],
+            x: 'left'
+        },
+        axisPointer: {
+            link: {xAxisIndex: 'all'}
+        },
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 30,
+                end: 70,
+                xAxisIndex: [0]
+            }
+        ],
+        grid: [{
+            left: 50,
+            right: 50,
+        }],
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {onZero: true},
+                data: x
+            }
+        ],
+        yAxis: [
+            {
+                name: '订单量',
+                type: 'value',
+                max: max
+            }
+        ],
+        series: [
+            {
+                name: '订单量',
+                type: 'line',
+                symbolSize: 8,
+                hoverAnimation: false,
+                data: y
+            },
+        ]
+    });
+};

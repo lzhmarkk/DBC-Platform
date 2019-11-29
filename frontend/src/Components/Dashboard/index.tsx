@@ -47,3 +47,43 @@ export const getOption = (occupy: string, capacity: string, repository_name: str
         ]
     });
 };
+
+export const getGraph = (cust_name: string[], cust_orders: string[]) => {
+    return ({
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: cust_name,
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '合作订单数',
+                type: 'bar',
+                barWidth: '60%',
+                data: cust_orders
+            }
+        ]
+    });
+};

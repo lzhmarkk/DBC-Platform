@@ -40,6 +40,48 @@ const clientApiData = {
             "cust_address": "平安街",
             "cust_phone": "16763697568"
         }
+    ],
+    "Graph": [
+        {
+            "cust_name": "张三",
+            "cust_orders": "50"
+        },
+        {
+            "cust_name": "李四",
+            "cust_orders": "15"
+        },
+        {
+            "cust_name": "王五",
+            "cust_orders": "20"
+        },
+        {
+            "cust_name": "赵六",
+            "cust_orders": "15"
+        },
+        {
+            "cust_name": "刘七",
+            "cust_orders": "10"
+        },
+        {
+            "cust_name": "曲八",
+            "cust_orders": "35"
+        },
+        {
+            "cust_name": "王九",
+            "cust_orders": "20"
+        },
+        {
+            "cust_name": "赵十",
+            "cust_orders": "15"
+        },
+        {
+            "cust_name": "刘XI",
+            "cust_orders": "10"
+        },
+        {
+            "cust_name": "曲XII",
+            "cust_orders": "35"
+        },
     ]
 };
 export default clientApiData;

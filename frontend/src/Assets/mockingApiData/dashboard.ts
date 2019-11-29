@@ -81,6 +81,28 @@ const indexApiData = {
             "cust_name": "刘七",
             "cust_co": "BUGG",
         }
+    ],
+    "Graph": [
+        {
+            "cust_name": "张三",
+            "cust_orders": "50"
+        },
+        {
+            "cust_name": "李四",
+            "cust_orders": "15"
+        },
+        {
+            "cust_name": "王五",
+            "cust_orders": "20"
+        },
+        {
+            "cust_name": "赵六",
+            "cust_orders": "15"
+        },
+        {
+            "cust_name": "刘七",
+            "cust_orders": "10"
+        },
     ]
 };
 export default indexApiData;

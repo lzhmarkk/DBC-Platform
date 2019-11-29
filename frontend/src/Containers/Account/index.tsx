@@ -2,9 +2,12 @@ import React, {useEffect, useState} from "react";
 import IAccountForm, {IFormPayload} from "../../Components/Account";
 import Axios from "axios";
 import {APIList} from "../../API";
-import {message} from "antd";
+import {Card, Col, Icon, message} from "antd";
 import accountApiData from "../../Assets/mockingApiData/account";
+import styles from "../DashBoard/index.module.scss";
+import logo from "../../Assets/logo.jpeg";
 
+const {Meta} = Card;
 const PageAccount = () => {
     const [adminData, setAdminData] = useState(accountApiData);
 
@@ -31,20 +34,27 @@ const PageAccount = () => {
 
     return (
         <div>
-            <IAccountForm
-                onSubmit={(e: IFormPayload) => {
-                    const editUser = {
-                        "type": "EDIT_ACCOUNT",
-                        "data": {
-                            "admin_id": e.admin_id,
-                            "name": e.name,
-                            "password": e.password
-                        }
-                    };
-                    console.log(editUser);
-                    handlePost(editUser);
-                }}
-                userData={adminData}/>
+            <Col span={18}>
+                <IAccountForm
+                    onSubmit={(e: IFormPayload) => {
+                        const editUser = {
+                            "type": "EDIT_ACCOUNT",
+                            "data": {
+                                "admin_id": e.admin_id,
+                                "name": e.name,
+                                "password": e.password
+                            }
+                        };
+                        console.log(editUser);
+                        handlePost(editUser);
+                    }}
+                    userData={adminData}/>
+            </Col>
+            <Col span={6} className={styles.card}>
+                <Card cover={<img src={logo} alt={"logo"}/>}>
+                    <Meta avatar={<Icon type={"github"}/>} title={"lzhnb"} description={"develop"}/>
+                </Card>
+            </Col>
         </div>
     )
 };

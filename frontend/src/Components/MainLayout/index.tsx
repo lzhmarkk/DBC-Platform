@@ -1,10 +1,11 @@
 import React, {useState, ReactElement} from "react"
-import {Layout, Button, Modal} from 'antd';
+import {Layout, Button, Modal, DatePicker, Statistic, Icon} from 'antd';
 import styles from "./index.module.scss"
 import Avatar from "../../Assets/logo.jpeg"
 import './index.css'
 import SideMenu from "../SideMenu";
 import {Redirect} from "react-router";
+import moment from "moment";
 
 const {Header, Content, Sider} = Layout;
 
@@ -12,12 +13,14 @@ const MainLayout = (props: { children: ReactElement }) => {
     const [loginState, setLoginState] = useState(true);
     const [collapsed, setCollapsed] = useState(false);
     const [logout, setLogout] = useState(false);
-
+    const [time, setTime] = useState(moment().format("h:mm:ss"));
+    setInterval(() => setTime(moment().format("h:mm:ss")), 1000);
+//todo 用户名和头像
     const layout = <Layout style={{minHeight: '100vh'}}>
         <Sider collapsible collapsed={collapsed} theme="light"
                onCollapse={() => setCollapsed(!collapsed)}>
             <div className={styles.logo}>
-                DBC
+                <Statistic title={"当前时间"} value={time} prefix={<Icon type={"clock-circle"}/>}/>
             </div>
             <SideMenu/>
         </Sider>

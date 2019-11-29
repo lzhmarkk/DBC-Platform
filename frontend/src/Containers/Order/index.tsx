@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../Components/SearchPanel";
 import styles from "./index.module.scss"
-import {Table, Button, Modal, Typography, Drawer, message} from 'antd';
-import GenColumns, {genButtons, getButton} from "../../Components/Order";
+import {Table, Button, Modal, Typography, Drawer, message, Card} from 'antd';
+import GenColumns, {genButtons, getButton, getGraph} from "../../Components/Order";
 import INewOrderPanel, {IFormPayload} from "../../Components/Order/form";
 import {orderStates} from "../../Components/Order";
 import orderApiData from "../../Assets/mockingApiData/order";
 import Axios from "axios";
 import {APIList} from "../../API";
+import ReactEcharts from "echarts-for-react";
 
 const {Title} = Typography;
 
@@ -69,9 +70,24 @@ const PageOrder = () => {
             setWinOpen(true);
         })}
     </div>;
+    const genGraph = () => {
+        let max = 0;
+        const x = apiData.Graph.map(e => e.date);
+        const y = apiData.Graph.map(e => e.value);
+        y.forEach(e => parseInt(e) > max ? max = parseInt(e) : max);
+
+        return (
+            <ReactEcharts option={getGraph(x, y, max)}/>
+        )
+    };
     const columns = GenColumns(Action);
     return (
         <div>
+            <div style={{paddingBottom: "60px"}}>
+                <Card title={"订单曲线"} type={"inner"}>
+                    {genGraph()}
+                </Card>
+            </div>
             <div className={styles.ControlPanel}>
                 <ISearchPanel
                     field={{

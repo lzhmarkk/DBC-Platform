@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../Components/SearchPanel";
 import styles from "./index.module.scss"
-import {Table, Button, Modal, Drawer, message} from 'antd';
+import {Table, Button, Modal, Drawer, message, Card} from 'antd';
 import Axios from "axios";
 import {APIList} from "../../API";
 import clientApiData from "../../Assets/mockingApiData/client";
@@ -11,6 +11,8 @@ import {genButtons} from "../../Components/Order";
 import GenColumns, {getButton} from "../../Components/Client";
 import IEditClientModel from "../../Components/Client/form";
 import INewClientForm from "../../Components/Client/form/newClientForm";
+import ReactEcharts from "echarts-for-react";
+import {getGraph} from "../../Components/Dashboard";
 
 const PageClient = () => {
     const [apiData, setApiData] = useState(clientApiData);
@@ -57,9 +59,21 @@ const PageClient = () => {
             setModelOpen(true);
         })}
     </div>;
+    const genGraph = () => {
+        const name = apiData.Graph.map(e => e.cust_name);
+        const orders = apiData.Graph.map(e => e.cust_orders);
+        return (
+            <ReactEcharts option={getGraph(name, orders)}/>
+        )
+    };
     const columns = GenColumns(Action);
     return (
         <div>
+            <div style={{paddingBottom: "60px"}}>
+                <Card title={"合作伙伴"} type={"inner"}>
+                    {genGraph()}
+                </Card>
+            </div>
             <div className={styles.ControlPanel}>
                 <ISearchPanel
                     field={{

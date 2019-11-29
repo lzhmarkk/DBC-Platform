@@ -20,9 +20,13 @@ const MainLayout = (props: { children: ReactElement }) => {
         <Sider collapsible collapsed={collapsed} theme="light"
                onCollapse={() => setCollapsed(!collapsed)}>
             <div className={styles.logo}>
-                <Statistic title={"当前时间"} value={time} prefix={<Icon type={"clock-circle"}/>}/>
+                {
+                    !collapsed ?
+                        <Statistic title={"当前时间"} value={time} prefix={<Icon type={"clock-circle"}/>}/> :
+                        <React.Fragment> </React.Fragment>
+                }
             </div>
-            <SideMenu/>
+            <SideMenu collapsed={collapsed}/>
         </Sider>
 
         <Layout>

@@ -18,28 +18,28 @@ const sideMenuItems: IMenuItem[] = [
                 title: "总览",
                 key: "repository",
                 route: "/repository/dashboard",
-                icon: "home",
+                icon: "appstore",
                 children: []
             },
             {
                 title: "入库",
                 key: "repositoryIn",
                 route: "/repository/in",
-                icon: "home",
+                icon: "menu-unfold",
                 children: []
             },
             {
                 title: "出库",
                 key: "repositoryOut",
                 route: "/repository/out",
-                icon: "home",
+                icon: "menu-fold",
                 children: []
             },
             {
                 title: "调配",
                 key: "repositoryTrans",
                 route: "/repository/trans",
-                icon: "home",
+                icon: "column-width",
                 children: []
             },
         ]
@@ -48,7 +48,7 @@ const sideMenuItems: IMenuItem[] = [
         title: "订单",
         key: "order",
         route: "/order",
-        icon: "home",
+        icon: "form",
         children: []
     },
 
@@ -56,21 +56,21 @@ const sideMenuItems: IMenuItem[] = [
         title: "客户信息",
         key: "client",
         route: "/client",
-        icon: "home",
+        icon: "apple",
         children: []
     },
     {
         title: "个人信息",
         key: "account",
         route: "/account",
-        icon: "home",
+        icon: "user",
         children: []
     },
     {
         title: "帮助",
         key: "help",
         route: "/help/",
-        icon: "container",
+        icon: "question-circle",
         children: []
     },
 ];

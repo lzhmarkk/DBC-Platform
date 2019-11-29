@@ -8,28 +8,43 @@ import sideMenuItems from "./sideMenuItems";
 const {SubMenu, Item} = Menu;
 
 const constructMenuKey = (item: IMenuItem) => item.key;
-const generateMenu = (items: IMenuItem[]) => items.reduce((accu: any[], cur) => {
-    const tSubMenuItem = cur.children.map(e => e.children.length === 0 ? <Item key={constructMenuKey(e)}>
-        <Link to={e.route}>
+const generateMenu = (items: IMenuItem[], collapsed: boolean) => items.reduce((accu: any[], cur) => {
+    const tSubMenuItem = cur.children.map(e =>
+        <Item key={constructMenuKey(e)}>
+            <Link to={e.route}>
             <span>
-                <span>{e.title}</span>
+                <Icon type={e.icon}/>
+                {
+                    !collapsed ?
+                        <span>{e.title}</span> :
+                        <React.Fragment> </React.Fragment>
+                }
             </span>
-        </Link>
-    </Item> : generateMenu([e]));
+            </Link>
+        </Item>
+    );
     return [...accu,
         cur.children.length > 0 ?
             <SubMenu key={constructMenuKey(cur)} className={styles.bigIconItem}
                      title={<span>
-                        <span>{cur.title}</span>
+                         <Icon type={cur.icon}/>
+                         {
+                             !collapsed ?
+                                 <span>{cur.title}</span> :
+                                 <React.Fragment> </React.Fragment>
+                         }
                     </span>}>
                 {tSubMenuItem}
             </SubMenu> :
             <Item className={styles.bigIconItem} key={constructMenuKey(cur)}>
                 <Link to={cur.route}>
             <span>
-                <span>
-                    {cur.title}
-                </span>
+                <Icon type={cur.icon}/>
+                {
+                    !collapsed ?
+                        <span>{cur.title}</span> :
+                        <React.Fragment> </React.Fragment>
+                }
             </span>
                 </Link>
             </Item>
@@ -37,10 +52,10 @@ const generateMenu = (items: IMenuItem[]) => items.reduce((accu: any[], cur) => 
 }, []);
 
 
-const SideMenu = (props: any) => {
+const SideMenu = (props: { collapsed: boolean }) => {
     return (
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
-            {generateMenu(sideMenuItems)}
+            {generateMenu(sideMenuItems, props.collapsed)}
         </Menu>
     )
 };

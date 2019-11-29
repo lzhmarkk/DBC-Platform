@@ -42,7 +42,7 @@ const PageOrder = () => {
         };
         console.log("开始改状态");
         console.log(changeState);
-        handlePost(changeState);
+        handlePut(changeState);
     };
     const handlePost = (prop: any) => {
         console.log("开始post");
@@ -52,6 +52,16 @@ const PageOrder = () => {
             })
             .catch(() => message.error("获取post的后台返回结果失败"));
         console.log("post完成");
+    };
+
+    const handlePut = (prop: any) => {
+        console.log("开始put");
+        Axios.put(APIList.client, prop)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(() => message.error("获取put的后台返回结果失败"));
+        console.log("put完成");
     };
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         {getButton(props, () => {

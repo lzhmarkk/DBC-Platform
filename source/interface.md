@@ -220,7 +220,7 @@ POST:
 		"state":"1"
 	}
 }
-或者
+PUT:
 {
 	"type":"CHANGE_ORDER_STATE",
 	"data":{
@@ -265,7 +265,7 @@ GET:
 
 ```json
 url:"/api/client"
-POST:
+PUT:
 {
     "type": "EDIT_CUST",//编辑已有的顾客
     "data": {
@@ -276,7 +276,7 @@ POST:
         "cust_phone": "16666666666"
     }
 }
-或者
+POST:
 {
     "type": "NEW_CUST",//新顾客
     "data": {

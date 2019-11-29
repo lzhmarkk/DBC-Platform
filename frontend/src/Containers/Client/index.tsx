@@ -40,6 +40,15 @@ const PageClient = () => {
             .catch(() => message.error("获取post的后台返回结果失败"));
         console.log("post完成");
     };
+    const handlePut = (prop: any) => {
+        console.log("开始put");
+        Axios.put(APIList.client, prop)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(() => message.error("获取put的后台返回结果失败"));
+        console.log("put完成");
+    };
 
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         {getButton(props, () => {
@@ -87,7 +96,7 @@ const PageClient = () => {
                                   };
                                   console.log("修改表单数据");
                                   console.log(editClient);
-                                  handlePost(editClient);
+                                  handlePut(editClient);
                               }}
                               customer={curClient}
             />

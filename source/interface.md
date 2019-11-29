@@ -98,7 +98,22 @@ GET:
         }
     ],
     "RepoMessOut",//同理 出库的"direction"为"OUT"
-    "RepoMessTrans"(待补充)
+    "RepoMessTrans":[
+        {
+            "repo_out_name":"二号仓库",
+            "repo_in_name":"一号仓库",
+            "quantity":"100",
+            "prod_name":"笔记本电脑",
+            "repo_mess_info":"日常清点移动"
+        },
+        {
+             "repo_out_name":"炎热仓库",
+             "repo_in_name":"冷冻仓库",
+             "quantity":"300",
+             "prod_name":"苹果",
+             "repo_mess_info":"苹果快坏了"
+        }
+    ]
 }
 ```
 
@@ -391,7 +406,15 @@ GET:
             "repo_name": "三号仓库",
         }
     ],
-    "RepoMessTrans": [],
+    "RepoMessTrans":[
+        {
+            "repo_out_name":"二号仓库",
+            "repo_in_name":"一号仓库",
+            "quantity":"100",
+            "prod_name":"笔记本电脑",
+             repo_mess_info":"日常清点移动"
+        },
+    ],
     "Cust": [
         {
             "cust_name": "张三",

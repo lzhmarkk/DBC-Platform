@@ -1,5 +1,6 @@
 import React from "react";
-import GenColumns, {IDetailData} from "./index";
+import {GenColumnsTrans, IDetailData} from "./index";
+import {Table} from "antd";
 
 interface IProps {
     data: IDetailData
@@ -7,6 +8,13 @@ interface IProps {
 
 const MessagesShow = 5;
 const RepoMessTrans = (props: IProps) => {
-    return (<div>trans</div>);//todo 调配页面
+    const data: any[] = props.data.RepoMessTrans.slice(0, MessagesShow);
+    const columns = GenColumnsTrans().slice(0, 5);
+
+    return (
+        <Table pagination={false}
+               columns={columns}
+               dataSource={data}
+        />);
 };
 export default RepoMessTrans;

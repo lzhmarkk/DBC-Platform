@@ -1,6 +1,6 @@
 import React from "react";
 import {Table} from "antd";
-import GenColumns, {IDetailData} from "./index";
+import {GenColumns, IDetailData} from "./index";
 
 
 interface IProps {

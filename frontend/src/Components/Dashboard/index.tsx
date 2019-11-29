@@ -50,6 +50,11 @@ export const getOption = (occupy: string, capacity: string, repository_name: str
 
 export const getGraph = (cust_name: string[], cust_orders: string[]) => {
     return ({
+        title: {
+            text: '客户合作订单图',
+            subtext: '数据自动生成',
+            x: 'center'
+        },
         color: ['#3398DB'],
         tooltip: {
             trigger: 'axis',

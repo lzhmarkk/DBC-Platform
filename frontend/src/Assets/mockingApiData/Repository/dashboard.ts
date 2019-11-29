@@ -90,6 +90,28 @@ const dashboardApiData = {
             "repo_id": "3"
         }
     ],
-    "RepoMessTrans": []
+    "RepoMessTrans": [
+        {
+            "repo_out_name": "二号仓库",
+            "repo_in_name": "一号仓库",
+            "quantity": "100",
+            "prod_name": "笔记本电脑",
+            "repo_mess_info": "日常清点移动"
+        },
+        {
+            "repo_out_name": "炎热仓库",
+            "repo_in_name": "冷冻仓库",
+            "quantity": "300",
+            "prod_name": "苹果",
+            "repo_mess_info": "苹果快坏了"
+        },
+        {
+            "repo_out_name": "冷冻仓库",
+            "repo_in_name": "温暖仓库",
+            "quantity": "30000",
+            "prod_name": "鸡蛋",
+            "repo_mess_info": "鸡蛋太冷了"
+        }
+    ]
 };
 export default dashboardApiData;

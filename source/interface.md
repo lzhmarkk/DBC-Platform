@@ -269,6 +269,7 @@ PUT:
 {
     "type": "EDIT_CUST",//编辑已有的顾客
     "data": {
+        "cust_id":"3",
         "cust_name": "小红",
         "cust_email": "xiaohong@xh.com",
         "cust_co": "小绿有限公司",

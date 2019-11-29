@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Drawer, Form, Input} from "antd";
 import {FormComponentProps} from "antd/lib/form";
 
-export interface IFormPayload {
+export interface INewClientFormPayload {
     cust_name: string,
     cust_email: string,
     cust_co: string,
@@ -11,7 +11,7 @@ export interface IFormPayload {
 }
 
 interface IFormProps extends FormComponentProps {
-    onSubmit: (payload: IFormPayload) => void,
+    onSubmit: (payload: INewClientFormPayload) => void,
     setDrawerOpen: (a: boolean) => void,
     drawerOpen: boolean
 }

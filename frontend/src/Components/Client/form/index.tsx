@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import {Form, Input, Button, Modal, Col, Drawer} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 
-export interface IFormPayload {
+export interface IEditClientFormPayload {
+    cust_id: string,
     cust_name: string,
     cust_email: string,
     cust_co: string,
@@ -11,7 +12,7 @@ export interface IFormPayload {
 }
 
 interface IFormProps extends FormComponentProps {
-    onSubmit: (payload: IFormPayload) => void,
+    onSubmit: (payload: IEditClientFormPayload) => void,
     customer: undefined | { cust_id: string, cust_name: string, cust_email: string, cust_co: string, cust_address: string, cust_phone: string },
     modelOpen: boolean,
     setModelOpen: (a: boolean) => void,
@@ -50,37 +51,40 @@ const IEditForm = (props: IFormProps) => {
                cancelText="取消">
             <Form
                 style={{background: "white"}}>
-                <Form.Item label="客户名">
+                <Form.Item label="客户编号" style={{marginBottom: "0px"}}>
+                    {getFieldDecorator('cust_id', {
+                        initialValue: initValue == undefined ? "" : initValue.cust_id
+                    })(<Input style={{width: "400px"}} placeholder={"用户编号"} disabled={true}/>)}
+                </Form.Item>
+                <Form.Item label="客户名" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_name', {
                         rules: [{type: "string", required: true, message: "请输入客户名"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_name
                     })(<Input style={{width: "400px"}} placeholder={"请输入客户名"} disabled={!changeName}/>)}
                     <Button icon={"lock"} onClick={() => setChangeName(!changeName)}/>
                 </Form.Item>
-                <Form.Item label="客户邮箱">
+                <Form.Item label="客户邮箱" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_email', {
                         rules: [{type: "email", required: true, message: "请输入邮箱"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_email
                     })(<Input style={{width: "400px"}} placeholder={"请输入客户邮箱"} disabled={!changeEmail}/>)}
                     <Button icon={"lock"} onClick={() => setChangeEmail(!changeEmail)}/>
                 </Form.Item>
-                <Form.Item label="公司名">
+                <Form.Item label="公司名" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_co', {
                         rules: [{required: true, message: "请输入公司名"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_co
                     })(<Input style={{width: "400px"}} placeholder={"请输入公司名"} disabled={!changeCo}/>)}
                     <Button icon={"lock"} onClick={() => setChangeCo(!changeCo)}/>
                 </Form.Item>
-
-                <Form.Item label="公司地址">
+                <Form.Item label="公司地址" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_address', {
                         rules: [{required: true, message: "请输入公司地址"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_address
                     })(<Input style={{width: "400px"}} placeholder={"请输入公司地址"} disabled={!changeAddr}/>)}
                     <Button icon={"lock"} onClick={() => setChangeAddr(!changeAddr)}/>
                 </Form.Item>
-
-                <Form.Item label="客户电话">
+                <Form.Item label="客户电话" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_phone', {
                         rules: [
                             {required: true, message: "请输入手机或固话"},

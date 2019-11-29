@@ -5,7 +5,8 @@ import {Table, Button, Modal, Drawer, message} from 'antd';
 import Axios from "axios";
 import {APIList} from "../../API";
 import clientApiData from "../../Assets/mockingApiData/client";
-import IEditClientPanel, {IFormPayload} from "../../Components/Client/form";
+import IEditClientPanel, {IEditClientFormPayload} from "../../Components/Client/form";
+import {INewClientFormPayload} from "../../Components/Client/form/newClientForm";
 import {genButtons} from "../../Components/Order";
 import GenColumns, {getButton} from "../../Components/Client";
 import IEditClientModel from "../../Components/Client/form";
@@ -82,11 +83,12 @@ const PageClient = () => {
             <IEditClientModel setCurClient={setCurClient}
                               setModelOpen={setModelOpen}
                               modelOpen={modelOpen}
-                              onSubmit={(e: IFormPayload) => {
+                              onSubmit={(e: IEditClientFormPayload) => {
                                   setDrawerOpen(false);
                                   const editClient = {
                                       "type": "EDIT_CUST",
                                       "data": {
+                                          "cust_id": e.cust_id,
                                           "cust_name": e.cust_name,
                                           "cust_email": e.cust_email,
                                           "cust_co": e.cust_co,
@@ -103,22 +105,22 @@ const PageClient = () => {
             <INewClientForm
                 drawerOpen={drawerOpen}
                 setDrawerOpen={setDrawerOpen}
-                onSubmit={(e: IFormPayload) => {
-                                  setDrawerOpen(false);
-                                  const newClient = {
-                                      "type": "NEW_CUST",
-                                      "data": {
-                                          "cust_name": e.cust_name,
-                                          "cust_email": e.cust_email,
-                                          "cust_co": e.cust_co,
-                                          "cust_address": e.cust_address,
-                                          "cust_phone": e.cust_phone
-                                      }
-                                  };
-                                  console.log("新建表单数据");
-                                  console.log(newClient);
-                                  handlePost(newClient);
-                              }}
+                onSubmit={(e: INewClientFormPayload) => {
+                    setDrawerOpen(false);
+                    const newClient = {
+                        "type": "NEW_CUST",
+                        "data": {
+                            "cust_name": e.cust_name,
+                            "cust_email": e.cust_email,
+                            "cust_co": e.cust_co,
+                            "cust_address": e.cust_address,
+                            "cust_phone": e.cust_phone
+                        }
+                    };
+                    console.log("新建表单数据");
+                    console.log(newClient);
+                    handlePost(newClient);
+                }}
             />
         </div>
     )

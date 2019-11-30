@@ -8,8 +8,8 @@ class Admin(models.Model):
     admin_id = models.AutoField(primary_key=True)
     admin_desc = models.TextField(null=True)
     admin_icon = models.TextField(null=True)
-    identity = models.CharField(max_length=150)
-    phone_num = models.CharField(max_length=50)
+    identity = models.CharField(max_length=150, null=True)
+    phone_num = models.CharField(max_length=50, null=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -19,8 +19,8 @@ class Customer(models.Model):
     cust_name = models.CharField(max_length=50)
     cust_address = models.CharField(max_length=50)
     cust_email = models.EmailField(null=True)
-    cust_co = models.CharField(max_length=150)
-    cust_phone = models.CharField(max_length=50)
+    cust_co = models.CharField(max_length=150, null=True)
+    cust_phone = models.CharField(max_length=50, null=True)
 
 
 class Order(models.Model):

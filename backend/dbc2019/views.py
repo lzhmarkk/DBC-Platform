@@ -115,7 +115,7 @@ def api_account(request):
 
     data = Admin.objects.all()
     serializer = ApiAccountGetSerializer(data, many=True)
-    return JsonResponse(serializer.data)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @csrf_exempt
@@ -186,9 +186,12 @@ def api_signup(request):
 
 def add_example(request):
     # admin
-    admin_1 = User.objects.create(username='bob', password='123456')
-    admin_2 = User.objects.create(username='angel', password='123456')
-    admin_3 = User.objects.create(username='jack', password='123456')
+    user_1 = User.objects.create_user(username='bob', password='123456')
+    user_2 = User.objects.create_user(username='angel', password='123456')
+    user_3 = User.objects.create_user(username='jack', password='123456')
+    admin_1 = Admin.objects.create(user=user_1)
+    admin_2 = Admin.objects.create(user=user_2)
+    admin_3 = Admin.objects.create(user=user_3)
 
     # Customer
     cust_1 = Customer.objects.create(cust_name='bob', cust_address='CH')

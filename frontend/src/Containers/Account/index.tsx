@@ -5,11 +5,12 @@ import {APIList} from "../../API";
 import {Card, Col, Icon, message} from "antd";
 import accountApiData from "../../Assets/mockingApiData/account";
 import styles from "../DashBoard/index.module.scss";
-import logo from "../../Assets/logo.jpeg";
+import apiUserInfo from "../../Assets/mockingApiData/userInfo";
 
 const {Meta} = Card;
 const PageAccount = () => {
     const [adminData, setAdminData] = useState(accountApiData);
+    const [userInfo, setUserInfo] = useState(apiUserInfo);
 
     useEffect(() => {
         Axios.get(APIList.account)
@@ -19,7 +20,12 @@ const PageAccount = () => {
                 console.log("返回值结束");
                 setAdminData(res.data);
             })
-            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+            .catch(() => message.error("获取表单个人信息错误"));
+        Axios.get(APIList.userInfo)
+            .then(res => {
+                setUserInfo(res.data);
+            })
+            .catch(() => message.error("获取右侧个人头像信息错误"))
     }, []);
 
     const handlePost = (prop: any) => {
@@ -42,7 +48,9 @@ const PageAccount = () => {
                             "data": {
                                 "admin_id": e.admin_id,
                                 "name": e.name,
-                                "password": e.password
+                                "password": e.password,
+                                "admin_description": e.admin_description,
+                                "admin_icon": e.admin_icon[0].thumbUrl
                             }
                         };
                         console.log(editUser);
@@ -51,8 +59,9 @@ const PageAccount = () => {
                     userData={adminData}/>
             </Col>
             <Col span={6} className={styles.card}>
-                <Card cover={<img src={logo} alt={"logo"}/>}>
-                    <Meta avatar={<Icon type={"github"}/>} title={"lzhnb"} description={"develop"}/>
+                <Card cover={<img src={userInfo.admin_icon} alt={"logo"}/>}>
+                    <Meta avatar={<Icon type={"github"}/>} title={userInfo.admin_name}
+                          description={userInfo.admin_description}/>
                 </Card>
             </Col>
         </div>

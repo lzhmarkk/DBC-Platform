@@ -341,19 +341,21 @@ GET:
 url:"/api/account"
 GET:
 {
-	"Account": {
-			"admin_id":"001",
-			"name": "lzh",
-	}
+    "admin_id":"001",
+    "identity":"开发"
+	"name": "lzh",
+    "admin_description":"一个程序员"
 }
 POST:
 {
 	"type": "EDIT_ACCOUNT",
-		"data": {
-			"admin_id": "001",
-			"name": "qs",
-			"password": "adminadmin"
-		}
+	"data": {
+		"admin_id": "001",
+		"name": "qs",
+		"password": "adminadmin",
+        "admin_icon":"data:image/png;base64,....",
+        "admin_description":"一个小老板"
+	}
 }
 ```
 ```json
@@ -412,7 +414,7 @@ GET:
             "repo_in_name":"一号仓库",
             "quantity":"100",
             "prod_name":"笔记本电脑",
-             repo_mess_info":"日常清点移动"
+            "repo_mess_info":"日常清点移动"
         },
     ],
     "Cust": [
@@ -427,5 +429,13 @@ GET:
             "cust_orders": "50"//客户名和与该客户有关的订单数（只要订单最多的前5个顾客）
         },
     ]
+}
+```
+```json
+url:"api/userInfo"
+GET:{
+        "name":"admin",
+        "admin_icon":"data:image/png;base64,....",
+        "admin_description":"一个程序员"
 }
 ```

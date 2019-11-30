@@ -1,23 +1,26 @@
 import React, {useState} from "react";
 import {FormComponentProps} from "antd/lib/form";
-import {Button, Form, Input} from "antd";
+import {Button, Form, Icon, Input, Upload} from "antd";
 
 import styles from '../../Containers/Account/index.module.scss'
 
 export interface IFormPayload {
     admin_id: string,
     name: string,
-    password: string
+    password: string,
+    admin_icon: any,
+    admin_description: string
 }
 
 export interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IFormPayload) => void,
-    userData: { admin_id: string, identity: string, name: string }
+    userData: { admin_id: string, identity: string, name: string, admin_description: string }
 }
 
 const IForm = (props: IFormProps) => {
     const [editName, setEditName] = useState(false);
     const [editPasswd, setEditPasswd] = useState(false);
+    const [editDescription, setEditDescription] = useState(false);
 
     const compareToFirstPassword = (rule: any, value: any, callback: any) => {
         const form = props.form;
@@ -39,7 +42,13 @@ const IForm = (props: IFormProps) => {
         }
         callback();
     };
-
+    const normFile = (e: any) => {
+        //console.log('文件如下:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    };
     const handleSubmit = (e: any) => {
         e.preventDefault();
         props.form.validateFields((err, value: any) => {
@@ -73,6 +82,13 @@ const IForm = (props: IFormProps) => {
                             initialValue: props.userData.name
                         })(<Input placeholder={"请输入用户名"} style={{width: "90%"}} disabled={!editName}/>)}
                     </Form.Item>
+                    <Form.Item label="自我描述">
+                        <Button onClick={() => setEditDescription(!editDescription)} icon={"lock"}/>
+                        {getFieldDecorator('admin_description', {
+                            rules: [{type: "string", message: "请输入自我描述"}],
+                            initialValue: props.userData.admin_description
+                        })(<Input placeholder={"请输入自我描述"} style={{width: "90%"}} disabled={!editDescription}/>)}
+                    </Form.Item>
                     <Form.Item label="修改密码" hasFeedback>
                         <Button onClick={() => setEditPasswd(!editPasswd)} icon={"lock"}/>
                         {getFieldDecorator('password', {
@@ -91,6 +107,16 @@ const IForm = (props: IFormProps) => {
                             ],
                             initialValue: undefined
                         })(<Input.Password style={{width: "90%"}} disabled={!editPasswd}/>)}
+                    </Form.Item>
+                    <Form.Item label="头像">
+                        {getFieldDecorator('admin_icon', {
+                            valuePropName: 'fileList',
+                            getValueFromEvent: normFile,
+                        })(<Upload name="logo" listType="picture">
+                            <Button>
+                                <Icon type="upload"/>点击上传头像
+                            </Button>
+                        </Upload>)}
                     </Form.Item>
                     <Form.Item>
                         <Button onClick={handleSubmit} icon={"plus-circle"} type={"primary"}>确认修改</Button>

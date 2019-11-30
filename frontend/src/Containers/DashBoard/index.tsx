@@ -9,12 +9,14 @@ import indexApiData from "../../Assets/mockingApiData/dashboard";
 import Axios from "axios";
 import {APIList} from "../../API";
 import logo from "../../Assets/logo.jpeg"
+import apiUserInfo from "../../Assets/mockingApiData/userInfo";
 
 const {TabPane} = Tabs;
 const {Meta} = Card;
 
 const PageDashBoard = (props: any) => {
     const [data, setData] = useState(indexApiData);
+    const [userInfo, setUserInfo] = useState(apiUserInfo);
     const messages = data.Messages.slice(0, 5);
     const tabData: IDetailData = {
         "RepoMessIn": data.RepoMessIn,
@@ -54,7 +56,12 @@ const PageDashBoard = (props: any) => {
                 console.log("返回值结束");
                 setData(res.data);
             })
-            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+            .catch(() => message.error("获取首页信息错误"));
+        Axios.get(APIList.userInfo)
+            .then(res => {
+                setUserInfo(res.data);
+            })
+            .catch(() => message.error("获取右侧个人头像信息错误"))
     }, []);
 
     return (
@@ -67,8 +74,9 @@ const PageDashBoard = (props: any) => {
                 </Card>
             </Col>
             <Col span={6} className={styles.card}>
-                <Card cover={<img src={logo} alt={"logo"}/>}>
-                    <Meta avatar={<Icon type={"github"}/>} title={"lzhnb"} description={"develop"}/>
+                <Card cover={<img src={userInfo.admin_icon} alt={"logo"}/>}>
+                    <Meta avatar={<Icon type={"github"}/>} title={userInfo.admin_name}
+                          description={userInfo.admin_description}/>
                 </Card>
             </Col>
             <Col span={8} className={styles.card}>

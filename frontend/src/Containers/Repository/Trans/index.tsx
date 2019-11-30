@@ -19,24 +19,19 @@ const PageRepositoryTrans = () => {
     const [repoOut, setRepoOut] = useState<any>(repos[0]);
 
     const handlePost = (prop: any) => {
-        console.log("开始post");
         Axios.post(APIList.repoTrans, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取post的后台返回结果失败"));
-        console.log("post完成");
+            .catch(() => message.error("调配失败"));
     };
 
     useEffect(() => {
         Axios.get(APIList.repoTrans)
             .then(res => {
-                console.log("api的返回值：");
-                console.log(res);
-                console.log("返回值结束");
                 setRepos(res.data.Repo);
             })
-            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+            .catch(() => message.error("调配备用信息获取失败"))
     }, []);
 
     const step0Form = <div className={styles.stepForm}>

@@ -15,27 +15,22 @@ const PageAccount = () => {
     useEffect(() => {
         Axios.get(APIList.account)
             .then(res => {
-                console.log("api的返回值：");
-                console.log(res);
-                console.log("返回值结束");
                 setAdminData(res.data);
             })
-            .catch(() => message.error("获取表单个人信息错误"));
+            .catch(() => message.error("表单信息获取失败"));
         Axios.get(APIList.userInfo)
             .then(res => {
                 setUserInfo(res.data);
             })
-            .catch(() => message.error("获取右侧个人头像信息错误"))
+            .catch(() => message.error("右侧个人信息获取失败"))
     }, []);
 
     const handlePost = (prop: any) => {
-        console.log("开始post");
         Axios.post(APIList.account, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取post的后台返回结果失败"));
-        console.log("post完成");
+            .catch(() => message.error("个人信息修改失败"));
     };
 
     return (

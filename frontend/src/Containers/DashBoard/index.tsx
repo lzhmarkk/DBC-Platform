@@ -51,17 +51,14 @@ const PageDashBoard = (props: any) => {
     useEffect(() => {
         Axios.get(APIList.dashboard)
             .then(res => {
-                console.log("api的返回值：");
-                console.log(res);
-                console.log("返回值结束");
                 setData(res.data);
             })
-            .catch(() => message.error("获取首页信息错误"));
+            .catch(() => message.error("首页信息获取失败"));
         Axios.get(APIList.userInfo)
             .then(res => {
                 setUserInfo(res.data);
             })
-            .catch(() => message.error("获取右侧个人头像信息错误"))
+            .catch(() => message.error("右侧个人信息获取失败"))
     }, []);
 
     return (

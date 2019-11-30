@@ -24,13 +24,10 @@ const PageOrder = () => {
     useEffect(() => {
         Axios.get(APIList.order)
             .then(res => {
-                console.log("api的返回值：");
-                console.log(res);
-                console.log("返回值结束");
                 setApiData(res.data);
                 setListData(res.data.Order);
             })
-            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+            .catch(() => message.error("订单信息获取失败"))
     }, []);
 
     const onChangeState = () => {
@@ -41,28 +38,23 @@ const PageOrder = () => {
                 "state": nextState.toString()
             }
         };
-        console.log("开始改状态");
         console.log(changeState);
         handlePut(changeState);
     };
     const handlePost = (prop: any) => {
-        console.log("开始post");
         Axios.post(APIList.order, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取post的后台返回结果失败"));
-        console.log("post完成");
+            .catch(() => message.error("订单新建失败"));
     };
 
     const handlePut = (prop: any) => {
-        console.log("开始put");
         Axios.put(APIList.client, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取put的后台返回结果失败"));
-        console.log("put完成");
+            .catch(() => message.error("订单修改失败"));
     };
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         {getButton(props, () => {

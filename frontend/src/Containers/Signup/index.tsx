@@ -7,13 +7,11 @@ import {message} from "antd";
 const PageSignup = () => {
     const [form, setForm] = useState();
     const handlePost = (prop: any) => {
-        console.log("开始post");
         Axios.post(APIList.order, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取post的后台返回结果失败"));
-        console.log("post完成");
+            .catch(() => message.error("注册失败"));
     };
     return (
         <div>

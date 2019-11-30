@@ -31,26 +31,21 @@ const PageRepositoryIn = () => {
     </div>;
 
     const handlePost = (prop: any) => {
-        console.log("开始post");
         Axios.post(APIList.repoIn, prop)
             .then(res => {
                 console.log(res);
             })
-            .catch(() => message.error("获取post的后台返回结果失败"));
-        console.log("post完成");
+            .catch(() => message.error("入库信息新建失败"));
     };
     const columns = GenColumns(Action);
 
     useEffect(() => {
         Axios.get(APIList.repoIn)
             .then(res => {
-                console.log("api的返回值：");
-                console.log(res);
-                console.log("返回值结束");
                 setApiData(res.data);
                 setListData(res.data.RepoMessIn);
             })
-            .catch(() => message.error("网络错误现在显示的是前端的硬编码数据\n建议查看控制台"))
+            .catch(() => message.error("入库信息获取失败"))
     }, []);
 
     return (

@@ -25,7 +25,7 @@ const MainLayout = (props: { children: ReactElement }) => {
             .then(res => {
                 setUserInfo(res.data);
             })
-            .catch(() => message.error("获取标题栏用户信息错误"))
+            .catch(() => message.error("标题栏用户信息获取失败"))
     }, []);
 
 

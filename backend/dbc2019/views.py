@@ -1,11 +1,12 @@
-from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
 from .serializers import *
 from .models import *
+from .utils import *
 
 
 # Create your views here.
@@ -17,7 +18,7 @@ def api_repository_dashboard(request):
         'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT')
     }
-    serializer = DashboardSerializer(data)
+    serializer = ApiRepositoryDashboardGetSerializer(data)
 
     return JsonResponse(serializer.data)
 
@@ -27,7 +28,7 @@ def api_repository_in(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
         data['direction'] = 'IN'
-        serializer = RepoMessSerializer(data=data)
+        serializer = ApiRepositoryInOutPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
         else:
@@ -40,7 +41,7 @@ def api_repository_in(request):
         'order': Order.objects.all()
     }
 
-    serializer = InSerializer(data)
+    serializer = ApiRepositoryInGetSerializer(data)
     return JsonResponse(serializer.data)
 
 
@@ -49,7 +50,7 @@ def api_repository_out(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
         data['direction'] = 'OUT'
-        serializer = RepoMessSerializer(data=data)
+        serializer = ApiRepositoryInOutPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
         else:
@@ -62,7 +63,7 @@ def api_repository_out(request):
         'order': Order.objects.all()
     }
 
-    serializer = OutSerializer(data)
+    serializer = ApiRepositoryOutGetSerializer(data)
     return JsonResponse(serializer.data)
 
 
@@ -70,15 +71,117 @@ def api_repository_out(request):
 def api_repository_trans(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
-        serializer = TransMessSerializer(data=data)
+        serializer = ApiRepositoryTransPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
 
     data = {
         'repo': Repository.objects.all()
     }
-    serializer = TransSerializer(data)
+    serializer = ApiRepositoryTransGetSerializer(data)
     return JsonResponse(serializer.data)
+
+
+@csrf_exempt
+def api_order(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request).get('data')
+        serializer = ApiOrderPostSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        order = Order.objects.get(order_id=data.get('order_id'))
+        serializer = ApiOrderPostSerializer(order, data=data)
+        if serializer.is_valid():
+            serializer.save()
+
+    data = {
+        'Order': Order.objects.all(),
+        'Cust': Customer.objects.all()
+    }
+    serializer = ApiOrderGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+@csrf_exempt
+def api_account(request):
+    if request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        admin = Admin.objects.get(admin_id=data.get('admin'))
+        serializer = ApiAccountPutSerializer(admin, data=data)
+        if serializer.is_valid():
+            serializer.save()
+
+    data = Admin.objects.all()
+    serializer = ApiAccountGetSerializer(data, many=True)
+    return JsonResponse(serializer.data)
+
+
+@csrf_exempt
+def api_client(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request).get('data')
+        serializer = ApiClientPostSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        customer = Customer.objects.get(cust_id=data.get('cust_id'))
+        serializer = ApiClientPutSerializer(customer, data=data)
+        if serializer.is_valid():
+            serializer.save()
+
+    data = {
+        'Cust': Customer.objects.all(),
+        'Graph': get_most_order_cust(10)
+    }
+    serializer = ApiClientGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+def api_dashboard(request):
+    data = {
+        'Messages': WorkMessage.objects.all(),
+        'Repo': Repository.objects.all(),
+        'RepoMessIn': RepoMessage.objects.filter(direction='In'),
+        'RepoMessOut': RepoMessage.objects.filter(direction='Out'),
+        'RepoMessTrans': TransMessage.objects.all(),
+        'Cust': Customer.objects.all(),
+        'Graph': get_most_order_cust(5)
+    }
+    serializer = ApiDashboardGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+def api_userInfo(request):
+    data = Admin.objects.all()
+    serializer = ApiUserInfoGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+@csrf_exempt
+def api_login(request):
+    data = JSONParser().parse(request)
+    user = User.objects.get(username=data.get('username'))
+    if user is None:
+        return HttpResponse(status=status.HTTP_403_FORBIDDEN)
+    user = authenticate(request, username=data.get('username'), password=data.get('password'))
+    if user is not None:
+        login(request, user)
+        return HttpResponse(status=status.HTTP_200_OK)
+    else:
+        return HttpResponse(status=status.HTTP_403_FORBIDDEN)
+
+
+@csrf_exempt
+def api_signup(request):
+    data = JSONParser().parse(request)
+    user = User.objects.create_user(username=data.get('username'),
+                                    password=data.get('password'), email=data.get('email'))
+    admin = Admin.objects.create(phone_num=data.get('phone_num'), user=user)
+    login(request, user)
+    return HttpResponse(status=status.HTTP_200_OK)
 
 
 def add_example(request):

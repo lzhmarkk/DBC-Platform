@@ -4,19 +4,30 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-# class Admin
-# replaced with User
+class Admin(models.Model):
+    admin_id = models.AutoField(primary_key=True)
+    admin_desc = models.TextField(null=True)
+    admin_icon = models.TextField(null=True)
+    identity = models.CharField(max_length=150)
+    phone_num = models.CharField(max_length=50)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 
 class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)
     cust_name = models.CharField(max_length=50)
     cust_address = models.CharField(max_length=50)
+    cust_email = models.EmailField(null=True)
+    cust_co = models.CharField(max_length=150)
+    cust_phone = models.CharField(max_length=50)
 
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     order_date = models.DateTimeField(auto_now=True)
     state = models.IntegerField(default=0)
+    order_info = models.TextField(null=True)
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
@@ -42,7 +53,7 @@ class Repository(models.Model):
     repo_capacity = models.IntegerField()
     repo_occupy = models.IntegerField(default=0)
 
-    admin = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    admin = models.OneToOneField(Admin, on_delete=models.SET_NULL, null=True)
 
 
 class RepositoryItem(models.Model):
@@ -86,7 +97,7 @@ class WorkMessage(models.Model):
     direction = models.CharField(max_length=50)
     work_mess_datetime = models.DateTimeField(auto_now=True)
 
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     repo_message = models.OneToOneField(RepoMessage, on_delete=models.CASCADE, null=True)
     trans_message = models.ForeignKey(TransMessage, on_delete=models.CASCADE, null=True)

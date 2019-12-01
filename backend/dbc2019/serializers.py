@@ -356,3 +356,45 @@ class ApiUserInfoGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ['name', 'admin_icon', 'admin_description']
+
+
+# url api/repository/${id}
+class RepositoryRepoItemSerializer(serializers.ModelSerializer):
+    prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+
+    class Meta:
+        model = RepositoryItem
+        fields = ['prod_id', 'prod_name', 'quantity']
+
+
+class RepositoryRepoMessSerializer(serializers.ModelSerializer):
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    order_id = serializers.PrimaryKeyRelatedField(source='order', read_only=True)
+
+    class Meta:
+        model = RepoMessage
+        fields = ['repo_mess_id', 'repo_mess_info', 'prod_name', 'order_id', 'quantity']
+
+
+class RepositoryTransMessSerializer(serializers.ModelSerializer):
+    repo_out_name = serializers.SlugRelatedField(source='from_repository', slug_field='repo_name', read_only=True)
+    repo_in_name = serializers.SlugRelatedField(source='to_repository', slug_field='repo_name', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    repo_mess_info = serializers.CharField(source='trans_mess_info')
+
+    class Meta:
+        model = TransMessage
+        fields = ['repo_out_name', 'repo_in_name', 'prod_name', 'repo_mess_info', 'quantity']
+
+
+class ApiRepositoryGetSerializer(serializers.Serializer):
+    repo_id = serializers.IntegerField()
+    repo_name = serializers.CharField()
+    repo_capacity = serializers.IntegerField()
+    repo_occupy = serializers.IntegerField()
+    RepoItem = RepositoryRepoItemSerializer(many=True)
+    RepoMessIn = RepositoryRepoMessSerializer(many=True)
+    RepoMessOut = RepositoryRepoMessSerializer(many=True)
+    RepoMessTrans = RepositoryTransMessSerializer(many=True)
+

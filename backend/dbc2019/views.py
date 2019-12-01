@@ -1,12 +1,13 @@
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
 from .serializers import *
 from .models import *
-from .utils import *
+from .query import *
 
 
 # Create your views here.
@@ -160,6 +161,22 @@ def api_userInfo(request):
     user = request.user
     data = user.admin
     serializer = ApiUserInfoGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+def api_repository(request, repo_id):
+    repository = Repository.objects.get(repo_id=repo_id)
+    data = {
+        'repo_id': repository.repo_id,
+        'repo_name': repository.repo_name,
+        'repo_capacity': repository.repo_capacity,
+        'repo_occupy': repository.repo_occupy,
+        'RepoItem': repository.repo_items.all(),
+        'RepoMessIn': repository.repomessage_set.filter(direction='In'),
+        'RepoMessOut': repository.repomessage_set.filter(direction='Out'),
+        'RepoMessTrans': TransMessage.objects.filter(Q(from_repository=repository) | Q(to_repository=repository))
+    }
+    serializer = ApiRepositoryGetSerializer(data)
     return JsonResponse(serializer.data)
 
 

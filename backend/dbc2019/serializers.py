@@ -225,7 +225,7 @@ class ApiOrderPutSerializer(serializers.ModelSerializer):
         return instance
 
 
-# url api/client
+# url api/account
 class ApiAccountGetSerializer(serializers.ModelSerializer):
     name = serializers.SlugRelatedField(source='user', slug_field='username', read_only=True)
     admin_description = serializers.CharField(source='admin_desc')

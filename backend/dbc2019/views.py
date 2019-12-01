@@ -107,6 +107,7 @@ def api_order(request):
 
 @csrf_exempt
 def api_account(request):
+    user = request.user
     if request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
         admin = Admin.objects.get(admin_id=data.get('admin'))
@@ -114,9 +115,9 @@ def api_account(request):
         if serializer.is_valid():
             serializer.save()
 
-    data = Admin.objects.all()
-    serializer = ApiAccountGetSerializer(data, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    data = user.admin
+    serializer = ApiAccountGetSerializer(data)
+    return JsonResponse(serializer.data)
 
 
 @csrf_exempt
@@ -156,9 +157,10 @@ def api_dashboard(request):
 
 
 def api_userInfo(request):
-    data = Admin.objects.all()
-    serializer = ApiUserInfoGetSerializer(data, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    user = request.user
+    data = user.admin
+    serializer = ApiUserInfoGetSerializer(data)
+    return JsonResponse(serializer.data)
 
 
 @csrf_exempt

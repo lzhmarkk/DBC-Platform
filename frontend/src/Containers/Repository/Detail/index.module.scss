@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2em;
+  padding-bottom: 1em;
+  height: 300px;
+
+  .chartRow {
+    display: flex;
+    padding: 2em;
+  }
+
+  .chartItem {
+
+
+  }
+  .cardRow{
+    .cardItem{
+      width: 25%;
+    }
+  }
+}
+.table{
+  display: flex;
+  flex-direction: column;
+  padding-left: 2em;
+  padding-bottom: 1em;
+}
+
+

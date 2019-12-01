@@ -4,26 +4,7 @@ import PageRepositoryDashboard from "./Dashboard";
 import PageRepositoryIn from "./In";
 import PageRepositoryOut from "./Out";
 import PageRepositoryTrans from "./Trans";
-import mockingRepoMessages from "../../Assets/mockings/mockingRepoMessages";
-import mockingProds from "../../Assets/mockings/mockingProds";
-import mockingRepos from "../../Assets/mockings/mockingRepos";
-import mockingOrders from "../../Assets/mockings/mockingOrders";
-import mockingRepoItems from "../../Assets/mockings/mockingRepoItems";
-import {
-    IOrder,
-    IProd,
-    IRepoItem,
-    IRepoMess,
-    IRepo
-} from "../../Components/Repository/interface";
-
-
-export const repoMessIn: IRepoMess[] = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
-export const repoMessOut: IRepoMess[] = mockingRepoMessages.filter((k: any) => (k["direction"] as string).indexOf("IN") != -1);
-export const prods: IProd[] = mockingProds;
-export const repos: IRepo[] = mockingRepos;
-export const orders: IOrder[] = mockingOrders;
-export const repoItems: IRepoItem[] = mockingRepoItems;
+import PageRepositoryDetail from "./Detail";
 
 const PageRepository = () => {
     return (
@@ -33,6 +14,7 @@ const PageRepository = () => {
             <Route path={"/repository/in/"} render={() => <PageRepositoryIn/>}/>
             <Route path={"/repository/out/"} render={() => <PageRepositoryOut/>}/>
             <Route path={"/repository/trans/"} render={() => <PageRepositoryTrans/>}/>
+            <Route path={"/repository/:id"} render={() => <PageRepositoryDetail/>}/>
         </Switch>)
 };
 export default PageRepository;

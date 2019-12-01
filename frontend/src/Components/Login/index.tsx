@@ -49,7 +49,7 @@ const IForm = (props: IFormProps) => {
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" onClick={handleSubmit}>登录</Button>
-                    Or <a href="">现在注册</a>
+                    Or <a href="/signup">现在注册</a>
                 </Form.Item>
             </Form>
         </div>

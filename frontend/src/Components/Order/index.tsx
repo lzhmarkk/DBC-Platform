@@ -85,6 +85,11 @@ export const getGraph = (x: string[], y: string[],max:number) => {
                 animation: false
             }
         },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         legend: {
             data: ['订单量'],
             x: 'left'

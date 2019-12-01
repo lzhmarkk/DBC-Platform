@@ -8,5 +8,6 @@ export const APIList = {
     order: `${BASE}/api/order/`,
     client: `${BASE}/api/client/`,
     userInfo: `${BASE}/api/userInfo/`,
-    account: `${BASE}/api/account/`
+    account: `${BASE}/api/account/`,
+    signup: `${BASE}/api/signup/`,
 };

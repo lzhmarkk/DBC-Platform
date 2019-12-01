@@ -44,6 +44,7 @@ const PageRepositoryDashboard = () => {
             style={{height: '290px', width: '50%'}}
             className={styles.chartItem}
             option={getOption(e.repo_occupy, e.repo_capacity, e.name)}
+            onEvents={{click: () => window.location.href = (`/repository/${e.repo_id}`)}}
         />))
     };
     const tabpanes = RepoDetailTabs.map(e => <TabPane tab={e.name} key={e.name}>

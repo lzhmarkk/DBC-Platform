@@ -25,8 +25,8 @@ const PageAccount = () => {
             .catch(() => message.error("右侧个人信息获取失败"))
     }, []);
 
-    const handlePost = (prop: any) => {
-        Axios.post(APIList.account, prop)
+    const handlePut = (prop: any) => {
+        Axios.put(APIList.account, prop)
             .then(res => {
                 console.log(res);
             })
@@ -49,7 +49,7 @@ const PageAccount = () => {
                             }
                         };
                         console.log(editUser);
-                        handlePost(editUser);
+                        handlePut(editUser);
                     }}
                     userData={adminData}/>
             </Col>

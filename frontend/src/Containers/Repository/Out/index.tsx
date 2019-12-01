@@ -33,17 +33,19 @@ const PageRepositoryOut = () => {
                 console.log(res);
             })
             .catch(() => message.error("出库信息新建失败"));
+        update();
     };
     const columns = GenColumns(Action);
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.repoOut)
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessOut);
             })
             .catch(() => message.error("出库信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
     return (
         <div>
             <div className={styles.ControlPanel}>

@@ -62,6 +62,11 @@ export const getGraph = (cust_name: string[], cust_orders: string[]) => {
                 type: 'shadow'
             }
         },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         grid: {
             left: '3%',
             right: '4%',

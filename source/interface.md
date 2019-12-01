@@ -342,11 +342,11 @@ url:"/api/account"
 GET:
 {
     "admin_id":"001",
-    "identity":"开发"
+    "identity":"开发",
 	"name": "lzh",
     "admin_description":"一个程序员"
 }
-POST:
+PUT:
 {
 	"type": "EDIT_ACCOUNT",
 	"data": {

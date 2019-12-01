@@ -24,15 +24,17 @@ const PageRepositoryTrans = () => {
                 console.log(res);
             })
             .catch(() => message.error("调配失败"));
+        update();
     };
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.repoTrans)
             .then(res => {
                 setRepos(res.data.Repo);
             })
             .catch(() => message.error("调配备用信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
 
     const step0Form = <div className={styles.stepForm}>
         <Step0form

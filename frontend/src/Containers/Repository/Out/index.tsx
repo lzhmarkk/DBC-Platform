@@ -66,6 +66,7 @@ const PageRepositoryOut = () => {
             <Table
                 columns={columns}
                 dataSource={listData}
+                rowKey={listData => listData.repo_mess_id}
             />
             <Modal title="修改状态"
                    visible={modelOpen}

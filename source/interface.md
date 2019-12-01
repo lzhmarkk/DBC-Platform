@@ -219,8 +219,53 @@ GET:
     ]
 }
 ```
-
-
+```json
+url:"/api/repository/${id}/"
+GET:{
+    "repo_id":"1",//仓库id
+    "repo_name":"秘密仓库",//仓库名
+    "repo_capacity":"120",//容量
+    "repo_occupy":"10",//已使用
+    "RepoItem":[//仓库中含有的产品的信息
+        {
+        	"prod_id":"3",//产品id
+        	"prod_name": "A380",//产品名字
+	    	"quantity":"4"//存货数量
+   	    },
+  	    {
+	    	"prod_id":"2",
+        	"prod_name": "737",
+	    	"quantity":"2"
+	    }
+	],
+    "RepoMessIn":[
+            {
+                            "repo_mess_id": "1",//入库消息id
+                            "repo_mess_info": "西瓜爆炸",//入库消息
+               				"prod_name": "大西瓜炸弹",//产品名
+                            "order_id": "12",//订单号
+                			"quantity":"10",
+            },
+            {
+                            "repo_mess_id": "2",
+                            "repo_mess_info": "东风快递来啦",
+                            "prod_name": "东风41",
+                            "order_id": "2019",
+                			"quantity":"1000",
+            }
+        ],
+    "RepoMessOut":[],
+    "RepoMessTrans":[
+        {
+            "repo_out_name":"秘密",
+            "repo_in_name":"一号仓库",
+            "quantity":"100",
+            "prod_name":"笔记本电脑",
+            "repo_mess_info":"日常清点移动"
+        },
+    ]
+}
+```
 
 ```json
 url:"/api/order"

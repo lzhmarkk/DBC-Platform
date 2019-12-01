@@ -5,9 +5,8 @@ import {Table, Button, Modal, Drawer, message, Card} from 'antd';
 import Axios from "axios";
 import {APIList} from "../../API";
 import clientApiData from "../../Assets/mockingApiData/client";
-import IEditClientPanel, {IEditClientFormPayload} from "../../Components/Client/form";
+import {IEditClientFormPayload} from "../../Components/Client/form";
 import {INewClientFormPayload} from "../../Components/Client/form/newClientForm";
-import {genButtons} from "../../Components/Order";
 import GenColumns, {getButton} from "../../Components/Client";
 import IEditClientModel from "../../Components/Client/form";
 import INewClientForm from "../../Components/Client/form/newClientForm";
@@ -89,6 +88,7 @@ const PageClient = () => {
             <Table
                 columns={columns}
                 dataSource={listData}
+                rowKey={listData => listData.cust_id}
             />
             <IEditClientModel setCurClient={setCurClient}
                               setModelOpen={setModelOpen}

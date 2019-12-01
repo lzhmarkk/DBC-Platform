@@ -16,6 +16,7 @@ const RepoMessIn = (props: IProps) => {
         <Table pagination={false}
                columns={columns}
                dataSource={data}
+               rowKey={data => data.repo_mess_id}
         />)
 };
 export default RepoMessIn;

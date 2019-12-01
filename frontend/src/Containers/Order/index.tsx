@@ -100,6 +100,7 @@ const PageOrder = () => {
             <Table
                 columns={columns}
                 dataSource={listData}
+                rowKey={listData => listData.order_id}
             />
             <Modal title="修改状态"
                    visible={winOpen}

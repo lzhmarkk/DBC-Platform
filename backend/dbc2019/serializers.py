@@ -189,9 +189,15 @@ class OrderCustomerSerializer(serializers.ModelSerializer):
         fields = ['cust_name', 'cust_id', 'cust_co']
 
 
+class OrderGraphSerializer(serializers.Serializer):
+    data = serializers.DateField()
+    value = serializers.IntegerField()
+
+
 class ApiOrderGetSerializer(serializers.Serializer):
     Order = OrderOrderSerializer(many=True)
     Cust = OrderCustomerSerializer(many=True)
+    Graph = OrderGraphSerializer(many=True)
 
 
 class ApiOrderPostSerializer(serializers.ModelSerializer):
@@ -219,7 +225,7 @@ class ApiOrderPutSerializer(serializers.ModelSerializer):
         return instance
 
 
-# url api/client
+# url api/account
 class ApiAccountGetSerializer(serializers.ModelSerializer):
     name = serializers.SlugRelatedField(source='user', slug_field='username', read_only=True)
     admin_description = serializers.CharField(source='admin_desc')

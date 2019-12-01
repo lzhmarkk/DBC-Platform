@@ -5,6 +5,7 @@ export const APIList = {
     repoIn: `${BASE}/api/repository/in/`,
     repoOut: `${BASE}/api/repository/out/`,
     repoTrans: `${BASE}/api/repository/trans/`,
+    repoDetail: (id: number) => `${BASE}/api/repository/${id}/`,
     order: `${BASE}/api/order/`,
     client: `${BASE}/api/client/`,
     userInfo: `${BASE}/api/userInfo/`,

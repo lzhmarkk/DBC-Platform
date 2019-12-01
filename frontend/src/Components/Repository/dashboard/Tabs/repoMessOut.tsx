@@ -3,7 +3,6 @@ import {IDetailData} from "../../../../Containers/Repository/Dashboard";
 import {IRepoMess, IWorkMess} from "../../interface";
 import {Table} from "antd";
 import GenColumns from "../../out";
-import {prods, repos} from "../../../../Containers/Repository";
 
 interface IProps {
     data: IDetailData
@@ -12,7 +11,7 @@ interface IProps {
 const MessagesShow = 5;
 const RepoMessOut = (props: IProps) => {
     const data: IRepoMess[] = props.data.RepoMessOut.slice(0, MessagesShow);
-    const columns = GenColumns((props: { record: any }) => <div></div>).slice(0, 5);
+    const columns = GenColumns((props: { record: any }) => <React.Fragment> </React.Fragment>).slice(0, 5);
 
     return (
         <Table pagination={false}

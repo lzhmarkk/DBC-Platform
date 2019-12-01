@@ -36,17 +36,19 @@ const PageRepositoryIn = () => {
                 console.log(res);
             })
             .catch(() => message.error("入库信息新建失败"));
+        update();
     };
     const columns = GenColumns(Action);
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.repoIn)
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessIn);
             })
             .catch(() => message.error("入库信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
 
     return (
         <div>

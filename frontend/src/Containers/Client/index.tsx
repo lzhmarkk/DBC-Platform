@@ -22,14 +22,15 @@ const PageClient = () => {
     const [modelOpen, setModelOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.client)
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
             })
             .catch(() => message.error("客户信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
 
     const handlePost = (prop: any) => {
         Axios.post(APIList.client, prop)
@@ -37,6 +38,7 @@ const PageClient = () => {
                 console.log(res);
             })
             .catch(() => message.error("客户信息新建失败"));
+        update();
     };
     const handlePut = (prop: any) => {
         Axios.put(APIList.client, prop)
@@ -44,6 +46,7 @@ const PageClient = () => {
                 console.log(res);
             })
             .catch(() => message.error("客户信息修改失败"));
+        update();
     };
 
     const Action = (props: { record: any }) => <div className={styles.hbox}>

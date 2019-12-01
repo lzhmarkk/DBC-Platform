@@ -21,14 +21,15 @@ const PageOrder = () => {
     const [winOpen, setWinOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.order)
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
             })
             .catch(() => message.error("订单信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
 
     const onChangeState = () => {
         const changeState = {
@@ -47,6 +48,7 @@ const PageOrder = () => {
                 console.log(res);
             })
             .catch(() => message.error("订单新建失败"));
+        update();
     };
 
     const handlePut = (prop: any) => {
@@ -55,6 +57,7 @@ const PageOrder = () => {
                 console.log(res);
             })
             .catch(() => message.error("订单修改失败"));
+        update();
     };
     const Action = (props: { record: any }) => <div className={styles.hbox}>
         {getButton(props, () => {

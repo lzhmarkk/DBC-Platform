@@ -189,9 +189,15 @@ class OrderCustomerSerializer(serializers.ModelSerializer):
         fields = ['cust_name', 'cust_id', 'cust_co']
 
 
+class OrderGraphSerializer(serializers.Serializer):
+    data = serializers.DateField()
+    value = serializers.IntegerField()
+
+
 class ApiOrderGetSerializer(serializers.Serializer):
     Order = OrderOrderSerializer(many=True)
     Cust = OrderCustomerSerializer(many=True)
+    Graph = OrderGraphSerializer(many=True)
 
 
 class ApiOrderPostSerializer(serializers.ModelSerializer):

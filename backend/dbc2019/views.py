@@ -98,7 +98,8 @@ def api_order(request):
 
     data = {
         'Order': Order.objects.all(),
-        'Cust': Customer.objects.all()
+        'Cust': Customer.objects.all(),
+        'Graph': get_last_year_orders()
     }
     serializer = ApiOrderGetSerializer(data)
     return JsonResponse(serializer.data)
@@ -156,8 +157,8 @@ def api_dashboard(request):
 
 def api_userInfo(request):
     data = Admin.objects.all()
-    serializer = ApiUserInfoGetSerializer(data)
-    return JsonResponse(serializer.data)
+    serializer = ApiUserInfoGetSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @csrf_exempt

@@ -3,64 +3,53 @@
 ```json
 GET:
 {
-    "Repo":[
+    "Repo": [
         {
-        	"repo_id":"1", //仓库id
-        	"repo_name":"零号仓库",//仓库名
-        	"repo_capacity":"120",//容量
-        	"repo_occupy":"10"//已使用
-        },
-        {
-        	"repo_id":"2",
-        	"repo_name":"一号仓库",
-        	"repo_capacity":"100",
-        	"repo_occupy":"105"
+            "repo_id": "1",
+            "name": "零号仓库",
+            "repo_capacity": "120",
+            "repo_occupy": "10"
         }
     ],
-    "Messages":[
+    "Messages": [
         {
-            "admin_id":"1",//相关管理员id
-            "work_mess_id":"3",//工作消息id
-            "work_mess_info":"快去开飞机"//内容	
+            "admin_id": "2",
+            "work_mess_id": "1",
+            "work_mess_info": "快去开汽车"
         }
     ],
-    "RepoMessIn":[
+    "RepoMessIn": [
         {
-            "repo_mess_id":"1",//入库消息id
-            "repo_mess_info":"购入100个西瓜",//入库消息
-            "direction":"IN",//方向为IN
-            "quantity":"100",//数量
-            "prod_name":"西瓜",//对应产品名称
+            "repo_mess_id": "1",
+            "repo_mess_info": "购入100个西瓜",
+            "quantity": "100",
+            "prod_name": "西瓜",
             "prod_id": "6",
-            "repo_name":"零号仓库",//对应仓库名称
-            "repo_id":"1"
-        },
-		{
-            "repo_mess_id":"2",
-            "repo_mess_info":"购入100个坦克",
-            "direction":"IN",
-            "quantity":"100",
-            "prod_name":"坦克",
-            "prod_id": "9",
-            "repo_name":"三号仓库",
-            "repo_id":"4"
+            "repo_name": "零号仓库",
+            "repo_id": "1",
         }
     ],
-    "RepoMessOut",//同理 出库的"direction"为"OUT"
-    "RepoMessTrans":[
+    "RepoMessOut": [
         {
-            "repo_out_name":"二号仓库",
-            "repo_in_name":"一号仓库",
-            "quantity":"100",
-            "prod_name":"笔记本电脑",
-            "repo_mess_info":"日常清点移动"
-        },
+            "repo_mess_id": "4",
+            "repo_mess_info": "售出100个水壶",
+            "quantity": "100",
+            "prod_name": "水壶",
+            "prod_id": "1",
+            "repo_name": "三号仓库",
+            "repo_id": "4"
+        }
+    ],
+    "RepoMessTrans": [
         {
-             "repo_out_name":"炎热仓库",
-             "repo_in_name":"冷冻仓库",
-             "quantity":"300",
-             "prod_name":"苹果",
-             "repo_mess_info":"苹果快坏了"
+            "trans_mess_id":"1",
+            "repo_out_id": "2",
+            "repo_out_name": "二号仓库",
+            "repo_in_id": "1",
+            "repo_in_name": "一号仓库",
+            "quantity": "100",
+            "prod_name": "笔记本电脑",
+            "repo_mess_info": "日常清点移动"
         }
     ]
 }
@@ -84,45 +73,33 @@ POST：//新增转入请求
 }
 GET:
 {
-    "RepoMessIn":[
+    "RepoMessIn": [
         {
-                        "repo_mess_id": "1",//入库消息id
-                        "repo_mess_info": "西瓜爆炸",//入库消息
-                        "repo_name": "负一号仓库",//相关仓库名字
-            			"repo_id":"1",//相关仓库id
-           				"prod_name": "大西瓜炸弹",//产品名
-                        "prod_id": "6",//产品id
-                        "order_id": "12",//订单号
-            			"quantity":"10",
-            			"direction":"IN"
-        },
-        {
-                        "repo_mess_id": "2",
-                        "repo_mess_info": "东风快递来啦",
-                        "repo_name": "秘密仓库",
-            			"repo_id":"2",
-                        "prod_name": "东风41",
-             			"prod_id": "5",
-                        "order_id": "2019",
-            			"quantity":"1000",
-            			"direction":"IN"
+            "repo_mess_id": "1",
+            "repo_mess_info": "西瓜爆炸",
+            "repo_name": "一号仓库",
+            "repo_id": "2",
+            "prod_name": "大西瓜炸弹",
+            "prod_id": "6",
+            "quantity": "100",
+            "order_id": "12",
         }
     ],
-    "Repo":[
+    "Repo": [
         {
-            "repo_id":"1",
-        	"repo_name":"一号仓库"
+            "repo_id": "1",
+            "repo_name": "零号仓库"
         }
     ],
-    "Prod":[
+    "Prod": [
         {
-            "prod_id":"3",
-            "prod_name":"西瓜"
+            "prod_id": "1",
+            "prod_name": "苹果"
         }
     ],
-    "Order":[
+    "Order": [
         {
-            "order_id":"23425534534534"
+            "order_id": "23425534534534"
         }
     ]
 }
@@ -152,76 +129,71 @@ POST:
 }
 GET:
 {
-	"Repo":[
+    "Repo": [
         {
-			"repo_id":"1",//仓库id
-			"repo_name":"秘密仓库",//仓库名
-			"RepoItem":[//仓库中含有的产品的信息
+            "repo_id": "1",
+            "repo_name": "秘密仓库",
+            "RepoItem": [
                 {
-					"prod_id":"3",//产品id
-					"prod_name": "A380",//产品名字
-					"quantity":"4"//存货数量
-				},
-				{
-					"prod_id":"2",
-					"prod_name": "737",
-					"quantity":"2"
-				}
-			]
-		}
+                    "prod_id": "3",
+                    "prod_name": "A380",
+                    "quantity": "4"
+                }
+            ]
+        }
     ]
 }
 ```
 #### "/api/repository/${id}/"
 
 ```json
-GET:{
-    "repo_id":"1",//仓库id
-    "repo_name":"秘密仓库",//仓库名
-    "repo_capacity":"120",//容量
-    "repo_occupy":"10",//已使用
-    "RepoItem":[//仓库中含有的产品的信息
+GET:
+{
+    "repo_id": "1",
+    "repo_name": "秘密仓库",
+    "repo_capacity": "120",
+    "repo_occupy": "10",
+    "RepoItem": [
         {
-        	"prod_id":"3",//产品id
-        	"prod_name": "A380",//产品名字
-	    	"quantity":"4"//存货数量
-   	    },
-  	    {
-	    	"prod_id":"2",
-        	"prod_name": "737",
-	    	"quantity":"2"
-	    }
-	],
-    "RepoMessIn":[
-            {
-                            "repo_mess_id": "1",//入库消息id
-                            "repo_mess_info": "西瓜爆炸",//入库消息
-               				"prod_name": "大西瓜炸弹",//产品名
-                            "order_id": "12",//订单号
-                			"quantity":"10",
-            },
-            {
-                            "repo_mess_id": "2",
-                            "repo_mess_info": "东风快递来啦",
-                            "prod_name": "东风41",
-                            "order_id": "2019",
-                			"quantity":"1000",
-            }
-        ],
-    "RepoMessOut":[],
-    "RepoMessTrans":[
+            "prod_id": "3",
+            "prod_name": "A380",
+            "quantity": "4"
+        }
+    ],
+    "RepoMessIn": [
         {
-            "repo_out_name":"秘密",
-            "repo_in_name":"一号仓库",
-            "quantity":"100",
-            "prod_name":"笔记本电脑",
-            "repo_mess_info":"日常清点移动"
-        },
-    ]
+            "repo_mess_id": "1",
+            "repo_mess_info": "西瓜爆炸",
+            "prod_name": "大西瓜炸弹",
+            "order_id": "12",
+            "quantity": "10"
+        }
+    ],
+    "RepoMessOut": [
+        {
+            "repo_mess_id": "1",
+            "repo_mess_info": "西瓜爆炸",
+            "prod_name": "大西瓜炸弹",
+            "order_id": "12",
+            "quantity": "10"
+        }
+    ],
+    "RepoMessTrans": [
+        {
+            "trans_mess_id":"1",
+            "repo_out_id": "2",
+            "repo_out_name": "二号仓库",
+            "repo_in_id": "1",
+            "repo_in_name": "一号仓库",
+            "quantity": "100",
+            "prod_name": "笔记本电脑",
+            "repo_mess_info": "日常清点移动"
+        }
+    ],
 }
 ```
 
-#### "/api/order"
+#### "/api/order/index"
 
 ```json
 //订单
@@ -245,47 +217,34 @@ PUT:
 }
 GET:
 {
-    "Order":[
-        {
-            "order_id":"121212",
-            "order_date":"20191001",
-            "cust_name":"张三",
-            "cust_co":"BUAA",
-            "state":"3",
-            "order_info":"订单1"
-        },
-        {
-            "order_id":"33243424",
-            "order_date":"20191231",
-            "cust_name":"李四",
-            "cust_co":"BUDD",
-            "state":"1",
-            "order_info":"订单2"
-        }
-    ],
-    "Cust":[
-        {
-            "cust_id":"1",
-            "cust_name":"张三",
-            "cust_co":"BUAA"
-        },
-        {
-            "cust_id":"2",
-            "cust_name":"李四",
-            "cust_co":"BUBB"
-        },
-    ],
-    "Graph": [
-        {"date": "2019-01-01", "value": "0"},//从一年前到今天，每一天的订单数量（如果做这个有困难告诉我）
-        {"date": "2019-01-02", "value": "3"},
-        {"date": "2019-01-03", "value": "0"},
-        {"date": "2019-01-04", "value": "4"},
-        {"date": "2019-01-05", "value": "0"},
-        {"date": "2019-01-06", "value": "2"},
-        {"date": "2019-01-07", "value": "6"},
-        {"date": "2019-01-08", "value": "0"},
-    ]
-}
+        "Order": [
+            {
+                "order_id": "121212",
+                "order_date": "2019-10-01",
+                "cust_name": "张三",
+                "cust_co": "BUAA",
+                "state": "3",
+                "order_info": "订单1"
+            }
+        ],
+        "Cust": [
+            {
+                "cust_id": "1",
+                "cust_name": "张三",
+                "cust_co": "BUAA"
+            }
+        ],
+        "Graph": [
+            {"date": "2019-01-01", "value": "0"},
+            {"date": "2019-01-02", "value": "3"},
+            {"date": "2019-01-03", "value": "0"},
+            {"date": "2019-01-04", "value": "4"},
+            {"date": "2019-01-05", "value": "0"},
+            {"date": "2019-01-06", "value": "2"},
+            {"date": "2019-01-07", "value": "6"},
+            {"date": "2019-01-08", "value": "0"},
+        ]
+    }
 ```
 
 #### "/api/order/${id}"
@@ -310,7 +269,7 @@ GET:
         "order_tex":"0",
         "order_payer_card": "6221113134381613311",
         "order_payer_bank": "中国农业银行",
-        "order_description":"详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息",
+        "order_description":"详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息",
         "Prod":[
             {
                 "prod_id":"1",
@@ -319,23 +278,7 @@ GET:
                 "prod_unit":"只",
                 "prod_price":"5",
                 "quantity":"100"
-            },
-            {
-                "prod_id":"2",
-                "prod_name":"螺丝",
-                "prod_desc":"军用",
-                "prod_unit":"盒",
-                "prod_price":"1",
-                "quantity":"40"
-            },
-            {
-                "prod_id":"3",
-                "prod_name":"螺母",
-                "prod_desc":"军用",
-                "prod_unit":"盒",
-                "prod_price":"2",
-                "quantity":"40"
-            },
+            }
         ],
         "RepoMessIn": [
             {
@@ -347,26 +290,6 @@ GET:
                 "prod_id": "6",
                 "repo_name": "零号仓库",
                 "repo_id": "1",
-            },
-            {
-                "repo_mess_id": "2",
-                "repo_mess_info": "购入100个坦克",
-                "direction": "IN",
-                "quantity": "100",
-                "prod_name": "坦克",
-                "prod_id": "9",
-                "repo_name": "三号仓库",
-                "repo_id": "4"
-            },
-            {
-                "repo_mess_id": "3",
-                "repo_mess_info": "购入123个ipad",
-                "direction": "IN",
-                "quantity": "223",
-                "prod_name": "iPad",
-                "prod_id": "3",
-                "repo_name": "二号仓库",
-                "repo_id": "3"
             }
         ],
         "RepoMessOut": [
@@ -384,54 +307,27 @@ GET:
     }
 ```
 
-#### "/api/client"
+#### "/api/client/index"
 
 ```json
 PUT:
 {
-    "type": "EDIT_CUST",//编辑已有的顾客
-    "data": {
-        "cust_id":"3",
-        "cust_name": "小红",
-        "cust_email": "xiaohong@xh.com",
-        "cust_co": "小绿有限公司",
-        "cust_address": "小黄他楼上",
-        "cust_phone": "16666666666"
-    }
-}
-POST:
-{
-    "type": "NEW_CUST",//新顾客
-    "data": {
-        "cust_name": "小黄",
-        "cust_email": "xiaohuangg@xh.com",
-        "cust_co": "小蓝有限公司",
-        "cust_address": "小红她楼下",
-        "cust_phone": "19999999999"
-    }
-}
-GET:
-{
-	"Cust":[
-		{
-			"cust_id":"1",
-			"cust_name":"张三",
-			"cust_email":"bub@bucc.edu.cn",
-			"cust_co":"东方红公司",
-			"cust_address":"院学路",
-			"cust_phone":"16763197268"
-		}
-	],
+    "Cust": [
+        {
+            "cust_id": "1",
+            "cust_name": "张三",
+            "cust_email": "bub@bucc.edu.cn",
+            "cust_co": "东方红公司",
+            "cust_address": "院学路",
+            "cust_phone": "16763197268"
+        }
+    ],
     "Graph": [
-            {
-                "cust_name": "张三",
-                "cust_orders": "100"//与张三有关的订单数量，只显示前10名
-            },
-            {
-                "cust_name": "李四",
-                "cust_orders": "15"
-            },
-        ]
+        {
+            "cust_name": "张三",
+            "cust_orders": "50"
+        }
+    ]
 }
 ```
 #### "/api/client/${id}"
@@ -457,7 +353,7 @@ GET:
                 "order_info": "订单1"
             }
         ],
-    }
+}
 ```
 
 
@@ -467,9 +363,9 @@ GET:
 ```json
 GET:
 {
-    "admin_id":"001",
-    "identity":"开发",
-	"name": "lzh",
+    "admin_id": "0001",
+    "identity": "开发",
+    "name": "developer",
     "admin_description":"一个程序员"
 }
 PUT:
@@ -505,58 +401,61 @@ POST:
     "password":"admin"
 }
 ```
-#### "/api/dashboard"
+#### "/api/index"
 
 ```json
 GET:
 {
-    "Messages": [
+    "Messages": [//5
         {
             "admin_id": "3",
             "work_mess_info": "mess1"
         }
     ],
-    "Repo": [
+    "Repo": [//最多4个
         {
+            "repo_id": "0",
             "name": "零号仓库",
             "repo_capacity": "120",
             "repo_occupy": "10"
         }
     ],
-    "RepoMessIn": [
+    "RepoMessIn": [//5
         {
+            "repo_mess_id": "1",
             "repo_mess_info": "购入100个西瓜",
             "quantity": "100",
+            "repo_id": "0",
             "repo_name": "零号仓库",
         }
     ],
-    "RepoMessOut": [
+    "RepoMessOut": [//5
         {
+            "repo_mess_id": "4",
             "repo_mess_info": "售出100个水壶",
             "quantity": "100",
+            "repo_id": "3",
             "repo_name": "三号仓库",
         }
     ],
-    "RepoMessTrans":[
+    "RepoMessTrans": [//5
         {
-            "repo_out_name":"二号仓库",
-            "repo_in_name":"一号仓库",
-            "quantity":"100",
-            "prod_name":"笔记本电脑",
-            "repo_mess_info":"日常清点移动"
-        },
-    ],
-    "Cust": [
-        {
-            "cust_name": "张三",
-            "cust_co": "东方红公司",
+            "trans_mess_id":"1",
+            "repo_out_id": "2",
+            "repo_out_name": "二号仓库",
+            "repo_in_id": "1",
+            "repo_in_name": "一号仓库",
+            "quantity": "100",
+            "prod_name": "笔记本电脑",
+            "repo_mess_info": "日常清点移动"
         }
     ],
-    "Graph": [
+    "Graph": [//5个订单最多的
         {
+            "cust_id": "1",
             "cust_name": "张三",
-            "cust_orders": "50"//客户名和与该客户有关的订单数（只要订单最多的前5个顾客）
-        },
+            "cust_orders": "50"
+        }
     ]
 }
 ```

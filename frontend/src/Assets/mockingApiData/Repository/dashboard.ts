@@ -40,7 +40,6 @@ const dashboardApiData = {
         {
             "repo_mess_id": "1",
             "repo_mess_info": "购入100个西瓜",
-            "direction": "IN",
             "quantity": "100",
             "prod_name": "西瓜",
             "prod_id": "6",
@@ -50,7 +49,6 @@ const dashboardApiData = {
         {
             "repo_mess_id": "2",
             "repo_mess_info": "购入100个坦克",
-            "direction": "IN",
             "quantity": "100",
             "prod_name": "坦克",
             "prod_id": "9",
@@ -60,7 +58,6 @@ const dashboardApiData = {
         {
             "repo_mess_id": "3",
             "repo_mess_info": "购入123个ipad",
-            "direction": "IN",
             "quantity": "223",
             "prod_name": "iPad",
             "prod_id": "3",
@@ -72,7 +69,6 @@ const dashboardApiData = {
         {
             "repo_mess_id": "4",
             "repo_mess_info": "售出100个水壶",
-            "direction": "OUT",
             "quantity": "100",
             "prod_name": "水壶",
             "prod_id": "1",
@@ -82,7 +78,6 @@ const dashboardApiData = {
         {
             "repo_mess_id": "5",
             "repo_mess_info": "售出666盒巧克力",
-            "direction": "OUT",
             "quantity": "666",
             "prod_name": "巧克力",
             "prod_id": "4",
@@ -92,21 +87,30 @@ const dashboardApiData = {
     ],
     "RepoMessTrans": [
         {
+            "trans_mess_id": "1",
+            "repo_out_id": "2",
             "repo_out_name": "二号仓库",
+            "repo_in_id": "1",
             "repo_in_name": "一号仓库",
             "quantity": "100",
             "prod_name": "笔记本电脑",
             "repo_mess_info": "日常清点移动"
         },
         {
+            "trans_mess_id": "2",
+            "repo_out_id": "4",
             "repo_out_name": "炎热仓库",
+            "repo_in_id": "6",
             "repo_in_name": "冷冻仓库",
             "quantity": "300",
             "prod_name": "苹果",
             "repo_mess_info": "苹果快坏了"
         },
         {
+            "trans_mess_id": "3",
+            "repo_out_id": "4",
             "repo_out_name": "冷冻仓库",
+            "repo_in_id": "7",
             "repo_in_name": "温暖仓库",
             "quantity": "30000",
             "prod_name": "鸡蛋",

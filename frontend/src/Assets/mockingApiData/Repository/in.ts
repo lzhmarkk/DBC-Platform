@@ -9,7 +9,6 @@ const inApiData = {
             "prod_id": "6",
             "quantity": "100",
             "order_id": "12",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "2",
@@ -20,7 +19,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "2019",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "3",
@@ -31,7 +29,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "2019345",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "4",
@@ -42,7 +39,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "32141234",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "5",
@@ -53,7 +49,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "134412",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "6",
@@ -64,7 +59,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "415324532",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "7",
@@ -75,7 +69,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "1235125",
-            "direction": "IN"
         },
         {
             "repo_mess_id": "8",
@@ -86,7 +79,6 @@ const inApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "543151235",
-            "direction": "IN"
         }
     ],
     "Repo": [
@@ -152,6 +144,12 @@ const inApiData = {
     "Order": [
         {
             "order_id": "23425534534534"
+        },
+        {
+            "order_id": "23426452"
+        },
+        {
+            "order_id": "115153402"
         }
     ]
 };

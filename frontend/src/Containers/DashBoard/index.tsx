@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {getGraph, getOption, ICardPanel} from "../../Components/Dashboard";
 import ReactEcharts from "echarts-for-react";
-import {Affix, Calendar, Card, Col, Icon, message, Row, Tabs} from "antd";
+import {Calendar, Card, Col, Icon, message, Row, Tabs} from "antd";
 import styles from './index.module.scss'
 import {IDetailData} from "../../Components/Dashboard/Tabs";
 import RepoDetailTabs from "../../Components/Dashboard/Tabs/conf";
-import indexApiData from "../../Assets/mockingApiData/dashboard";
+import indexApiData from "../../Assets/mockingApiData";
 import Axios from "axios";
 import {APIList} from "../../API";
 import logo from "../../Assets/logo.jpeg"
@@ -35,21 +35,12 @@ const PageDashBoard = (props: any) => {
             <ReactEcharts option={getGraph(name, orders)}/>
         )
     };
-    const genCards = (line: number) => {
-        return data.Cust.slice(line * 4, line * 4 + 4).map(e =>
-            <Col span={6}>
-                <Card hoverable cover={<Icon type="smile" theme={"twoTone"} twoToneColor={"#eb2f96"}/>}>
-                    <Meta title={e.cust_name} description={e.cust_co}/>
-                </Card>
-            </Col>
-        )
-    };
     const tabpanes = RepoDetailTabs.map(e => <TabPane tab={e.name} key={e.name}>
         <e.component data={tabData}/>
     </TabPane>);
 
     useEffect(() => {
-        Axios.get(APIList.dashboard, {withCredentials: true})
+        Axios.get(APIList.index, {withCredentials: true})
             .then(res => {
                 setData(res.data);
             })

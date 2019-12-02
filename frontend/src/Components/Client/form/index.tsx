@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Form, Input, Button, Modal, Col, Drawer} from 'antd';
+import {Form, Input, Button, Modal, Upload, Icon} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 
 export interface IEditClientFormPayload {
@@ -8,15 +8,23 @@ export interface IEditClientFormPayload {
     cust_email: string,
     cust_co: string,
     cust_address: string,
-    cust_phone: string
+    cust_phone: string,
+    cust_icon: any,
+    cust_wechat: string,
+    cust_qq: string,
+    cust_duty: string,
+    cust_business_scope: string
 }
 
 interface IFormProps extends FormComponentProps {
     onSubmit: (payload: IEditClientFormPayload) => void,
-    customer: undefined | { cust_id: string, cust_name: string, cust_email: string, cust_co: string, cust_address: string, cust_phone: string },
+    customer: undefined | {
+        cust_id: string, cust_name: string, cust_email: string, cust_co: string,
+        cust_address: string, cust_phone: string, cust_icon: string, cust_wechat: string,
+        cust_qq: string, cust_duty: string, cust_business_scope: string
+    },
     modelOpen: boolean,
-    setModelOpen: (a: boolean) => void,
-    setCurClient: (a: any) => void,
+    setModelOpen: (a: boolean) => void
 }
 
 const IEditForm = (props: IFormProps) => {
@@ -26,6 +34,17 @@ const IEditForm = (props: IFormProps) => {
     const [changeCo, setChangeCo] = useState(false);
     const [changeAddr, setChangeAddr] = useState(false);
     const [changePho, setChangePho] = useState(false);
+    const [changeDuty, setChangeDuty] = useState(false);
+    const [changeScope, setChangeScope] = useState(false);
+    const [changeWechat, setChangeWechat] = useState(false);
+    const [changeQQ, setChangeQQ] = useState(false);
+
+    const normFile = (e: any) => {
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    };
 
     const handleSubmit = () => {
         props.form.validateFields((err, value: any) => {
@@ -40,12 +59,10 @@ const IEditForm = (props: IFormProps) => {
                visible={props.modelOpen}
                onCancel={() => {
                    props.setModelOpen(false);
-                   props.setCurClient(undefined);
                }}
                onOk={() => {
                    handleSubmit();
                    props.setModelOpen(false);
-                   props.setCurClient(undefined);
                }}
                okText="确认修改"
                cancelText="取消">
@@ -54,7 +71,7 @@ const IEditForm = (props: IFormProps) => {
                 <Form.Item label="客户编号" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_id', {
                         initialValue: initValue == undefined ? "" : initValue.cust_id
-                    })(<Input style={{width: "400px"}} placeholder={"用户编号"} disabled={true}/>)}
+                    })(<Input style={{width: "200px"}} placeholder={"用户编号"} disabled={true}/>)}
                 </Form.Item>
                 <Form.Item label="客户名" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_name', {
@@ -94,6 +111,42 @@ const IEditForm = (props: IFormProps) => {
                     })(<Input addonBefore={<div>+86</div>} style={{width: "400px"}} placeholder={"请输入手机或固话"}
                               disabled={!changePho}/>)}
                     <Button icon={"lock"} onClick={() => setChangePho(!changePho)}/>
+                </Form.Item>
+                <Form.Item label="职务" style={{marginBottom: "0px"}}>
+                    {getFieldDecorator('cust_duty', {
+                        rules: [{required: true, message: "请输入职务"}],
+                        initialValue: initValue == undefined ? "" : initValue.cust_duty
+                    })(<Input style={{width: "400px"}} placeholder={"请输入职务"} disabled={!changeDuty}/>)}
+                    <Button icon={"lock"} onClick={() => setChangeDuty(!changeDuty)}/>
+                </Form.Item>
+                <Form.Item label="业务范围" style={{marginBottom: "0px"}}>
+                    {getFieldDecorator('cust_business_scope', {
+                        rules: [{required: true, message: "请输入业务范围"}],
+                        initialValue: initValue == undefined ? "" : initValue.cust_business_scope
+                    })(<Input style={{width: "400px"}} placeholder={"请输入公司名"} disabled={!changeScope}/>)}
+                    <Button icon={"lock"} onClick={() => setChangeScope(!changeScope)}/>
+                </Form.Item>
+                <Form.Item label="微信号" style={{marginBottom: "0px"}}>
+                    {getFieldDecorator('cust_wechat', {
+                        initialValue: initValue == undefined ? "" : initValue.cust_wechat
+                    })(<Input style={{width: "400px"}} placeholder={"请输入微信"} disabled={!changeWechat}/>)}
+                    <Button icon={"lock"} onClick={() => setChangeWechat(!changeWechat)}/>
+                </Form.Item>
+                <Form.Item label="QQ号" style={{marginBottom: "0px"}}>
+                    {getFieldDecorator('cust_qq', {
+                        initialValue: initValue == undefined ? "" : initValue.cust_qq
+                    })(<Input style={{width: "400px"}} placeholder={"请输入公司名"} disabled={!changeQQ}/>)}
+                    <Button icon={"lock"} onClick={() => setChangeQQ(!changeQQ)}/>
+                </Form.Item>
+                <Form.Item label="头像">
+                    {getFieldDecorator('cust_icon', {
+                        valuePropName: 'fileList',
+                        getValueFromEvent: normFile,
+                    })(<Upload name="logo" listType="picture">
+                        <Button>
+                            <Icon type="upload"/>点击上传头像
+                        </Button>
+                    </Upload>)}
                 </Form.Item>
             </Form>
         </Modal>

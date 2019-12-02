@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2em;
+  padding-bottom: 1em;
+  height: 500px;
+
+  .chartRow {
+    display: flex;
+    padding: 2em;
+  }
+
+  .chartItem {
+
+
+  }
+
+  .cardRow {
+    .cardItem {
+      width: 25%;
+    }
+  }
+}
+
+.button {
+  float: right
+}
+.ControlPanel{
+  display: flex;
+  justify-content: space-between;
+
+}
+

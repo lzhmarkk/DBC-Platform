@@ -1,5 +1,4 @@
 import React from "react";
-import {Button} from "antd";
 
 const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
@@ -15,12 +14,23 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
         sorter: (a: any, b: any) => parseInt(a.cust_phone) - parseInt(b.cust_phone),
     },
     {
-        dataIndex: "Action", title: "修改", key: "Action",
+        dataIndex: "Action", title: "操作", key: "Action",
         render: (_: any, record: any, ___: any) => <Action record={record}/>
     },
 ];
 export default GenColumns;
 
-export const getButton = (props: { record: any }, handleClick: () => void) => {
-    return (<Button onClick={handleClick}>修改客户信息</Button>);
-};
+export const GenOrderColumns = (Action: (props: { record: any }) => JSX.Element) => [
+    {
+        dataIndex: "order_id", title: "订单编号", key: "order_id",
+        sorter: (a: any, b: any) => parseInt(a.order_id) - parseInt(b.order_id),
+    },
+    {dataIndex: "order_info", title: "订单内容", key: "order_info"},
+    {
+        dataIndex: "order_date", title: "订单时间", key: "order_date",
+    },
+    {
+        dataIndex: "Action", title: "查看订单", key: "Action",
+        render: (_: any, record: any, ___: any) => <Action record={record}/>
+    },
+];

@@ -49,12 +49,12 @@ const PageDashBoard = (props: any) => {
     </TabPane>);
 
     useEffect(() => {
-        Axios.get(APIList.dashboard)
+        Axios.get(APIList.dashboard, {withCredentials: true})
             .then(res => {
                 setData(res.data);
             })
             .catch(() => message.error("首页信息获取失败"));
-        Axios.get(APIList.userInfo)
+        Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
             })

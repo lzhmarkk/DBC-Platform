@@ -52,7 +52,7 @@ const PageRepositoryDashboard = () => {
     </TabPane>);
 
     useEffect(() => {
-        Axios.get(APIList.repoDashboard)
+        Axios.get(APIList.repoDashboard, {withCredentials: true})
             .then(res => {
                 setData(res.data);
             })

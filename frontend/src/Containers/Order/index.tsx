@@ -22,7 +22,7 @@ const PageOrder = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const update = () => {
-        Axios.get(APIList.order)
+        Axios.get(APIList.order, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
@@ -43,7 +43,7 @@ const PageOrder = () => {
         handlePut(changeState);
     };
     const handlePost = (prop: any) => {
-        Axios.post(APIList.order, prop)
+        Axios.post(APIList.order, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })
@@ -52,7 +52,7 @@ const PageOrder = () => {
     };
 
     const handlePut = (prop: any) => {
-        Axios.put(APIList.client, prop)
+        Axios.put(APIList.client, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })

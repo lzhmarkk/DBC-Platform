@@ -22,7 +22,7 @@ const PageClient = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const update = () => {
-        Axios.get(APIList.client)
+        Axios.get(APIList.client, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
@@ -32,7 +32,7 @@ const PageClient = () => {
     useEffect(update, []);
 
     const handlePost = (prop: any) => {
-        Axios.post(APIList.client, prop)
+        Axios.post(APIList.client, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })
@@ -40,7 +40,7 @@ const PageClient = () => {
         update();
     };
     const handlePut = (prop: any) => {
-        Axios.put(APIList.client, prop)
+        Axios.put(APIList.client, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })

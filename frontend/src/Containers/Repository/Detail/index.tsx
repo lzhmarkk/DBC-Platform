@@ -25,7 +25,7 @@ const PageRepositoryDetail = withRouter((props) => {
 
     useEffect(() => {
         if (id) {
-            Axios.get(APIList.repoDetail(id))
+            Axios.get(APIList.repoDetail(id), {withCredentials: true})
                 .then(res => {
                     setData(res.data);
                 })

@@ -28,7 +28,7 @@ const PageRepositoryOut = () => {
     </div>;
 
     const handlePost = (prop: any) => {
-        Axios.post(APIList.repoOut, prop)
+        Axios.post(APIList.repoOut, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })
@@ -38,7 +38,7 @@ const PageRepositoryOut = () => {
     const columns = GenColumns(Action);
 
     const update = () => {
-        Axios.get(APIList.repoOut)
+        Axios.get(APIList.repoOut, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessOut);

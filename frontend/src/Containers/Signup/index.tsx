@@ -7,7 +7,7 @@ import {message} from "antd";
 const PageSignup = () => {
     const [form, setForm] = useState();
     const handlePost = (prop: any) => {
-        Axios.post(APIList.signup, prop)
+        Axios.post(APIList.signup, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })

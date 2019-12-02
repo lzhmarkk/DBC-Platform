@@ -19,7 +19,7 @@ const PageRepositoryTrans = () => {
     const [repoOut, setRepoOut] = useState<any>(repos[0]);
 
     const handlePost = (prop: any) => {
-        Axios.post(APIList.repoTrans, prop)
+        Axios.post(APIList.repoTrans, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })
@@ -28,7 +28,7 @@ const PageRepositoryTrans = () => {
     };
 
     const update = () => {
-        Axios.get(APIList.repoTrans)
+        Axios.get(APIList.repoTrans, {withCredentials: true})
             .then(res => {
                 setRepos(res.data.Repo);
             })

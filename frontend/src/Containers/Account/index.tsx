@@ -13,12 +13,12 @@ const PageAccount = () => {
     const [userInfo, setUserInfo] = useState(apiUserInfo);
 
     useEffect(() => {
-        Axios.get(APIList.account)
+        Axios.get(APIList.account, {withCredentials: true})
             .then(res => {
                 setAdminData(res.data);
             })
             .catch(() => message.error("表单信息获取失败"));
-        Axios.get(APIList.userInfo)
+        Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
             })
@@ -26,7 +26,7 @@ const PageAccount = () => {
     }, []);
 
     const handlePut = (prop: any) => {
-        Axios.put(APIList.account, prop)
+        Axios.put(APIList.account, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })

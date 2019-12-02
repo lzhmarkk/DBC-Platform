@@ -10,5 +10,6 @@ export const APIList = {
     client: `${BASE}/api/client/`,
     userInfo: `${BASE}/api/userInfo/`,
     account: `${BASE}/api/account/`,
+    login: `${BASE}/api/login/`,
     signup: `${BASE}/api/signup/`,
 };

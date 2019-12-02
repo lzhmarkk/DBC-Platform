@@ -8,7 +8,7 @@ import {Redirect} from "react-router";
 const PageLogin = () => {
     const [login, setLogin] = useState(false);
     const handlePost = (prop: any) => {
-        Axios.post(APIList.order, prop)
+        Axios.post(APIList.login, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
             })

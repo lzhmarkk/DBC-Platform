@@ -21,7 +21,7 @@ const MainLayout = (props: { children: ReactElement }) => {
     setInterval(() => setTime(moment().format("h:mm:ss")), 1000);
 
     useEffect(() => {
-        Axios.get(APIList.userInfo)
+        Axios.get(APIList.userInfo,{withCredentials:true})
             .then(res => {
                 setUserInfo(res.data);
             })

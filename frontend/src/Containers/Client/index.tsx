@@ -4,7 +4,7 @@ import styles from "./index.module.scss"
 import {Table, Button, Modal, Drawer, message, Card} from 'antd';
 import Axios from "axios";
 import {APIList} from "../../API";
-import clientApiData from "../../Assets/mockingApiData/client";
+import clientApiData from "../../Assets/mockingApiData/Client/client";
 import {IEditClientFormPayload} from "../../Components/Client/form";
 import {INewClientFormPayload} from "../../Components/Client/form/newClientForm";
 import GenColumns, {getButton} from "../../Components/Client";

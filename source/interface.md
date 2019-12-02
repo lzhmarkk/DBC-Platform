@@ -1,57 +1,6 @@
-```javascript
-前端接口（仅供参考）
-export interface IRepo {
-    repo_id: string
-    place: string
-    name: string
-    admin_id: string
-    repo_capacity: string
-    repo_occupy: string
-}
+#### "/api/repository/dashboard"
 
-export interface IRepoMess {
-    repo_mess_id: string
-    repo_mess_info: string
-    repo_id: string
-    direction: string
-    quantity: string
-    prod_id: string
-    order_id: string
-}
-
-export interface IWorkMess {
-    work_mess_id: string
-    work_mess_info: string
-    admin_id: string
-    direction: string
-    quantity: string
-    prod_id: string
-    order_id: string
-}
-
-export interface IProd {
-    prod_id: string
-    prod_name: string
-    prod_desc: string
-}
-
-export interface IOrder {
-    order_id: string
-    order_date: string
-    cust_id: string
-    state: string
-}
-
-export interface IRepoItem {
-    repo_item: string,
-    repo_id: string
-    prod_id: string
-    quantity: string
-}
-```
 ```json
-url:"/api/repository/dashboard"
-//后面为注释
 GET:
 {
     "Repo":[
@@ -117,8 +66,10 @@ GET:
 }
 ```
 
+#### "/api/repository/in"
+
 ```json
-url:"/api/repository/in"
+
 POST：//新增转入请求
 {	
     //PS：需要在后端实现"repo_mess_id"自增
@@ -177,14 +128,16 @@ GET:
 }
 ```
 
+#### "/api/repository/out"
+
 ```json
-url:"/api/repository/out"
 //出库
 //自行将in改成out
 ```
 
+#### "/api/repository/trans"
+
 ```json
-url:"/api/repository/trans"
 //调库
 POST:
 {
@@ -219,8 +172,9 @@ GET:
     ]
 }
 ```
+#### "/api/repository/${id}/"
+
 ```json
-url:"/api/repository/${id}/"
 GET:{
     "repo_id":"1",//仓库id
     "repo_name":"秘密仓库",//仓库名
@@ -267,8 +221,9 @@ GET:{
 }
 ```
 
+#### "/api/order"
+
 ```json
-url:"/api/order"
 //订单
 POST:
 {
@@ -333,8 +288,105 @@ GET:
 }
 ```
 
+#### "/api/order/${id}"
+
 ```json
-url:"/api/client"
+GET:
+{
+        "order_id": "121212",
+        "order_date": "2019-10-01",
+        "cust_id":"2",
+        "cust_name": "张三",
+        "cust_co": "BUAA",
+        "state": "3",
+        "order_info": "与高小姐达成的长期进货协议",
+        "order_amount": "100000",
+        "order_payee": "张三",
+        "order_payer": "高萍萍",
+        "order_pay_type":"cash",
+        "order_serial": "8967891810204394720194",
+        "order_payee_card": "6221014165860322903",
+        "order_payee_bank": "中国工商银行",
+        "order_tex":"0",
+        "order_payer_card": "6221113134381613311",
+        "order_payer_bank": "中国农业银行",
+        "order_description":"详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息",
+        "Prod":[
+            {
+                "prod_id":"1",
+                "prod_name":"螺丝刀",
+                "prod_desc":"军用",
+                "prod_unit":"只",
+                "prod_price":"5",
+                "quantity":"100"
+            },
+            {
+                "prod_id":"2",
+                "prod_name":"螺丝",
+                "prod_desc":"军用",
+                "prod_unit":"盒",
+                "prod_price":"1",
+                "quantity":"40"
+            },
+            {
+                "prod_id":"3",
+                "prod_name":"螺母",
+                "prod_desc":"军用",
+                "prod_unit":"盒",
+                "prod_price":"2",
+                "quantity":"40"
+            },
+        ],
+        "RepoMessIn": [
+            {
+                "repo_mess_id": "1",
+                "repo_mess_info": "购入100个西瓜",
+                "direction": "IN",
+                "quantity": "100",
+                "prod_name": "西瓜",
+                "prod_id": "6",
+                "repo_name": "零号仓库",
+                "repo_id": "1",
+            },
+            {
+                "repo_mess_id": "2",
+                "repo_mess_info": "购入100个坦克",
+                "direction": "IN",
+                "quantity": "100",
+                "prod_name": "坦克",
+                "prod_id": "9",
+                "repo_name": "三号仓库",
+                "repo_id": "4"
+            },
+            {
+                "repo_mess_id": "3",
+                "repo_mess_info": "购入123个ipad",
+                "direction": "IN",
+                "quantity": "223",
+                "prod_name": "iPad",
+                "prod_id": "3",
+                "repo_name": "二号仓库",
+                "repo_id": "3"
+            }
+        ],
+        "RepoMessOut": [
+            {
+                "repo_mess_id": "4",
+                "repo_mess_info": "售出100个水壶",
+                "direction": "OUT",
+                "quantity": "100",
+                "prod_name": "水壶",
+                "prod_id": "1",
+                "repo_name": "三号仓库",
+                "repo_id": "4"
+            }
+        ],
+    }
+```
+
+#### "/api/client"
+
+```json
 PUT:
 {
     "type": "EDIT_CUST",//编辑已有的顾客
@@ -382,8 +434,37 @@ GET:
         ]
 }
 ```
+#### "/api/client/${id}"
+
 ```json
-url:"/api/account"
+{
+        "cust_id": "6",
+        "cust_name": "刘七",
+        "cust_email": "buf@bugg.edu.cn",
+        "cust_co": "BUGG",
+        "cust_address": "平安街",
+        "cust_phone": "16763697568",
+        "cust_icon": logo,
+        "cust_wechat": "bilibili",
+        "cust_qq": "123141131",
+        "cust_duty":"经理",
+        "cust_business_scope":"文化用品",
+        "Order": [
+            {
+                "order_id": "121212",
+                "order_date": "2019-10-01",
+                "state": "3",
+                "order_info": "订单1"
+            }
+        ],
+    }
+```
+
+
+
+#### "/api/account"
+
+```json
 GET:
 {
     "admin_id":"001",
@@ -403,8 +484,9 @@ PUT:
 	}
 }
 ```
+#### "/api/login"
+
 ```json
-url:"/api/login"
 POST:
 {
     "username":"admin",
@@ -412,8 +494,9 @@ POST:
     "remember":true
 }
 ```
+#### "/api/signup"
+
 ```json
-url:"/api/signup"
 POST:
 {
     "email":"lzhmark@buaa.edu.cn",
@@ -422,8 +505,9 @@ POST:
     "password":"admin"
 }
 ```
+#### "/api/dashboard"
+
 ```json
-url:"api/dashboard"
 GET:
 {
     "Messages": [
@@ -476,8 +560,9 @@ GET:
     ]
 }
 ```
+#### "/api/userInfo"
+
 ```json
-url:"api/userInfo"
 GET:{
         "name":"admin",
         "admin_icon":"data:image/png;base64,....",

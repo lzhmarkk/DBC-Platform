@@ -5,7 +5,7 @@ import {Table, Button, Modal, Typography, Drawer, message, Card} from 'antd';
 import GenColumns, {genButtons, getButton, getGraph} from "../../Components/Order";
 import INewOrderPanel, {IFormPayload} from "../../Components/Order/form";
 import {orderStates} from "../../Components/Order";
-import orderApiData from "../../Assets/mockingApiData/order";
+import orderApiData from "../../Assets/mockingApiData/Order/order";
 import Axios from "axios";
 import {APIList} from "../../API";
 import ReactEcharts from "echarts-for-react";

@@ -303,7 +303,7 @@ class ApiOrderRepoMessSerializer(serializers.ModelSerializer):
     prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
     prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
     repo_id = serializers.PrimaryKeyRelatedField(source='repository', read_only=True)
-    repo_name = serializers.SlugRelatedField(source='repository', read_only=True)
+    repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
 
     class Meta:
         model = RepoMessage

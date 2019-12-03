@@ -36,8 +36,21 @@ class RepositoryDashboardRepoMessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RepoMessage
-        fields = ['repo_mess_id', 'repo_mess_info', 'direction', 'quantity',
-                  'prod_name', 'prod_id', 'repo_name', 'repo_id']
+        fields = ['repo_mess_id', 'repo_mess_info', 'quantity', 'prod_name', 'prod_id', 'repo_name', 'repo_id']
+
+
+class RepositoryDashboardTransMessSerializer(serializers.ModelSerializer):
+    repo_out_name = serializers.SlugRelatedField(source='from_repository', slug_field='repo_name', read_only=True)
+    repo_out_id = serializers.PrimaryKeyRelatedField(source='from_repository', read_only=True)
+    repo_in_name = serializers.SlugRelatedField(source='to_repository', slug_field='repo_name', read_only=True)
+    repo_in_id = serializers.PrimaryKeyRelatedField(source='to_repository', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    repo_mess_info = serializers.CharField(source='trans_mess_info')
+
+    class Meta:
+        model = TransMessage
+        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name',
+                  'quantity', 'repo_mess_info', 'repo_out_id', 'repo_in_id']
 
 
 class ApiRepositoryDashboardGetSerializer(serializers.Serializer):
@@ -45,10 +58,11 @@ class ApiRepositoryDashboardGetSerializer(serializers.Serializer):
     Messages = RepositoryDashboardWorkMessSerializer(source='work_mess', many=True)
     RepoMessIn = RepositoryDashboardRepoMessSerializer(source='repo_mess_in', many=True)
     RepoMessOut = RepositoryDashboardRepoMessSerializer(source='repo_mess_out', many=True)
+    RepoMessTrans = RepositoryDashboardTransMessSerializer(source='trans_mess', many=True)
 
 
 # url api/repository/in,out
-class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
+class RepositoryInOutRepoMessSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all())
     repo_id = serializers.PrimaryKeyRelatedField(source='repository', queryset=Repository.objects.all())
     prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
@@ -57,8 +71,50 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RepoMessage
-        fields = ['repo_mess_id', 'repo_mess_info', 'direction', 'quantity',
+        fields = ['repo_mess_id', 'repo_mess_info', 'quantity',
                   'prod_name', 'prod_id', 'repo_name', 'repo_id', 'order_id']
+
+
+class RepositoryInOutRepositorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Repository
+        fields = ['repo_id', 'repo_name']
+
+
+class RepositoryInOutProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['prod_id', 'prod_name']
+
+
+class RepositoryInOutOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['order_id']
+
+
+class ApiRepositoryInGetSerializer(serializers.Serializer):
+    RepoMessIn = RepositoryInOutRepoMessSerializer(source='repo_mess_in', many=True)
+    Repo = RepositoryInOutRepositorySerializer(source='repo', many=True)
+    Prod = RepositoryInOutProductSerializer(source='prod', many=True)
+    Order = RepositoryInOutOrderSerializer(source='order', many=True)
+
+
+class ApiRepositoryOutGetSerializer(serializers.Serializer):
+    RepoMessOut = RepositoryInOutRepoMessSerializer(source='repo_mess_out', many=True)
+    Repo = RepositoryInOutRepositorySerializer(source='repo', many=True)
+    Prod = RepositoryInOutProductSerializer(source='prod', many=True)
+    Order = RepositoryInOutOrderSerializer(source='order', many=True)
+
+
+class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
+    prod_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all())
+    repo_id = serializers.PrimaryKeyRelatedField(source='repository', queryset=Repository.objects.all())
+    order_id = serializers.PrimaryKeyRelatedField(source='order', queryset=Order.objects.all())
+
+    class Meta:
+        model = RepoMessage
+        fields = ['repo_mess_info', 'direction', 'quantity', 'prod_id', 'repo_id', 'order_id']
 
     def create(self, validated_data):
         repo_mess = RepoMessage.objects.create(**validated_data)
@@ -81,39 +137,28 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
         return repo_mess
 
 
-class RepositoryInOutRepositorySerializer(serializers.ModelSerializer):
+# url api/repository/trans
+class RepositoryTransRepoItemSerializer(serializers.ModelSerializer):
+    prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+
+    class Meta:
+        model = RepositoryItem
+        fields = ['quantity', 'prod_id', 'prod_name']
+
+
+class RepositoryTransRepositorySerializer(serializers.ModelSerializer):
+    RepoItem = RepositoryTransRepoItemSerializer(source='repo_items', many=True, read_only=True)
+
     class Meta:
         model = Repository
-        fields = ['repo_id', 'repo_name']
+        fields = ['repo_id', 'repo_name', 'RepoItem']
 
 
-class RepositoryInOutProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ['prod_id', 'prod_name']
+class ApiRepositoryTransGetSerializer(serializers.Serializer):
+    Repo = RepositoryTransRepositorySerializer(source='repo', many=True)
 
 
-class RepositoryInOutOrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ['order_id']
-
-
-class ApiRepositoryInGetSerializer(serializers.Serializer):
-    RepoMessIn = ApiRepositoryInOutPostSerializer(source='repo_mess_in', many=True)
-    Repo = RepositoryInOutRepositorySerializer(source='repo', many=True)
-    Prod = RepositoryInOutProductSerializer(source='prod', many=True)
-    Order = RepositoryInOutOrderSerializer(source='order', many=True)
-
-
-class ApiRepositoryOutGetSerializer(serializers.Serializer):
-    RepoMessOut = ApiRepositoryInOutPostSerializer(source='repo_mess_in', many=True)
-    Repo = RepositoryInOutRepositorySerializer(source='repo', many=True)
-    Prod = RepositoryInOutProductSerializer(source='prod', many=True)
-    Order = RepositoryInOutOrderSerializer(source='order', many=True)
-
-
-# url api/repository/trans
 class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
     repo_out_id = serializers.PrimaryKeyRelatedField(source='from_repository', queryset=Repository.objects.all())
     repo_in_id = serializers.PrimaryKeyRelatedField(source='to_repository', queryset=Repository.objects.all())
@@ -152,29 +197,51 @@ class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
         return trans_mess
 
 
-class RepositoryTransRepoItemSerializer(serializers.ModelSerializer):
+# url api/repository/${id}
+class RepositoryRepoItemSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
     prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
 
     class Meta:
         model = RepositoryItem
-        fields = ['quantity', 'prod_id', 'prod_name']
+        fields = ['prod_id', 'prod_name', 'quantity']
 
 
-class RepositoryTransRepositorySerializer(serializers.ModelSerializer):
-    RepoItem = RepositoryTransRepoItemSerializer(source='repo_items', many=True, read_only=True)
+class RepositoryRepoMessSerializer(serializers.ModelSerializer):
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    order_id = serializers.PrimaryKeyRelatedField(source='order', read_only=True)
 
     class Meta:
-        model = Repository
-        fields = ['repo_id', 'repo_name', 'RepoItem']
+        model = RepoMessage
+        fields = ['repo_mess_id', 'repo_mess_info', 'prod_name', 'order_id', 'quantity']
 
 
-class ApiRepositoryTransGetSerializer(serializers.Serializer):
-    Repo = RepositoryTransRepositorySerializer(source='repo', many=True)
+class RepositoryTransMessSerializer(serializers.ModelSerializer):
+    repo_out_name = serializers.SlugRelatedField(source='from_repository', slug_field='repo_name', read_only=True)
+    repo_out_id = serializers.PrimaryKeyRelatedField(source='from_repository', read_only=True)
+    repo_in_name = serializers.SlugRelatedField(source='to_repository', slug_field='repo_name', read_only=True)
+    repo_in_id = serializers.PrimaryKeyRelatedField(source='to_repository', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    repo_mess_info = serializers.CharField(source='trans_mess_info')
+
+    class Meta:
+        model = TransMessage
+        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'repo_mess_info', 'quantity']
 
 
-# url api/order
-class OrderOrderSerializer(serializers.ModelSerializer):
+class ApiRepositoryGetSerializer(serializers.Serializer):
+    repo_id = serializers.IntegerField()
+    repo_name = serializers.CharField()
+    repo_capacity = serializers.IntegerField()
+    repo_occupy = serializers.IntegerField()
+    RepoItem = RepositoryRepoItemSerializer(many=True)
+    RepoMessIn = RepositoryRepoMessSerializer(many=True)
+    RepoMessOut = RepositoryRepoMessSerializer(many=True)
+    RepoMessTrans = RepositoryTransMessSerializer(many=True)
+
+
+# url api/order/index
+class OrderIndexOrderSerializer(serializers.ModelSerializer):
     cust_name = serializers.SlugRelatedField(source='customer', slug_field='cust_name', read_only=True)
     cust_co = serializers.SlugRelatedField(source='customer', slug_field='cust_co', read_only=True)
 
@@ -183,29 +250,29 @@ class OrderOrderSerializer(serializers.ModelSerializer):
         fields = ['order_id', 'order_date', 'cust_name', 'cust_co', 'state', 'order_info']
 
 
-class OrderCustomerSerializer(serializers.ModelSerializer):
+class OrderIndexCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ['cust_name', 'cust_id', 'cust_co']
 
 
-class OrderGraphSerializer(serializers.Serializer):
+class OrderIndexGraphSerializer(serializers.Serializer):
     data = serializers.DateField()
     value = serializers.IntegerField()
 
 
-class ApiOrderGetSerializer(serializers.Serializer):
-    Order = OrderOrderSerializer(many=True)
-    Cust = OrderCustomerSerializer(many=True)
-    Graph = OrderGraphSerializer(many=True)
+class ApiOrderIndexGetSerializer(serializers.Serializer):
+    Order = OrderIndexOrderSerializer(many=True)
+    Cust = OrderIndexCustomerSerializer(many=True)
+    Graph = OrderIndexGraphSerializer(many=True)
 
 
-class ApiOrderPostSerializer(serializers.ModelSerializer):
+class ApiOrderIndexPostSerializer(serializers.ModelSerializer):
     cust_id = serializers.PrimaryKeyRelatedField(source='customer', read_only=True)
 
     class Meta:
         model = Order
-        fields = ['cust_id', 'order_info', 'order_data', 'order_info']
+        fields = ['cust_id', 'order_info', 'order_data', 'state']
 
     def create(self, validated_data):
         order = Order.objects.create(order_info=validated_data.get('order_info'),
@@ -214,7 +281,7 @@ class ApiOrderPostSerializer(serializers.ModelSerializer):
         return order
 
 
-class ApiOrderPutSerializer(serializers.ModelSerializer):
+class ApiOrderIndexPutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['order_id', 'state']
@@ -223,6 +290,109 @@ class ApiOrderPutSerializer(serializers.ModelSerializer):
         instance.state = validated_data.get('state')
         instance.save()
         return instance
+
+
+# url api/order/${id}
+class ApiOrderProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['prod_id', 'prod_name', 'prod_desc', 'prod_unit', 'prod_price', 'quantity']
+
+
+class ApiOrderRepoMessSerializer(serializers.ModelSerializer):
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
+    repo_id = serializers.PrimaryKeyRelatedField(source='repository', read_only=True)
+    repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
+
+    class Meta:
+        model = RepoMessage
+        fields = ['repo_mess_id', 'repo_mess_info', 'direction', 'quantity',
+                  'prod_name', 'prod_id', 'repo_id', 'repo_name']
+
+
+class ApiOrderGetSerializer(serializers.Serializer):
+    cust_id = serializers.IntegerField()
+    cust_name = serializers.CharField()
+    cust_co = serializers.CharField()
+
+    order_id = serializers.IntegerField()
+    order_date = serializers.DateField()
+    state = serializers.IntegerField()
+    order_info = serializers.CharField()
+    order_amount = serializers.IntegerField()
+    order_payee = serializers.CharField()
+    order_payer = serializers.CharField()
+    order_pay_type = serializers.CharField()
+    order_serial = serializers.CharField()
+    order_payee_card = serializers.CharField()
+    order_payee_bank = serializers.CharField()
+    order_tex = serializers.IntegerField()
+    order_payer_card = serializers.CharField()
+    order_payer_bank = serializers.CharField()
+    order_description = serializers.CharField()
+
+    Prod = ApiOrderProductSerializer(many=True)
+    RepoMessIn = ApiOrderRepoMessSerializer(many=True)
+    RepoMessOut = ApiOrderRepoMessSerializer(many=True)
+
+
+# url api/client/index
+class ClientIndexCustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
+class ClientIndexGraphSerializer(serializers.Serializer):
+    cust_name = serializers.CharField()
+    cust_orders = serializers.IntegerField()
+
+
+class ApiClientIndexGetSerializer(serializers.Serializer):
+    Cust = ClientIndexCustomerSerializer(many=True)
+    Graph = ClientIndexGraphSerializer(many=True)
+
+
+class ApiClientPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['__all__']
+
+    def create(self, validated_data):
+        return Customer.objects.create(**validated_data)
+
+
+class ApiClientPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['__all__']
+
+    def update(self, instance, validated_data):
+        instance.cust_name = validated_data.get('cust_name')
+        instance.cust_email = validated_data.get('cust_email')
+        instance.cust_co = validated_data.get('cust_co')
+        instance.cust_address = validated_data.get('cust_address')
+        instance.cust_phone = validated_data.get('cust_phone')
+        instance.save()
+        return instance
+
+
+# url api/client
+class ClientOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['order_id', 'order_date', 'state', 'order_info']
+
+
+class ApiClientGetSerializer(serializers.ModelSerializer):
+    Order = ClientOrderSerializer(source='order_set', many=True)
+
+    class Meta:
+        model = Customer
+        fields = ['cust_id', 'cust_name', 'cust_email', 'cust_co', 'cust_address',
+                  'cust_phone', 'cust_icon', 'cust_wechat', 'cust_qq', 'cust_duty',
+                  'cust_business_scope', 'Order']
 
 
 # url api/account
@@ -250,49 +420,8 @@ class ApiAccountPutSerializer(serializers.ModelSerializer):
         return instance
 
 
-# url api/client
-class ClientCustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = '__all__'
-
-
-class ClientGraphSerializer(serializers.Serializer):
-    cust_name = serializers.CharField()
-    cust_orders = serializers.IntegerField()
-
-
-class ApiClientGetSerializer(serializers.Serializer):
-    Cust = ClientCustomerSerializer(many=True)
-    Graph = ClientGraphSerializer(many=True)
-
-
-class ApiClientPostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = ['__all__']
-
-    def create(self, validated_data):
-        return Customer.objects.create(**validated_data)
-
-
-class ApiClientPutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = ['__all__']
-
-    def update(self, instance, validated_data):
-        instance.cust_name = validated_data.get('cust_name')
-        instance.cust_email = validated_data.get('cust_email')
-        instance.cust_co = validated_data.get('cust_co')
-        instance.cust_address = validated_data.get('cust_address')
-        instance.cust_phone = validated_data.get('cust_phone')
-        instance.save()
-        return instance
-
-
-# url api/dashboard
-class DashboardWorkMessSerializer(serializers.ModelSerializer):
+# url api/index
+class IndexWorkMessSerializer(serializers.ModelSerializer):
     admin_id = serializers.PrimaryKeyRelatedField(source='admin', read_only=True)
 
     class Meta:
@@ -300,52 +429,49 @@ class DashboardWorkMessSerializer(serializers.ModelSerializer):
         fields = ['admin_id', 'work_mess_info']
 
 
-class DashboardRepositorySerializer(serializers.ModelSerializer):
+class IndexRepositorySerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='repo_name')
 
     class Meta:
         model = Repository
-        fields = ['name', 'repo_occupy', 'repo_capacity']
+        fields = ['repo_id', 'name', 'repo_occupy', 'repo_capacity']
 
 
-class DashboardRepoMessSerializer(serializers.ModelSerializer):
+class IndexRepoMessSerializer(serializers.ModelSerializer):
     repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
+    repo_id = serializers.PrimaryKeyRelatedField(source='repository', read_only=True)
 
     class Meta:
         model = RepoMessage
-        fields = ['repo_name', 'quantity', 'repo_mess_info']
+        fields = ['repo_mess_id', 'repo_name', 'repo_id', 'quantity', 'repo_mess_info']
 
 
-class DashboardTransMessSerializer(serializers.ModelSerializer):
+class IndexTransMessSerializer(serializers.ModelSerializer):
     repo_out_name = serializers.SlugRelatedField(source='from_repository', slug_field='repo_name', read_only=True)
     repo_in_name = serializers.SlugRelatedField(source='to_repository', slug_field='repo_name', read_only=True)
     prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
     repo_mess_info = serializers.CharField(source='trans_mess_info')
+    repo_out_id = serializers.PrimaryKeyRelatedField(source='from_repository', read_only=True)
+    repo_in_id = serializers.PrimaryKeyRelatedField(source='to_repository', read_only=True)
 
     class Meta:
         model = TransMessage
-        fields = ['repo_out_name', 'repo_in_name', 'prod_name', 'quantity', 'repo_mess_info']
+        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'quantity', 'repo_mess_info']
 
 
-class DashboardCustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = ['cust_co', 'cust_name']
-
-
-class DashboardGraphSerializer(serializers.Serializer):
+class IndexGraphSerializer(serializers.Serializer):
+    cust_id = serializers.IntegerField()
     cust_name = serializers.CharField()
     cust_orders = serializers.IntegerField()
 
 
-class ApiDashboardGetSerializer(serializers.Serializer):
-    Messages = DashboardWorkMessSerializer(many=True)
-    Repo = DashboardRepositorySerializer(many=True)
-    RepoMessIn = DashboardRepoMessSerializer(many=True)
-    RepoMessOut = DashboardRepoMessSerializer(many=True)
-    RepoMessTrans = DashboardTransMessSerializer(many=True)
-    Cust = DashboardCustomerSerializer(many=True)
-    Graph = DashboardGraphSerializer(many=True)
+class ApiIndexGetSerializer(serializers.Serializer):
+    Messages = IndexWorkMessSerializer(many=True)
+    Repo = IndexRepositorySerializer(many=True)
+    RepoMessIn = IndexRepoMessSerializer(many=True)
+    RepoMessOut = IndexRepoMessSerializer(many=True)
+    RepoMessTrans = IndexTransMessSerializer(many=True)
+    Graph = IndexGraphSerializer(many=True)
 
 
 # url api/userInfo
@@ -357,44 +483,4 @@ class ApiUserInfoGetSerializer(serializers.ModelSerializer):
         model = Admin
         fields = ['name', 'admin_icon', 'admin_description']
 
-
-# url api/repository/${id}
-class RepositoryRepoItemSerializer(serializers.ModelSerializer):
-    prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
-    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
-
-    class Meta:
-        model = RepositoryItem
-        fields = ['prod_id', 'prod_name', 'quantity']
-
-
-class RepositoryRepoMessSerializer(serializers.ModelSerializer):
-    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
-    order_id = serializers.PrimaryKeyRelatedField(source='order', read_only=True)
-
-    class Meta:
-        model = RepoMessage
-        fields = ['repo_mess_id', 'repo_mess_info', 'prod_name', 'order_id', 'quantity']
-
-
-class RepositoryTransMessSerializer(serializers.ModelSerializer):
-    repo_out_name = serializers.SlugRelatedField(source='from_repository', slug_field='repo_name', read_only=True)
-    repo_in_name = serializers.SlugRelatedField(source='to_repository', slug_field='repo_name', read_only=True)
-    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
-    repo_mess_info = serializers.CharField(source='trans_mess_info')
-
-    class Meta:
-        model = TransMessage
-        fields = ['repo_out_name', 'repo_in_name', 'prod_name', 'repo_mess_info', 'quantity']
-
-
-class ApiRepositoryGetSerializer(serializers.Serializer):
-    repo_id = serializers.IntegerField()
-    repo_name = serializers.CharField()
-    repo_capacity = serializers.IntegerField()
-    repo_occupy = serializers.IntegerField()
-    RepoItem = RepositoryRepoItemSerializer(many=True)
-    RepoMessIn = RepositoryRepoMessSerializer(many=True)
-    RepoMessOut = RepositoryRepoMessSerializer(many=True)
-    RepoMessTrans = RepositoryTransMessSerializer(many=True)
 

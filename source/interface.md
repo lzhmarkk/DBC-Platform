@@ -221,6 +221,7 @@ GET:
             {
                 "order_id": "121212",
                 "order_date": "2019-10-01",
+                "cust_id": "1",
                 "cust_name": "张三",
                 "cust_co": "BUAA",
                 "state": "3",
@@ -262,7 +263,7 @@ GET:
         "order_amount": "100000",
         "order_payee": "张三",
         "order_payer": "高萍萍",
-        "order_pay_type":"cash",
+        "order_pay_type":"transfer",
         "order_serial": "8967891810204394720194",
         "order_payee_card": "6221014165860322903",
         "order_payee_bank": "中国工商银行",
@@ -284,7 +285,6 @@ GET:
             {
                 "repo_mess_id": "1",
                 "repo_mess_info": "购入100个西瓜",
-                "direction": "IN",
                 "quantity": "100",
                 "prod_name": "西瓜",
                 "prod_id": "6",
@@ -296,7 +296,6 @@ GET:
             {
                 "repo_mess_id": "4",
                 "repo_mess_info": "售出100个水壶",
-                "direction": "OUT",
                 "quantity": "100",
                 "prod_name": "水壶",
                 "prod_id": "1",

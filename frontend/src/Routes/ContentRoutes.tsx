@@ -12,7 +12,7 @@ const ContentRoutes = () => <Switch>
     <Route exact path="/" render={() => <PageDashBoard/>}/>
     <Route path="/index" render={() => <PageDashBoard/>}/>
     <Route path="/repository/" render={PageRepository}/>
-    <Route path="/order" render={() => <PageOrder/>}/>
+    <Route path="/order/" render={PageOrder}/>
     <Route path="/client/" render={PageClient}/>
     <Route path="/account" render={() => <PageAccount/>}/>
     <Route path="/help" render={() => <PageHelp/>}/>

@@ -10,7 +10,7 @@ const orderDetailApiData =
         "order_amount": "100000",
         "order_payee": "张三",
         "order_payer": "高萍萍",
-        "order_pay_type":"cash",
+        "order_pay_type":"transfer",
         "order_serial": "8967891810204394720194",
         "order_payee_card": "6221014165860322903",
         "order_payee_bank": "中国工商银行",
@@ -48,7 +48,6 @@ const orderDetailApiData =
             {
                 "repo_mess_id": "1",
                 "repo_mess_info": "购入100个西瓜",
-                "direction": "IN",
                 "quantity": "100",
                 "prod_name": "西瓜",
                 "prod_id": "6",
@@ -58,7 +57,6 @@ const orderDetailApiData =
             {
                 "repo_mess_id": "2",
                 "repo_mess_info": "购入100个坦克",
-                "direction": "IN",
                 "quantity": "100",
                 "prod_name": "坦克",
                 "prod_id": "9",
@@ -68,7 +66,6 @@ const orderDetailApiData =
             {
                 "repo_mess_id": "3",
                 "repo_mess_info": "购入123个ipad",
-                "direction": "IN",
                 "quantity": "223",
                 "prod_name": "iPad",
                 "prod_id": "3",
@@ -80,7 +77,6 @@ const orderDetailApiData =
             {
                 "repo_mess_id": "4",
                 "repo_mess_info": "售出100个水壶",
-                "direction": "OUT",
                 "quantity": "100",
                 "prod_name": "水壶",
                 "prod_id": "1",
@@ -90,7 +86,6 @@ const orderDetailApiData =
             {
                 "repo_mess_id": "5",
                 "repo_mess_info": "售出666盒巧克力",
-                "direction": "OUT",
                 "quantity": "666",
                 "prod_name": "巧克力",
                 "prod_id": "4",

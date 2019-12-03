@@ -1,7 +1,7 @@
 import React from "react";
-import {Button, Radio} from "antd";
+import {Button, Tag} from "antd";
 
-const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
+export const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
         dataIndex: "order_id", title: "订单编号", key: "order_id",
         sorter: (a: any, b: any) => parseInt(a.order_id) - parseInt(b.order_id),
@@ -10,14 +10,16 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
         dataIndex: "order_date", title: "订单时间", key: "order_date",
     },
-    {dataIndex: "cust_name", title: "客户名", key: "cust_name",},
+    {
+        dataIndex: "cust_name", title: "客户名", key: "cust_name",
+        render: (_: any, a: any, ___: any) => <a href={`/client/${a.cust_id}`}>{a.cust_name}</a>
+    },
     {dataIndex: "cust_co", title: "公司名", key: "cust_co",},
     {
-        dataIndex: "Action", title: "订单状态", key: "Action",
+        dataIndex: "Action", title: "查看更多", key: "Action",
         render: (_: any, record: any, ___: any) => <Action record={record}/>
     },
 ];
-export default GenColumns;
 
 export const orderStates: any = {"1": "草稿", "2": "已签订", "3": "已付款", "4": "已完成", "5": "已取消"};
 
@@ -41,38 +43,16 @@ export const getButton = (props: { record: any }, handleClick: () => void) => {
     </Button>);
 };
 
-export const genButtons = (cur: any, setNextState: (index: string) => void) => {
-    if (cur == undefined) return;
-    return (<div>
-            <Button value={"1"} type={"dashed"} disabled={parseInt(cur.state) >= 1} onClick={() => {
-                setNextState("1");
-            }}>{orderStates["1"]}</Button>
-            <Button value={"2"} disabled={parseInt(cur.state) >= 2} onClick={() => {
-                setNextState("2");
-            }}>{orderStates["2"]}</Button>
-            <Button value={"3"} type={"primary"} ghost disabled={parseInt(cur.state) >= 3} onClick={() => {
-                setNextState("3");
-            }}>{orderStates["3"]}</Button>
-            <Button value={"4"} type={"primary"} disabled={parseInt(cur.state) >= 4} onClick={() => {
-                setNextState("4");
-            }}>{orderStates["4"]}</Button>
-            <Button value={"5"} type={"danger"} disabled={parseInt(cur.state) >= 5} onClick={() => {
-                setNextState("5");
-            }}>{orderStates["5"]}</Button>
-        </div>
-    )
+export const genTags = (state: string) => {
+    const color = state === "1" ? "lime" : state == "2" ? "volcano" : state == "3" ? "geekblue" : state == "4" ? "green" : "red";
+    return (
+        <Tag color={color} key={state}>
+            {orderStates[state]}
+        </Tag>
+    );
 };
 
-export const genFormButtons = (
-    <Radio.Group>
-        <Radio.Button value="1">{orderStates["1"]}</Radio.Button>
-        <Radio.Button value="2">{orderStates["2"]}</Radio.Button>
-        <Radio.Button value="3">{orderStates["3"]}</Radio.Button>
-        <Radio.Button value="4">{orderStates["4"]}</Radio.Button>
-        <Radio.Button value="5" disabled={true}>{orderStates["5"]}</Radio.Button>
-    </Radio.Group>);
-
-export const getGraph = (x: string[], y: string[],max:number) => {
+export const getGraph = (x: string[], y: string[], max: number) => {
     return ({
         title: {
             text: '订单数量图',
@@ -136,3 +116,79 @@ export const getGraph = (x: string[], y: string[],max:number) => {
         ]
     });
 };
+
+export const genProdColumns = () => [
+    {
+        dataIndex: "prod_id", title: "产品编号", key: "prod_id",
+        sorter: (a: any, b: any) => parseInt(a.prod_id) - parseInt(b.prod_id),
+    },
+    {dataIndex: "prod_name", title: "产品名", key: "prod_name"},
+    {dataIndex: "prod_desc", title: "产品描述", key: "prod_desc"},
+    {dataIndex: "prod_unit", title: "单位", key: "prod_unit"},
+    {
+        dataIndex: "prod_price", title: "单价", key: "prod_price",
+        sorter: (a: any, b: any) => parseInt(a.prod_price) - parseInt(b.prod_price),
+    },
+    {
+        dataIndex: "quantity", title: "数量", key: "quantity",
+        sorter: (a: any, b: any) => parseInt(a.quantity) - parseInt(b.quantity),
+    },
+];
+
+export const genProdGraph = (prod_name: string[], quantity: number[]) => {
+    return ({
+        title: {
+            text: '订单产品图',
+            subtext: '数据自动生成',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: prod_name
+        },
+        series:
+            {
+                name: '数量',
+                type: 'bar',
+                data: quantity
+            }
+
+    });
+};
+
+export const genRepoMessColumns = (direction: string) => [
+    {
+        dataIndex: "repo_mess_id", title: direction == "IN" ? "转入编号" : "转出编号", key: "repo_mess_id",
+        sorter: (a: any, b: any) => parseInt(a.repo_mess_id) - parseInt(b.repo_mess_id),
+    },
+    {dataIndex: "repo_mess_info", title: direction == "IN" ? "转入详情" : "转出详情", key: "repo_mess_info"},
+    {
+        dataIndex: "prod_name", title: "产品", key: "prod_name",
+        sorter: (a: any, b: any) => parseInt(a.prod_id) - parseInt(b.prod_id),
+    },
+    {
+        dataIndex: "quantity", title: "数量", key: "quantity",
+        sorter: (a: any, b: any) => parseInt(a.quantity) - parseInt(b.quantity),
+    },
+    {
+        dataIndex: "repo_name", title: "仓库名", key: "repo_name",
+        sorter: (a: any, b: any) => parseInt(a.repo_id) - parseInt(b.repo_id),
+        render: (_: any, a: any, ___: any) => <a href={`/repository/${a.repo_id}`}>{a.repo_name}</a>
+    },
+];

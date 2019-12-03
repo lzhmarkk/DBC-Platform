@@ -47,7 +47,7 @@ const sideMenuItems: IMenuItem[] = [
     {
         title: "订单",
         key: "order",
-        route: "/order",
+        route: "/order/index",
         icon: "form",
         children: []
     },
@@ -55,7 +55,7 @@ const sideMenuItems: IMenuItem[] = [
     {
         title: "客户信息",
         key: "client",
-        route: "/client",
+        route: "/client/index",
         icon: "apple",
         children: []
     },
@@ -69,7 +69,7 @@ const sideMenuItems: IMenuItem[] = [
     {
         title: "帮助",
         key: "help",
-        route: "/help/",
+        route: "/help",
         icon: "question-circle",
         children: []
     },

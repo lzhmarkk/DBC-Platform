@@ -1,0 +1,55 @@
+h1,h2{
+    text-align: center;
+}
+
+.imgbox {
+    width: 100%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+
+    }
+    p{
+        width: 100%;
+        text-align: center;
+
+
+    }
+}
+
+.hbox{
+    display: flex;
+    justify-content: space-around;
+}
+
+.resultItem{
+    width: 45%;
+}
+.ControlPanel{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.root{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+
+
+}
+.stepForm{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.formArea{
+    width: 50%;
+    max-width: 35em;
+    min-width: 20em;
+
+
+
+}

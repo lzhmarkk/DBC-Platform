@@ -4,6 +4,7 @@ const orderApiData =
             {
                 "order_id": "121212",
                 "order_date": "2019-10-01",
+                "cust_id": "1",
                 "cust_name": "张三",
                 "cust_co": "BUAA",
                 "state": "3",
@@ -12,6 +13,7 @@ const orderApiData =
             {
                 "order_id": "33243424",
                 "order_date": "2019-12-31",
+                "cust_id": "3",
                 "cust_name": "张三",
                 "cust_co": "BUAA",
                 "state": "1",
@@ -20,6 +22,7 @@ const orderApiData =
             {
                 "order_id": "3243",
                 "order_date": "2018-01-01",
+                "cust_id": "5",
                 "cust_name": "王五",
                 "cust_co": "BUCC",
                 "state": "2",
@@ -28,6 +31,7 @@ const orderApiData =
             {
                 "order_id": "335554109",
                 "order_date": "2019-07-31",
+                "cust_id": "7",
                 "cust_name": "刘七",
                 "cust_co": "BUKK",
                 "state": "5",

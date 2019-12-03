@@ -21,6 +21,10 @@ class Customer(models.Model):
     cust_email = models.EmailField(null=True)
     cust_co = models.CharField(max_length=150, null=True)
     cust_phone = models.CharField(max_length=50, null=True)
+    cust_duty = models.CharField(max_length=50)
+    cust_wechat = models.CharField(max_length=50)
+    cust_qq = models.CharField(max_length=50)
+    cust_business_scope = models.CharField(max_length=50)
 
 
 class Order(models.Model):
@@ -28,6 +32,17 @@ class Order(models.Model):
     order_date = models.DateField(auto_now=True)
     state = models.IntegerField(default=0)
     order_info = models.TextField(null=True)
+    order_amount = models.IntegerField()
+    order_payee = models.CharField(max_length=50)
+    order_payer = models.CharField(max_length=50)
+    order_payee_card = models.CharField(max_length=50)
+    order_payee_bank = models.CharField(max_length=100)
+    order_payer_card = models.CharField(max_length=50)
+    order_payer_bank = models.CharField(max_length=100)
+    order_serial = models.CharField(max_length=100)
+    order_tex = models.IntegerField()
+    order_pay_type = models.CharField(max_length=100)
+    order_description = models.TextField()
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
@@ -36,6 +51,8 @@ class Product(models.Model):
     prod_id = models.AutoField(primary_key=True)
     prod_name = models.CharField(max_length=50)
     prod_desc = models.TextField(null=True)
+    prod_unit = models.CharField(max_length=50)
+    prod_price = models.IntegerField()
 
 
 class OrderItem(models.Model):

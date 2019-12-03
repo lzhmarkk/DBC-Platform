@@ -17,7 +17,8 @@ def api_repository_dashboard(request):
         'repo': Repository.objects.all(),
         'work_mess': WorkMessage.objects.all(),
         'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
-        'repo_mess_out': RepoMessage.objects.filter(direction='OUT')
+        'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
+        'trans_mess': TransMessage.objects.all()
     }
     serializer = ApiRepositoryDashboardGetSerializer(data)
 
@@ -58,7 +59,7 @@ def api_repository_out(request):
             return JsonResponse(serializer.errors)
 
     data = {
-        'repo_mess_in': RepoMessage.objects.filter(direction='OUT'),
+        'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
         'repo': Repository.objects.all(),
         'prod': Product.objects.all(),
         'order': Order.objects.all()
@@ -84,16 +85,16 @@ def api_repository_trans(request):
 
 
 @csrf_exempt
-def api_order(request):
+def api_order_index(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
-        serializer = ApiOrderPostSerializer(data=data)
+        serializer = ApiOrderIndexPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
     elif request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
         order = Order.objects.get(order_id=data.get('order_id'))
-        serializer = ApiOrderPostSerializer(order, data=data)
+        serializer = ApiOrderIndexPostSerializer(order, data=data)
         if serializer.is_valid():
             serializer.save()
 
@@ -101,6 +102,35 @@ def api_order(request):
         'Order': Order.objects.all(),
         'Cust': Customer.objects.all(),
         'Graph': get_last_year_orders()
+    }
+    serializer = ApiOrderIndexGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+def api_order(request, order_id):
+    order = Order.objects.get(order_id=order_id)
+    data = {
+        'cust_id': order.customer_id,
+        'cust_name': order.customer.cust_name,
+        'cust_co': order.customer.cust_co,
+        'order_id': order.order_id,
+        'order_date': order.order_date,
+        'state': order.state,
+        'order_info': order.order_info,
+        'order_amount': order.order_amount,
+        'order_payee': order.order_payee,
+        'order_payer': order.order_payer,
+        'order_pay_type': order.order_pay_type,
+        'order_serial': order.order_serial,
+        'order_payee_card': order.order_payee_card,
+        'order_payee_bank': order.order_payee_bank,
+        'order_payer_card': order.order_payer_card,
+        'order_payer_bank': order.order_payer_bank,
+        'order_tex': order.order_tex,
+        'order_description': order.order_description,
+        'Prod': order.orderitem_set.all(),
+        'RepoMessIn': order.repomessage_set.filter(direction='In'),
+        'RepoMessOut': order.repomessage_set.filter(direction='Out')
     }
     serializer = ApiOrderGetSerializer(data)
     return JsonResponse(serializer.data)
@@ -122,7 +152,7 @@ def api_account(request):
 
 
 @csrf_exempt
-def api_client(request):
+def api_client_index(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
         serializer = ApiClientPostSerializer(data=data)
@@ -139,21 +169,26 @@ def api_client(request):
         'Cust': Customer.objects.all(),
         'Graph': get_most_order_cust(10)
     }
+    serializer = ApiClientIndexGetSerializer(data)
+    return JsonResponse(serializer.data)
+
+
+def api_client(request, cust_id):
+    data = Customer.objects.get(cust_id=cust_id)
     serializer = ApiClientGetSerializer(data)
     return JsonResponse(serializer.data)
 
 
-def api_dashboard(request):
+def api_index(request):
     data = {
         'Messages': WorkMessage.objects.all(),
         'Repo': Repository.objects.all(),
         'RepoMessIn': RepoMessage.objects.filter(direction='In'),
         'RepoMessOut': RepoMessage.objects.filter(direction='Out'),
         'RepoMessTrans': TransMessage.objects.all(),
-        'Cust': Customer.objects.all(),
         'Graph': get_most_order_cust(5)
     }
-    serializer = ApiDashboardGetSerializer(data)
+    serializer = ApiIndexGetSerializer(data)
     return JsonResponse(serializer.data)
 
 

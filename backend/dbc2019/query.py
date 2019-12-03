@@ -9,6 +9,7 @@ def get_most_order_cust(num):
     datas = []
     for customer in customers:
         data = {
+            'cust_id': customer.cust_id,
             'cust_name': customer.cust_name,
             'cust_orders': len(customer.order_set.all())
         }

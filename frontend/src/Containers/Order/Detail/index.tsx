@@ -146,6 +146,7 @@ const PageOrderDetail = withRouter((prop) => {
                                  const editOrder = {
                                      "type": "EDIT_ORDER",
                                      "data": {
+                                         "order_id": id,
                                          "cust_id": e.cust_id,
                                          "order_info": e.order_info,
                                          "order_date": e.order_date,
@@ -160,7 +161,8 @@ const PageOrderDetail = withRouter((prop) => {
                                          "order_tex": e.order_tex,
                                          "order_payer_card": e.order_payer_card,
                                          "order_payer_bank": e.order_payer_bank,
-                                         "order_description": e.order_description
+                                         "order_description": e.order_description,
+                                         "Prod": e.Prod
                                      }
                                  };
                                  console.log("订单修改", editOrder);

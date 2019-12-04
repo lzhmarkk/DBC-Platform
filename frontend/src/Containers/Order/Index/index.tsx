@@ -103,7 +103,8 @@ const PageOrderIndex = () => {
                                          "order_tex": e.order_tex,
                                          "order_payer_card": e.order_payer_card,
                                          "order_payer_bank": e.order_payer_bank,
-                                         "order_description": e.order_description
+                                         "order_description": e.order_description,
+                                         "Prod": e.Prod
                                      }
                                  };
                                  console.log("表单数据");

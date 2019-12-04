@@ -199,21 +199,41 @@ GET:
 //订单
 POST:
 {
-	"type":"NEW_ORDER",
-	"data":{
-		"cust_id":"12",
-		"order_info":"新订单",
-		"order_date":"20190304",
-		"state":"1"
-	}
+    "type": "NEW_ORDER",
+    "data": {
+        "cust_id":"2",
+        "order_info": "与高小姐达成的长期进货协议",
+        "order_date": "2019-10-01",
+        "state": "3",
+        "order_amount": "100000",
+        "order_payee": "张三",
+        "order_payer": "高萍萍",
+        "order_pay_type":"transfer",
+        "order_serial": "8967891810204394720194",
+        "order_payee_card": "6221014165860322903",
+        "order_payee_bank": "中国工商银行",
+        "order_tex":"0",
+        "order_payer_card": "6221113134381613311",
+        "order_payer_bank": "中国农业银行",
+        "order_description":"详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息详细信息",
+        "Prod":[//如果没有该产品，创建一个，产品的候选码可以为name
+            {
+                "prod_name":"螺丝刀",
+                "prod_desc":"军用",
+                "prod_unit":"只",
+                "prod_price":"5",
+                "quantity":"100"
+            }
+        ],
+    }
 }
 PUT:
 {
-	"type":"CHANGE_ORDER_STATE",
-	"data":{
-		"order_id":"11111",
-		"state":"3"
-	}
+    "type": "EDIT_ORDER",
+    "data": {
+        "order_id":"1",
+        //同post
+    }
 }
 GET:
 {

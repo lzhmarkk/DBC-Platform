@@ -329,7 +329,31 @@ GET:
 #### "/api/client/index"
 
 ```json
+POST:
+{
+    "type": "NEW_CUST",
+    "data":{
+        "cust_name": "刘七",
+        "cust_email": "buf@bugg.edu.cn",
+        "cust_co": "BUGG",
+        "cust_address": "平安街",
+        "cust_phone": "16763697568",
+        "cust_icon": "...",
+        "cust_wechat": "bilibili",
+        "cust_qq": "123141131",
+        "cust_duty":"经理",
+        "cust_business_scope":"文化用品"
+	}
+}
 PUT:
+{
+    "type": "EDIT_CUST",
+    "data":{
+        "cust_id": "6",
+        //同POST
+	}
+}
+GET:
 {
     "Cust": [
         {
@@ -352,6 +376,7 @@ PUT:
 #### "/api/client/${id}"
 
 ```json
+GET:
 {
         "cust_id": "6",
         "cust_name": "刘七",

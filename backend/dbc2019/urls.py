@@ -20,5 +20,7 @@ urlpatterns = [
     path('api/userInfo/', views.api_userInfo, name='api_userInfo'),
     path('api/login/', views.api_login, name='api_login'),
     path('api/signup/', views.api_signup, name='api_signup'),
-    path('api/repository/<int:repo_id>/', views.api_repository, name='api_repository')
+    path('api/repository/<int:repo_id>/', views.api_repository, name='api_repository'),
+    path('api/checkLogin/', views.api_checkLogin, name='api_checkLogin'),
+    path('api/login/', views.api_logout, name='api_logout'),
 ]

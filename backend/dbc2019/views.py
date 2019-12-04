@@ -239,6 +239,19 @@ def api_signup(request):
     return HttpResponse(status=status.HTTP_200_OK)
 
 
+@csrf_exempt
+def api_checkLogin(request):
+    # todo checklogin
+    return HttpResponse(status=status.HTTP_200_OK)
+    # return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@csrf_exempt
+def api_logout(request):
+    # todo logout
+    return HttpResponse(status=status.HTTP_200_OK)
+
+
 def add_example(request):
     # admin
     user_1 = User.objects.create_user(username='bob', password='123456')

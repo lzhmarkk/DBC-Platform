@@ -1,7 +1,6 @@
 import React, {useState, ReactElement, useEffect} from "react"
-import {Layout, Button, Modal, DatePicker, Statistic, Icon, message} from 'antd';
+import {Layout, Button, Modal, Statistic, Icon, message} from 'antd';
 import styles from "./index.module.scss"
-import Avatar from "../../Assets/logo.jpeg"
 import './index.css'
 import SideMenu from "../SideMenu";
 import {Redirect} from "react-router";
@@ -9,19 +8,25 @@ import moment from "moment";
 import Axios from "axios";
 import {APIList} from "../../API";
 import apiUserInfo from "../../Assets/mockingApiData/userInfo";
+import {useDispatch, useSelector} from "react-redux";
+import {IRootStore} from "../../@types/store";
+import {logout} from "../../Containers/Login/actions";
+import {withAuth} from "../Common/AuthWrapper";
 
 const {Header, Content, Sider} = Layout;
 
-const MainLayout = (props: { children: ReactElement }) => {
-    const [loginState, setLoginState] = useState(true);
+const Main = (props: { children: ReactElement }) => {
+    const dispatch = useDispatch();
+    const isLogin = useSelector<IRootStore, any>(e => e.login.loginState);
+
     const [collapsed, setCollapsed] = useState(false);
-    const [logout, setLogout] = useState(false);
+    const [logoutModel, setLogoutModel] = useState(false);
     const [userInfo, setUserInfo] = useState(apiUserInfo);
     const [time, setTime] = useState(moment().format("h:mm:ss"));
     setInterval(() => setTime(moment().format("h:mm:ss")), 1000);
 
     useEffect(() => {
-        Axios.get(APIList.userInfo,{withCredentials:true})
+        Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
             })
@@ -55,7 +60,7 @@ const MainLayout = (props: { children: ReactElement }) => {
                         <span>{userInfo.admin_name}</span>
                     </div>
                     <div>
-                        <Button icon={"logout"} ghost onClick={() => setLogout(true)}/>
+                        <Button icon={"logout"} ghost onClick={() => setLogoutModel(true)}/>
                     </div>
                 </div>
             </Header>
@@ -63,14 +68,13 @@ const MainLayout = (props: { children: ReactElement }) => {
                 {props.children}
             </Content>
             <Modal title=""
-                   visible={logout}
+                   visible={logoutModel}
                    onCancel={() => {
-                       setLogout(false);
+                       setLogoutModel(false);
                    }}
                    onOk={() => {
-                       setLogout(false);
-                       setLoginState(false);
-                       //todo logout
+                       setLogoutModel(false);
+                       dispatch(logout());
                    }}
                    okText="退出"
                    cancelText="取消"
@@ -83,6 +87,7 @@ const MainLayout = (props: { children: ReactElement }) => {
     </Layout>;
     const jump = <Redirect to="/login"/>;
 
-    return loginState ? layout : jump;
+    return isLogin ? layout : jump;
 };
+const MainLayout = withAuth(Main);
 export default MainLayout;

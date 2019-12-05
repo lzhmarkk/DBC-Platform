@@ -87,7 +87,7 @@ class RepoMessage(models.Model):
     quantity = models.IntegerField()
     direction = models.CharField(max_length=50)
     repo_mess_datetime = models.DateTimeField(auto_now=True)
-    state = models.CharField(max_length=50, default='未完成')
+    state = models.IntegerField(default=0)
 
     repository = models.ForeignKey(Repository, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -99,7 +99,7 @@ class TransMessage(models.Model):
     trans_mess_info = models.TextField(null=True)
     quantity = models.IntegerField()
     trans_mess_datetime = models.DateTimeField(auto_now=True)
-    state = models.CharField(max_length=50, default='未完成')
+    state = models.IntegerField(default=0)
     flag = models.IntegerField(default=0)
 
     from_repository = models.ForeignKey(Repository, related_name='from_mess', on_delete=models.CASCADE)

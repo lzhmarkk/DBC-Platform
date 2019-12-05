@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import *
+from .utils import *
 
 
 # util func
@@ -137,6 +138,19 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
         return repo_mess
 
 
+class ApiRepositoryInOutPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RepoMessage
+        fields = ['repo_mess_id', 'state']
+
+    def update(self, instance, validated_data):
+        instance.state = validated_data.get('state')
+        instance.save()
+        # when repo_mess state change, also change the product num in the repository
+        update_repository_item(instance.repository, instance.product, instance.direction, instance.quantity)
+        return instance
+
+
 # url api/repository/trans
 class RepositoryTransRepoItemSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
@@ -157,6 +171,23 @@ class RepositoryTransRepositorySerializer(serializers.ModelSerializer):
 
 class ApiRepositoryTransGetSerializer(serializers.Serializer):
     Repo = RepositoryTransRepositorySerializer(source='repo', many=True)
+
+
+class ApiRepositoryTransPutSerializer(serializers.ModelSerializer):
+    repo_mess_id = serializers.IntegerField(source='trans_mess_id')
+
+    class Meta:
+        model = TransMessage
+        fields = ['repo_mess_id', 'state']
+
+    def update(self, instance, validated_data):
+        instance.state = validated_data.get('state')
+        instance.save()
+
+        update_repository_item(instance.from_repository, instance.product, 'Out', instance.quantity)
+        update_repository_item(instance.to_repository, instance.product, 'In', instance.quantity)
+
+        return instance
 
 
 class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):

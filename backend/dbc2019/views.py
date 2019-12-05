@@ -35,6 +35,12 @@ def api_repository_in(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        repo_mess_in = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
+        serializer = ApiRepositoryInOutPutSerializer(repo_mess_in, data=data)
+        if serializer.is_valid():
+            serializer.save()
 
     data = {
         'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
@@ -57,6 +63,12 @@ def api_repository_out(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        repo_mess_out = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
+        serializer = ApiRepositoryInOutPutSerializer(repo_mess_out, data=data)
+        if serializer.is_valid():
+            serializer.save()
 
     data = {
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
@@ -74,6 +86,12 @@ def api_repository_trans(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
         serializer = ApiRepositoryTransPostSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        trans_mess = TransMessage.objects.get(trans_mess_id=data.get('repo_mess_id'))
+        serializer = ApiRepositoryTransPutSerializer(trans_mess, data=data)
         if serializer.is_valid():
             serializer.save()
 

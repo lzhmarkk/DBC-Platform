@@ -181,11 +181,11 @@ def api_client(request, cust_id):
 
 def api_index(request):
     data = {
-        'Messages': WorkMessage.objects.all(),
+        'Messages': WorkMessage.objects.order_by('work_mess_datetime')[:5],
         'Repo': Repository.objects.all(),
-        'RepoMessIn': RepoMessage.objects.filter(direction='In'),
-        'RepoMessOut': RepoMessage.objects.filter(direction='Out'),
-        'RepoMessTrans': TransMessage.objects.all(),
+        'RepoMessIn': RepoMessage.objects.filter(direction='In').order_by('repo_mess_datetime')[:5],
+        'RepoMessOut': RepoMessage.objects.filter(direction='Out').order_by('repo_mess_datetime')[:5],
+        'RepoMessTrans': TransMessage.objects.order_by('trans_mess_datetime')[:5],
         'Graph': get_most_order_cust(5)
     }
     serializer = ApiIndexGetSerializer(data)
@@ -241,14 +241,16 @@ def api_signup(request):
 
 @csrf_exempt
 def api_checkLogin(request):
-    # todo checklogin
-    return HttpResponse(status=status.HTTP_200_OK)
-    # return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+    user = request.user
+    if user.is_authenticated():
+        return HttpResponse(status=status.HTTP_200_OK)
+    else:
+        return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
 
 
 @csrf_exempt
 def api_logout(request):
-    # todo logout
+    logout(request)
     return HttpResponse(status=status.HTTP_200_OK)
 
 

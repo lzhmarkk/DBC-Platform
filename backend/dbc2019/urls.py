@@ -22,5 +22,5 @@ urlpatterns = [
     path('api/signup/', views.api_signup, name='api_signup'),
     path('api/repository/<int:repo_id>/', views.api_repository, name='api_repository'),
     path('api/checkLogin/', views.api_checkLogin, name='api_checkLogin'),
-    path('api/login/', views.api_logout, name='api_logout'),
+    path('api/logout/', views.api_logout, name='api_logout'),
 ]

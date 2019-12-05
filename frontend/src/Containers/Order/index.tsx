@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Switch} from "react-router";
-import PageOrderIndex from "./Index";
+import PageOrderIndex from "./Index/index";
 import PageOrderDetail from "./Detail";
 
 const PageOrder = () => {

@@ -1,6 +1,6 @@
 import {Route, Switch} from "react-router";
 import React from "react";
-import PageClientIndex from "./Index";
+import PageClientIndex from "./Index/index";
 import PageClientDetail from "./Detail";
 
 const PageClient = () => {

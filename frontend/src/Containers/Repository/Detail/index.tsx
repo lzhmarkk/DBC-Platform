@@ -70,6 +70,6 @@ const PageRepositoryDetail = withRouter((props) => {
         </Col>
     </Row>;
 
-    return id > 0 ? page : <Redirect to={"/repository/dashboard"}/>;
+    return id >= 0 ? page : <Redirect to={"/repository/dashboard"}/>;
 });
 export default PageRepositoryDetail;

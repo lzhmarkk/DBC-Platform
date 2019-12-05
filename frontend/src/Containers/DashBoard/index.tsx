@@ -26,7 +26,9 @@ const PageDashBoard = (props: any) => {
     const genEcharts = (line: number) => {
         return data.Repo.slice(line * 2, line * 2 + 2).map(e => (
             <ReactEcharts style={{height: '150px', width: '50%'}}
-                          option={getOption(e.repo_occupy, e.repo_capacity, e.name)}/>));
+                          option={getOption(e.repo_occupy, e.repo_capacity, e.name)}
+                          onEvents={{click: () => window.location.href = (`/repository/${e.repo_id}`)}}
+            />));
     };
     const genGraph = () => {
         const name = data.Graph.map(e => e.cust_name);

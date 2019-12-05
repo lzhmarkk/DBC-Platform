@@ -9,6 +9,7 @@ const outApiData = {
             "prod_id": "6",
             "quantity": "100",
             "order_id": "12",
+            "state": "0"
         },
         {
             "repo_mess_id": "2",
@@ -19,6 +20,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "2019",
+            "state": "1"
         },
         {
             "repo_mess_id": "3",
@@ -29,6 +31,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "2019345",
+            "state": "0"
         },
         {
             "repo_mess_id": "4",
@@ -39,6 +42,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "32141234",
+            "state": "1"
         },
         {
             "repo_mess_id": "5",
@@ -49,6 +53,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "134412",
+            "state": "0"
         },
         {
             "repo_mess_id": "6",
@@ -59,6 +64,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "415324532",
+            "state": "1"
         },
         {
             "repo_mess_id": "7",
@@ -69,6 +75,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "1235125",
+            "state": "0"
         },
         {
             "repo_mess_id": "8",
@@ -79,6 +86,7 @@ const outApiData = {
             "prod_id": "4",
             "quantity": "100",
             "order_id": "543151235",
+            "state": "1"
         }
     ],
     "Repo": [

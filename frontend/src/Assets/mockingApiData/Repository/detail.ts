@@ -36,35 +36,40 @@ const detailApiData = {
             "repo_mess_info": "西瓜爆炸",
             "prod_name": "大西瓜炸弹",
             "order_id": "12",
-            "quantity": "10"
+            "quantity": "10",
+            "state": "0"
         },
         {
             "repo_mess_id": "2",
             "repo_mess_info": "东风快递来啦",
             "prod_name": "东风41",
             "order_id": "2019",
-            "quantity": "1000"
+            "quantity": "1000",
+            "state": "1"
         },
         {
             "repo_mess_id": "3",
             "repo_mess_info": "快递来啦",
             "prod_name": "西风41",
             "order_id": "2119",
-            "quantity": "123"
+            "quantity": "123",
+            "state": "0"
         },
         {
             "repo_mess_id": "4",
             "repo_mess_info": "东风快递",
             "prod_name": "东风51",
             "order_id": "1234",
-            "quantity": "1"
+            "quantity": "1",
+            "state": "1"
         },
         {
             "repo_mess_id": "5",
             "repo_mess_info": "东风来啦",
             "prod_name": "东风61",
             "order_id": "2010",
-            "quantity": "10"
+            "quantity": "10",
+            "state": "0"
         }
     ],
     "RepoMessOut": [
@@ -73,35 +78,40 @@ const detailApiData = {
             "repo_mess_info": "西瓜爆炸",
             "prod_name": "大西瓜炸弹",
             "order_id": "12",
-            "quantity": "10"
+            "quantity": "10",
+            "state": "1"
         },
         {
             "repo_mess_id": "2",
             "repo_mess_info": "东风快递来啦",
             "prod_name": "东风41",
             "order_id": "2019",
-            "quantity": "1000"
+            "quantity": "1000",
+            "state":"1"
         },
         {
             "repo_mess_id": "3",
             "repo_mess_info": "快递来啦",
             "prod_name": "西风41",
             "order_id": "2119",
-            "quantity": "123"
+            "quantity": "123",
+            "state":"1"
         },
         {
             "repo_mess_id": "4",
             "repo_mess_info": "东风快递",
             "prod_name": "东风51",
             "order_id": "1234",
-            "quantity": "1"
+            "quantity": "1",
+            "state":"0"
         },
         {
             "repo_mess_id": "5",
             "repo_mess_info": "东风来啦",
             "prod_name": "东风61",
             "order_id": "2010",
-            "quantity": "10"
+            "quantity": "10",
+            "state":"1"
         }
     ],
     "RepoMessTrans": [

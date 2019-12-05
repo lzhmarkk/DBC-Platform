@@ -10,7 +10,7 @@ interface IProps {
 const MessagesShow = 5;
 const RepoMessIn = (props: IProps) => {
     const data: any[] = props.data.RepoMessIn.slice(0, MessagesShow);
-    const columns = GenColumns((props: { record: any }) => <React.Fragment> </React.Fragment>).slice(0, 5);
+    const columns = GenColumns((props: { record: any }) => <React.Fragment> </React.Fragment>).slice(0, 7);
 
     return (
         <Table pagination={false}

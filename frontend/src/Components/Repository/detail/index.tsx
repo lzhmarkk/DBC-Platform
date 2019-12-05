@@ -1,4 +1,5 @@
 import React from "react";
+import {genMessTags} from "../index";
 
 export const getOption = (occupy: string, capacity: string, repository_name: string) => {
     return ({
@@ -33,6 +34,11 @@ export const GenColumns = () => [
         sorter: (a: any, b: any) => parseInt(a.order_id) - parseInt(b.order_id),
         render: (_: any, a: any, ___: any) => <a href={`/order/${a.order_id}`}>{a.order_id}</a>
     },
+    {
+        dataIndex: "state", title: "状态", key: "state",
+        sorter: (a: any, b: any) => parseInt(a.state) - parseInt(b.state),
+        render: (_: any, a: any, ___: any) => genMessTags(a.state)
+    }
 ];
 
 export const GenColumnsTrans = () => [

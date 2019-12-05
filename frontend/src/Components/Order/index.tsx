@@ -1,5 +1,6 @@
 import React from "react";
 import {Button, Tag} from "antd";
+import {genMessTags} from "../Repository";
 
 export const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
@@ -190,5 +191,10 @@ export const genRepoMessColumns = (direction: string) => [
         dataIndex: "repo_name", title: "仓库名", key: "repo_name",
         sorter: (a: any, b: any) => parseInt(a.repo_id) - parseInt(b.repo_id),
         render: (_: any, a: any, ___: any) => <a href={`/repository/${a.repo_id}`}>{a.repo_name}</a>
+    },
+    {
+        dataIndex: "state", title: "状态", key: "state",
+        sorter: (a: any, b: any) => parseInt(a.state) - parseInt(b.state),
+        render: (_: any, a: any, ___: any) => genMessTags(a.state)
     },
 ];

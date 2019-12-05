@@ -1,3 +1,5 @@
+
+
 #### "/api/repository/dashboard"
 
 ```json
@@ -27,6 +29,8 @@ GET:
             "prod_id": "6",
             "repo_name": "零号仓库",
             "repo_id": "1",
+            "order_id":"111",
+            "state":"0"
         }
     ],
     "RepoMessOut": [
@@ -37,7 +41,9 @@ GET:
             "prod_name": "水壶",
             "prod_id": "1",
             "repo_name": "三号仓库",
-            "repo_id": "4"
+            "repo_id": "4",
+            "order_id":"111",
+            "state":"0"
         }
     ],
     "RepoMessTrans": [
@@ -83,6 +89,7 @@ GET:
             "prod_id": "6",
             "quantity": "100",
             "order_id": "12",
+            "state":"0"
         }
     ],
     "Repo": [
@@ -166,7 +173,8 @@ GET:
             "repo_mess_info": "西瓜爆炸",
             "prod_name": "大西瓜炸弹",
             "order_id": "12",
-            "quantity": "10"
+            "quantity": "10",
+            "state":"1"
         }
     ],
     "RepoMessOut": [
@@ -175,7 +183,8 @@ GET:
             "repo_mess_info": "西瓜爆炸",
             "prod_name": "大西瓜炸弹",
             "order_id": "12",
-            "quantity": "10"
+            "quantity": "10",
+            "state":"0"
         }
     ],
     "RepoMessTrans": [
@@ -310,6 +319,7 @@ GET:
                 "prod_id": "6",
                 "repo_name": "零号仓库",
                 "repo_id": "1",
+                "state":"0"
             }
         ],
         "RepoMessOut": [
@@ -320,7 +330,8 @@ GET:
                 "prod_name": "水壶",
                 "prod_id": "1",
                 "repo_name": "三号仓库",
-                "repo_id": "4"
+                "repo_id": "4",
+                "state":"1"
             }
         ],
     }

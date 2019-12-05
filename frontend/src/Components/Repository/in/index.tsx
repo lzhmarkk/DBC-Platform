@@ -1,4 +1,5 @@
 import React from "react";
+import {genMessTags} from "../index";
 
 const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
     {
@@ -23,6 +24,11 @@ const GenColumns = (Action: (props: { record: any }) => JSX.Element) => [
         dataIndex: "order_id", title: "订单号", key: "order_id",
         sorter: (a: any, b: any) => parseInt(a.order_id) - parseInt(b.order_id),
         render: (_: any, a: any, ___: any) => <a href={`/order/${a.order_id}`}>{a.order_id}</a>
+    },
+    {
+        dataIndex: "state", title: "状态", key: "state",
+        sorter: (a: any, b: any) => parseInt(a.state) - parseInt(b.state),
+        render: (_: any, a: any, ___: any) => genMessTags(a.state)
     },
     {
         dataIndex: "Action", title: "操作", key: "Action",

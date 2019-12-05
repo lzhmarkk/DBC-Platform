@@ -275,7 +275,7 @@ const IOrderForm = (props: IFormProps) => {
                 {getFieldDecorator('order_description', {
                     initialValue: onNew ? undefined : props.init.order_description
                 })
-                (<TextArea placeholder={"请输入订单备注"} autoSize disabled={parseInt(state) > 4}/>)}
+                (<TextArea placeholder={"请输入订单备注"} disabled={parseInt(state) > 4}/>)}
             </Form.Item>
             <Form.Item>
                 <Button onClick={handleSubmit} icon={"plus-circle"}

@@ -8,25 +8,23 @@ import outApiData from "../../../Assets/mockingApiData/Repository/out";
 import INewRepoOutPanel, {IFormPayload} from "../../../Components/Repository/out/form";
 import Axios from "axios";
 import {APIList} from "../../../API";
+import IEditMessModel from "../../../Components/Repository";
 
 const PageRepositoryOut = () => {
-
-    const dispatch = useDispatch();
     const [apiData, setApiData] = useState(outApiData);
     const [listData, setListData] = useState(apiData.RepoMessOut);
     const [modelOpen, setModelOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
-    const Action = (props: { record: any }) => <div className={styles.hbox}>
-        <Button onClick={() => {
-            setCurRepoMess(props.record);
-            setModelOpen(true);
-        }}
-                icon={'search'}
-                type={'primary'}
-        >修改转出状态</Button>
-    </div>;
 
+    const handlePut = (prop: any) => {
+        Axios.put(APIList.repoOut, prop, {withCredentials: true})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(() => message.error("出库状态修改失败"));
+        update();
+    };
     const handlePost = (prop: any) => {
         Axios.post(APIList.repoOut, prop, {withCredentials: true})
             .then(res => {
@@ -35,8 +33,6 @@ const PageRepositoryOut = () => {
             .catch(() => message.error("出库信息新建失败"));
         update();
     };
-    const columns = GenColumns(Action);
-
     const update = () => {
         Axios.get(APIList.repoOut, {withCredentials: true})
             .then(res => {
@@ -45,7 +41,20 @@ const PageRepositoryOut = () => {
             })
             .catch(() => message.error("出库信息获取失败"))
     };
+
     useEffect(update, []);
+
+    const Action = (props: { record: any }) => <div className={styles.hbox}>
+        <Button onClick={() => {
+            setCurRepoMess(props.record);
+            setModelOpen(true);
+        }}
+                icon={'edit'}
+                type={'primary'}>
+            修改状态
+        </Button>
+    </div>;
+    const columns = GenColumns(Action);
     return (
         <div>
             <div className={styles.ControlPanel}>
@@ -68,23 +77,31 @@ const PageRepositoryOut = () => {
                 dataSource={listData}
                 rowKey={listData => listData.repo_mess_id}
             />
-            <Modal title="修改状态"
-                   visible={modelOpen}
-                   onCancel={() => {
-                       setModelOpen(false);
-                       setCurRepoMess(undefined);
-                   }}
-                   onOk={() => {
-                       setModelOpen(false);
-                       setCurRepoMess(undefined);
-                   }}
-                   okText="确定"
-                   cancelText="取消"
-            >
-                <span>
-                    是否选择
-                </span>
-            </Modal>
+
+            <IEditMessModel
+                modelOpen={modelOpen}
+                onCancel={() => {
+                    setModelOpen(false);
+                    setCurRepoMess(undefined);
+                }}
+                onOk={() => {
+                    setModelOpen(false);
+                    setCurRepoMess(undefined);
+                }}
+                curRepoMess={curRepoMess}
+                onSubmit={(e) => {
+                    const editRepoMess = {
+                        "type": "EDIT_MESS_OUT",
+                        "data": {
+                            "repo_mess_id": e.repo_mess_id,
+                            "state": e.state
+                        }
+                    };
+                    console.log("修改数据");
+                    console.log(editRepoMess);
+                    handlePut(editRepoMess);
+                }}/>
+
             <Drawer title={"新建转出记录"}
                     width={720}
                     onClose={() => setDrawerOpen(false)}

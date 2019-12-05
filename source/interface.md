@@ -77,6 +77,14 @@ POST：//新增转入请求
 		"order_id":"10"
     }
 }
+PUT:
+{
+    "type": "EDIT_MESS_IN",
+    "data": {
+        "repo_mess_id": e.repo_mess_id,
+        "state": e.state
+    }
+}
 GET:
 {
     "RepoMessIn": [
@@ -133,6 +141,14 @@ POST:
 		"repo_mess_info":"我是描述",//描述
 		"repo_in_id":"5",//被调入的仓库id
 	}
+}
+PUT:
+{
+    "type": "EDIT_MESS_OUT",
+    "data": {
+        "repo_mess_id": e.repo_mess_id,
+        "state": e.state
+    }
 }
 GET:
 {

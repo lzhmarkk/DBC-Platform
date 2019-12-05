@@ -1,34 +1,21 @@
-import React, {ReactNode, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import INewRepoInPanel, {IFormPayload} from "../../../Components/Repository/in/form";
 import styles from "../index.module.scss"
-import {Table, Button, Modal, Drawer, message} from 'antd';
-import {useDispatch} from "react-redux";
+import {Table, Button, Drawer, message} from 'antd';
 import GenColumns from "../../../Components/Repository/in";
 import inApiData from "../../../Assets/mockingApiData/Repository/in";
 import Axios from "axios";
 import {APIList} from "../../../API";
+import IEditMessModel from "../../../Components/Repository";
 
 const PageRepositoryIn = () => {
 
-    const dispatch = useDispatch();
     const [apiData, setApiData] = useState(inApiData);
     const [listData, setListData] = useState(apiData.RepoMessIn);
     const [modelOpen, setModelOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
-    const [curRepoName, setCurRepoName] = useState(undefined);
-
-    const Action = (props: { record: any }) => <div className={styles.hbox}>
-        <Button icon={'search'}
-                type={'primary'}
-                onClick={() => {
-                    setCurRepoMess(props.record);
-                    setModelOpen(true);
-                }}>
-            修改转入状态
-        </Button>
-    </div>;
 
     const handlePost = (prop: any) => {
         Axios.post(APIList.repoIn, prop, {withCredentials: true})
@@ -38,8 +25,14 @@ const PageRepositoryIn = () => {
             .catch(() => message.error("入库信息新建失败"));
         update();
     };
-    const columns = GenColumns(Action);
-
+    const handlePut = (prop: any) => {
+        Axios.put(APIList.repoIn, prop, {withCredentials: true})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(() => message.error("入库状态修改失败"));
+        update();
+    };
     const update = () => {
         Axios.get(APIList.repoIn, {withCredentials: true})
             .then(res => {
@@ -48,8 +41,20 @@ const PageRepositoryIn = () => {
             })
             .catch(() => message.error("入库信息获取失败"))
     };
+
     useEffect(update, []);
 
+    const Action = (props: { record: any }) => <div className={styles.hbox}>
+        <Button onClick={() => {
+            setCurRepoMess(props.record);
+            setModelOpen(true);
+        }}
+                icon={'edit'}
+                type={'primary'}>
+            修改状态
+        </Button>
+    </div>;
+    const columns = GenColumns(Action);
     return (
         <div>
             <div className={styles.ControlPanel}>
@@ -73,23 +78,30 @@ const PageRepositoryIn = () => {
                 rowKey={listData => listData.repo_mess_id}
             />
 
-            <Modal title="修改状态"
-                   visible={modelOpen}
-                   onCancel={() => {
-                       setModelOpen(false);
-                       setCurRepoMess(undefined);
-                   }}
-                   onOk={() => {
-                       setModelOpen(false);
-                       setCurRepoMess(undefined);
-                   }}
-                   okText="确定"
-                   cancelText="取消"
-            >
-                <span>
-                    是否选择
-                </span>
-            </Modal>
+            <IEditMessModel
+                modelOpen={modelOpen}
+                onCancel={() => {
+                    setModelOpen(false);
+                    setCurRepoMess(undefined);
+                }}
+                onOk={() => {
+                    setModelOpen(false);
+                    setCurRepoMess(undefined);
+                }}
+                curRepoMess={curRepoMess}
+                onSubmit={(e) => {
+                    const editRepoMess = {
+                        "type": "EDIT_MESS_IN",
+                        "data": {
+                            "repo_mess_id": e.repo_mess_id,
+                            "state": e.state
+                        }
+                    };
+                    console.log("修改数据");
+                    console.log(editRepoMess);
+                    handlePut(editRepoMess);
+                }}/>
+
             <Drawer title={"新建转入记录"}
                     width={720}
                     onClose={() => setDrawerOpen(false)}

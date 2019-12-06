@@ -21,7 +21,7 @@ const PageClientIndex = () => {
         Axios.get(APIList.client, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
-                setListData(res.data.Order);
+                setListData(res.data.Cust);
             })
             .catch(() => message.error("客户信息获取失败"))
     };

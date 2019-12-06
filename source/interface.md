@@ -539,3 +539,9 @@ GET:{
         "admin_description":"一个程序员"
 }
 ```
+
+#### "/api/logout"
+
+```json
+POST:{}
+```

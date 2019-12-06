@@ -14,7 +14,8 @@ export const APIList = {
     signup: `${BASE}/api/signup/`,
     index: `${BASE}/api/index/`,
     userInfo: `${BASE}/api/userInfo/`,
-    checkLogin: `${BASE}/api/checkLogin/`
+    checkLogin: `${BASE}/api/checkLogin/`,
+    logout: `${BASE}/api/logout/`,
 };
 
 export default APIList;

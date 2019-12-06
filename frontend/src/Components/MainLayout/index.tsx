@@ -33,6 +33,13 @@ const Main = (props: { children: ReactElement }) => {
             .catch(() => message.error("标题栏用户信息获取失败"))
     }, []);
 
+    const handleLogout = () => {
+        Axios.post(APIList.logout, {}, {withCredentials: true})
+            .then(res => {
+                dispatch(logout());
+            })
+            .catch(() => message.error("退出登录失败"))
+    };
 
     const layout = <Layout style={{minHeight: '100vh'}}>
         <Sider collapsible collapsed={collapsed} theme="light"
@@ -74,7 +81,7 @@ const Main = (props: { children: ReactElement }) => {
                    }}
                    onOk={() => {
                        setLogoutModel(false);
-                       dispatch(logout());
+                       handleLogout();
                    }}
                    okText="退出"
                    cancelText="取消"

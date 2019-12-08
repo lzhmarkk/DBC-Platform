@@ -36,13 +36,15 @@ const PageLogin = () => {
             })
             .catch(() => message.error("登录失败"));
     };
-    const Form = <ILoginForm onSubmit={
-        (e: IFormPayLoad) => {
-            console.log(e);
-            handlePost(e);
-        }}/>;
+    const Form = <div className={styles.root}>
+        <ILoginForm onSubmit={
+            (e: IFormPayLoad) => {
+                console.log(e);
+                handlePost(e);
+            }}/>
+    </div>;
     const jump = <Redirect to="/index"/>;
-    const loading = <div className={styles.root}><Spin/></div>;
+    const loading = <div><Spin/></div>;
     return isCheckLoading ? loading : isLogin ? jump : Form;
 };
 

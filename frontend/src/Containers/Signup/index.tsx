@@ -7,6 +7,7 @@ import {Redirect} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {IRootStore} from "../../@types/store";
 import {setLoginState} from "../Login/actions";
+import styles from "./index.module.scss"
 
 const PageSignup = () => {
     const dispatch = useDispatch();
@@ -20,7 +21,8 @@ const PageSignup = () => {
             .catch((err) => message.error("注册失败"));
     };
     const form =
-        <div>
+
+        <div className={styles.root}>
             <ISignupPanel onSubmit={
                 (e: IFormPayLoad) => {
                     handlePost(e);

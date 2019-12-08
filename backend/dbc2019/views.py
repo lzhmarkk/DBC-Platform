@@ -1,13 +1,13 @@
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
 from .serializers import *
 from .models import *
 from .query import *
+from .faker_data import creat_faker_date
 
 
 # Create your views here.
@@ -35,12 +35,6 @@ def api_repository_in(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request).get('data')
-        repo_mess_in = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
-        serializer = ApiRepositoryInOutPutSerializer(repo_mess_in, data=data)
-        if serializer.is_valid():
-            serializer.save()
 
     data = {
         'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
@@ -63,12 +57,6 @@ def api_repository_out(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request).get('data')
-        repo_mess_out = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
-        serializer = ApiRepositoryInOutPutSerializer(repo_mess_out, data=data)
-        if serializer.is_valid():
-            serializer.save()
 
     data = {
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
@@ -88,12 +76,6 @@ def api_repository_trans(request):
         serializer = ApiRepositoryTransPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request).get('data')
-        trans_mess = TransMessage.objects.get(trans_mess_id=data.get('repo_mess_id'))
-        serializer = ApiRepositoryTransPutSerializer(trans_mess, data=data)
-        if serializer.is_valid():
-            serializer.save()
 
     data = {
         'repo': Repository.objects.all()
@@ -106,9 +88,12 @@ def api_repository_trans(request):
 def api_order_index(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
+        prods = data['Prod']
+        data.pop('Prod')
         serializer = ApiOrderIndexPostSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            order = serializer.save()
+            order_add_item(prods, order)
     elif request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
         order = Order.objects.get(order_id=data.get('order_id'))
@@ -191,8 +176,8 @@ def api_client_index(request):
     return JsonResponse(serializer.data)
 
 
-def api_client(request, cust_id):
-    data = Customer.objects.get(cust_id=cust_id)
+def api_client(request, client_id):
+    data = Customer.objects.get(cust_id=client_id)
     serializer = ApiClientGetSerializer(data)
     return JsonResponse(serializer.data)
 
@@ -236,8 +221,9 @@ def api_repository(request, repo_id):
 @csrf_exempt
 def api_login(request):
     data = JSONParser().parse(request)
-    user = User.objects.get(username=data.get('username'))
-    if user is None:
+    try:
+        user = User.objects.get(username=data.get('username'))
+    except User.DoesNotExist:
         return HttpResponse(status=status.HTTP_403_FORBIDDEN)
     user = authenticate(request, username=data.get('username'), password=data.get('password'))
     if user is not None:
@@ -260,7 +246,7 @@ def api_signup(request):
 @csrf_exempt
 def api_checkLogin(request):
     user = request.user
-    if user.is_authenticated():
+    if user.is_authenticated:
         return HttpResponse(status=status.HTTP_200_OK)
     else:
         return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
@@ -273,53 +259,5 @@ def api_logout(request):
 
 
 def add_example(request):
-    # admin
-    user_1 = User.objects.create_user(username='bob', password='123456')
-    user_2 = User.objects.create_user(username='angel', password='123456')
-    user_3 = User.objects.create_user(username='jack', password='123456')
-    admin_1 = Admin.objects.create(user=user_1)
-    admin_2 = Admin.objects.create(user=user_2)
-    admin_3 = Admin.objects.create(user=user_3)
-
-    # Customer
-    cust_1 = Customer.objects.create(cust_name='bob', cust_address='CH')
-    cust_2 = Customer.objects.create(cust_name='dave', cust_address='US')
-    cust_3 = Customer.objects.create(cust_name='mary', cust_address='CH')
-
-    # Order
-    order_1 = Order.objects.create(customer=cust_1)
-    order_2 = Order.objects.create(customer=cust_1)
-    order_3 = Order.objects.create(customer=cust_2)
-    order_4 = Order.objects.create(customer=cust_3)
-
-    # Product
-    prod_1 = Product.objects.create(prod_name='ipad')
-    prod_2 = Product.objects.create(prod_name='apple')
-    prod_3 = Product.objects.create(prod_name='chicken')
-    prod_4 = Product.objects.create(prod_name='tv')
-
-    prods = [prod_1, prod_2, prod_3, prod_4]
-
-    # OrderItem
-    orderitem_1 = OrderItem.objects.create(quantity=20, order=order_1, product=prod_1)
-    orderitem_2 = OrderItem.objects.create(quantity=30, order=order_1, product=prod_2)
-    orderitem_3 = OrderItem.objects.create(quantity=10, order=order_2, product=prod_3)
-    orderitem_4 = OrderItem.objects.create(quantity=100, order=order_3, product=prod_4)
-    orderitem_5 = OrderItem.objects.create(quantity=66, order=order_4, product=prod_3)
-
-    # Repository
-    repo_1 = Repository.objects.create(repo_place='Beijing', repo_name='一号仓库', repo_capacity=1000,
-                                       repo_occupy=20, admin=admin_1)
-    repo_2 = Repository.objects.create(repo_place='Nanjing', repo_name='二号仓库', repo_capacity=1000,
-                                       repo_occupy=20, admin=admin_2)
-    repo_3 = Repository.objects.create(repo_place='Beihang', repo_name='三号仓库', repo_capacity=1000,
-                                       repo_occupy=20, admin=admin_3)
-
-    repos = [repo_1, repo_2, repo_3]
-
-    # Repoitem
-    for repo in repos:
-        for prod in prods:
-            RepositoryItem.objects.create(quantity=100, repository=repo, product=prod)
-
+    creat_faker_date()
     return HttpResponse(status=status.HTTP_200_OK)

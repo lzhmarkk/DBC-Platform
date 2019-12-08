@@ -17,14 +17,15 @@ class Admin(models.Model):
 class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)
     cust_name = models.CharField(max_length=50)
-    cust_address = models.CharField(max_length=50)
-    cust_email = models.EmailField(null=True)
-    cust_co = models.CharField(max_length=150, null=True)
-    cust_phone = models.CharField(max_length=50, null=True)
+    cust_address = models.CharField(max_length=100)
+    cust_email = models.EmailField()
+    cust_co = models.CharField(max_length=150)
+    cust_phone = models.CharField(max_length=50)
     cust_duty = models.CharField(max_length=50)
-    cust_wechat = models.CharField(max_length=50)
-    cust_qq = models.CharField(max_length=50)
-    cust_business_scope = models.CharField(max_length=50)
+    cust_wechat = models.CharField(max_length=50, null=True)
+    cust_qq = models.CharField(max_length=50, null=True)
+    cust_business_scope = models.CharField(max_length=50, null=True)
+    cust_icon = models.TextField(null=True)
 
 
 class Order(models.Model):
@@ -33,16 +34,16 @@ class Order(models.Model):
     state = models.IntegerField(default=0)
     order_info = models.TextField(null=True)
     order_amount = models.IntegerField()
-    order_payee = models.CharField(max_length=50)
-    order_payer = models.CharField(max_length=50)
-    order_payee_card = models.CharField(max_length=50)
+    order_payee = models.CharField(max_length=100)
+    order_payer = models.CharField(max_length=100)
+    order_payee_card = models.CharField(max_length=100)
     order_payee_bank = models.CharField(max_length=100)
-    order_payer_card = models.CharField(max_length=50)
+    order_payer_card = models.CharField(max_length=100)
     order_payer_bank = models.CharField(max_length=100)
     order_serial = models.CharField(max_length=100)
     order_tex = models.IntegerField()
     order_pay_type = models.CharField(max_length=100)
-    order_description = models.TextField()
+    order_description = models.TextField(null=True)
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
@@ -66,11 +67,11 @@ class OrderItem(models.Model):
 class Repository(models.Model):
     repo_id = models.AutoField(primary_key=True)
     repo_place = models.CharField(max_length=50)
-    repo_name = models.CharField(max_length=50, null=True)
+    repo_name = models.CharField(max_length=50)
     repo_capacity = models.IntegerField()
     repo_occupy = models.IntegerField(default=0)
 
-    admin = models.OneToOneField(Admin, on_delete=models.SET_NULL, null=True)
+    admin = models.ForeignKey(Admin, on_delete=models.SET_NULL, null=True)
 
 
 class RepositoryItem(models.Model):
@@ -83,7 +84,7 @@ class RepositoryItem(models.Model):
 
 class RepoMessage(models.Model):
     repo_mess_id = models.AutoField(primary_key=True)
-    repo_mess_info = models.TextField(null=True)
+    repo_mess_info = models.TextField()
     quantity = models.IntegerField()
     direction = models.CharField(max_length=50)
     repo_mess_datetime = models.DateTimeField(auto_now=True)
@@ -100,7 +101,6 @@ class TransMessage(models.Model):
     quantity = models.IntegerField()
     trans_mess_datetime = models.DateTimeField(auto_now=True)
     state = models.IntegerField(default=0)
-    flag = models.IntegerField(default=0)
 
     from_repository = models.ForeignKey(Repository, related_name='from_mess', on_delete=models.CASCADE)
     to_repository = models.ForeignKey(Repository, related_name='to_mess', on_delete=models.CASCADE)

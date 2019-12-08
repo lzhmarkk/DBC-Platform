@@ -135,20 +135,8 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
                                    work_mess_info=work_mess_info,
                                    product=product, admin=admin,
                                    repo_message=repo_mess)
+        update_repository_item(repository, product, direction, quantity)
         return repo_mess
-
-
-class ApiRepositoryInOutPutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RepoMessage
-        fields = ['repo_mess_id', 'state']
-
-    def update(self, instance, validated_data):
-        instance.state = validated_data.get('state')
-        instance.save()
-        # when repo_mess state change, also change the product num in the repository
-        update_repository_item(instance.repository, instance.product, instance.direction, instance.quantity)
-        return instance
 
 
 # url api/repository/trans
@@ -171,23 +159,6 @@ class RepositoryTransRepositorySerializer(serializers.ModelSerializer):
 
 class ApiRepositoryTransGetSerializer(serializers.Serializer):
     Repo = RepositoryTransRepositorySerializer(source='repo', many=True)
-
-
-class ApiRepositoryTransPutSerializer(serializers.ModelSerializer):
-    repo_mess_id = serializers.IntegerField(source='trans_mess_id')
-
-    class Meta:
-        model = TransMessage
-        fields = ['repo_mess_id', 'state']
-
-    def update(self, instance, validated_data):
-        instance.state = validated_data.get('state')
-        instance.save()
-
-        update_repository_item(instance.from_repository, instance.product, 'Out', instance.quantity)
-        update_repository_item(instance.to_repository, instance.product, 'In', instance.quantity)
-
-        return instance
 
 
 class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
@@ -224,6 +195,8 @@ class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
                                    admin=admin_in,
                                    product=product,
                                    trans_message=trans_mess)
+        update_repository_item(repository_out, product, 'Out', quantity)
+        update_repository_item(repository_in, product, 'In', quantity)
 
         return trans_mess
 
@@ -303,12 +276,13 @@ class ApiOrderIndexPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['cust_id', 'order_info', 'order_data', 'state']
+        fields = ['cust_id', 'order_info', 'state', 'order_amount', 'order_payee', 'order_payer', 'order_pay_type',
+                  'order_serial', 'order_payee_card', 'order_payee_bank', 'order_payer_card', 'order_payer_bank',
+                  'order_tex', 'order_description']
 
     def create(self, validated_data):
-        order = Order.objects.create(order_info=validated_data.get('order_info'),
-                                     state=validated_data.get('state'),
-                                     customer=validated_data.get('customer'))
+        order = Order.objects.create(**validated_data)
+
         return order
 
 
@@ -388,9 +362,10 @@ class ApiClientIndexGetSerializer(serializers.Serializer):
 class ApiClientPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['__all__']
+        fields = '__all__'
 
     def create(self, validated_data):
+        print(validated_data)
         return Customer.objects.create(**validated_data)
 
 

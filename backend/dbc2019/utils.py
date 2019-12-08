@@ -4,9 +4,31 @@ from .models import *
 
 
 def update_repository_item(repository, product, direction, quantity):
-    repo_item = RepositoryItem.objects.get(Q(repository=repository) & Q(product=product))
-    if direction == 'In':
-        repo_item.quantity = repo_item.quantity + quantity
-    else:
-        repo_item.quantity = repo_item.quantity - quantity
-    repo_item.save()
+    try:
+        repo_items = RepositoryItem.objects.get(Q(repository=repository) & Q(product=product))
+        if direction == 'In':
+            repo_items.quantity = repo_items.quantity + quantity
+            repository.repo_capacity -= quantity
+            repository.repo_occupy += quantity
+        else:
+            repo_items.quantity = repo_items.quantity - quantity
+            repository.repo_occupy -= quantity
+            repository.repo_capacity += quantity
+        repo_items.save()
+        repository.save()
+    except RepositoryItem.DoesNotExist:
+        RepositoryItem.objects.create(product=product, repository=repository, quantity=quantity)
+        repository.repo_capacity -= quantity
+        repository.repo_occupy += quantity
+        repository.save()
+
+def order_add_item(prods, order):
+    for prod in prods:
+        try:
+            product = Product.objects.get(prod_name=prod['prod_name'])
+        except Product.DoesNotExist:
+            product = Product.objects.create(prod_name=prod['prod_name'],
+                                             prod_desc=prod['prod_desc'],
+                                             prod_unit=prod['prod_unit'],
+                                             prod_price=prod['prod_price'])
+        OrderItem.objects.create(quantity=prod['quantity'], product=product, order=order)

@@ -81,7 +81,7 @@ const PageRepositoryTrans = () => {
         <Result
             status="success"
             title="成功发起调库申请"
-            subTitle={`从${formInfo.repo_out_id}调动${formInfo.quantity}个/箱${formInfo.prod_out_id}到${formInfo.repo_in_id}`}
+            //subTitle={`从${formInfo.repo_out_id}调动${formInfo.quantity}个/箱${formInfo.prod_out_id}到${formInfo.repo_in_id}`}
             extra={[
                 <Link to={"/repository/in"}>
                     <Button type="primary" key="console">

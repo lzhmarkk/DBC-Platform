@@ -18,8 +18,8 @@ const PageAuthWrapper = (props: { children: JSX.Element }) => {
             })
             .catch((err) => {
                 message.error("请您先登录");
-                //dispatch(logout());
-                dispatch(setLoginState(true));
+                dispatch(logout());
+                //dispatch(setLoginState(true));
                 console.log("wrapper确认未登录");
                 setCheckingLogin(false);
             })

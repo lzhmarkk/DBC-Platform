@@ -45,7 +45,7 @@ const PageAccount = () => {
                                 "name": e.name,
                                 "password": e.password,
                                 "admin_description": e.admin_description,
-                                "admin_icon": e.admin_icon[0].thumbUrl
+                                "admin_icon": e.admin_icon == undefined ? undefined : e.admin_icon[0].thumbUrl
                             }
                         };
                         console.log(editUser);

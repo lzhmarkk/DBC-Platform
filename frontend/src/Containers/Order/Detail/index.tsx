@@ -23,7 +23,7 @@ const PageOrderDetail = withRouter((prop) => {
         Axios.get(APIList.orderDetail(id), {withCredentials: true})
             .then(res => {
                 setData(res.data);
-                setProdListData(res.data.Order);
+                setProdListData(res.data.Prod);
                 setInListData(res.data.RepoMessIn);
                 setOutListData(res.data.RepoMessOut);
             })

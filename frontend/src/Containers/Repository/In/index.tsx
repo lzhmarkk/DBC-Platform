@@ -118,7 +118,7 @@ const PageRepositoryIn = () => {
                                              "repo_mess_info": e.repo_mess_info,
                                              "prod_id": e.prod_id,
                                              "quantity": e.quantity,
-                                             "repo_id": e.prod_id,
+                                             "repo_id": e.repo_id,
                                              "order_id": e.order_id
                                          }
                                      };

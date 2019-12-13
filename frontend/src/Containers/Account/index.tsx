@@ -12,7 +12,7 @@ const PageAccount = () => {
     const [adminData, setAdminData] = useState(accountApiData);
     const [userInfo, setUserInfo] = useState(apiUserInfo);
 
-    useEffect(() => {
+    const update = () => {
         Axios.get(APIList.account, {withCredentials: true})
             .then(res => {
                 setAdminData(res.data);
@@ -23,12 +23,14 @@ const PageAccount = () => {
                 setUserInfo(res.data);
             })
             .catch(() => message.error("右侧个人信息获取失败"))
-    }, []);
+    };
+    useEffect(update, []);
 
     const handlePut = (prop: any) => {
         Axios.put(APIList.account, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("个人信息修改失败"));
     };

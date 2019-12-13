@@ -18,7 +18,7 @@ export interface IFormProps extends FormComponentProps {
 }
 
 const IForm = (props: IFormProps) => {
-    const [editName, setEditName] = useState(false);
+    const [editIdentity, setEditIdentity] = useState(false);
     const [editPasswd, setEditPasswd] = useState(false);
     const [editDescription, setEditDescription] = useState(false);
 
@@ -55,7 +55,10 @@ const IForm = (props: IFormProps) => {
             if (err)
                 return;
             props.onSubmit(value);
-        })
+        });
+        setEditIdentity(false);
+        setEditDescription(false);
+        setEditPasswd(false);
     };
     const {getFieldDecorator} = props.form;
     return (
@@ -65,22 +68,21 @@ const IForm = (props: IFormProps) => {
                 <Form style={{background: "white"}} className={styles.hbox}>
                     <Form.Item label="用户id">
                         {getFieldDecorator('admin_id', {
-                            rules: [{type: "string", required: true, message: "请输入用户id"}],
+                            rules: [{required: true, message: "请输入用户id"}],
                             initialValue: props.userData.admin_id
                         })(<Input style={{width: "90%"}} disabled={true}/>)}
                     </Form.Item>
                     <Form.Item label="身份标志">
+                        <Button onClick={() => setEditIdentity(!editIdentity)} icon={"lock"}/>
                         {getFieldDecorator('identity', {
-                            rules: [{type: "string", required: true, message: "请输入用户标志"}],
                             initialValue: props.userData.identity
-                        })(<Input style={{width: "90%"}} disabled={true}/>)}
+                        })(<Input style={{width: "90%"}} disabled={!editIdentity}/>)}
                     </Form.Item>
                     <Form.Item label="用户名">
-                        <Button onClick={() => setEditName(!editName)} icon={"lock"}/>
                         {getFieldDecorator('name', {
                             rules: [{type: "string", required: true, message: "请输入用户名"}],
                             initialValue: props.userData.name
-                        })(<Input placeholder={"请输入用户名"} style={{width: "90%"}} disabled={!editName}/>)}
+                        })(<Input placeholder={"请输入用户名"} style={{width: "90%"}} disabled={true}/>)}
                     </Form.Item>
                     <Form.Item label="自我描述">
                         <Button onClick={() => setEditDescription(!editDescription)} icon={"lock"}/>

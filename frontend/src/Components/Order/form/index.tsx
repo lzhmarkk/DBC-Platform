@@ -145,7 +145,7 @@ const IOrderForm = (props: IFormProps) => {
                 <Col span={12}>
                     <Form.Item label="客户" hasFeedback>
                         {getFieldDecorator('cust_id', {
-                            rules: [{type: "string", required: true, message: "请选择客户"}],
+                            rules: [{required: true, message: "请选择客户"}],
                             initialValue: onNew ? undefined : props.init.cust_id
                         })(<Select placeholder={"请选择客户"} style={{minWidth: "160px"}} disabled={state != "1"}>
                             {custOptions}

@@ -31,7 +31,7 @@ class Customer(models.Model):
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     order_date = models.DateField()
-    state = models.IntegerField(default=0)
+    state = models.IntegerField(default=1)
     order_info = models.TextField(null=True)
     order_amount = models.IntegerField()
     order_payee = models.CharField(max_length=100)

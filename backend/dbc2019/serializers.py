@@ -36,10 +36,12 @@ class RepositoryDashboardRepoMessSerializer(serializers.ModelSerializer):
     repo_id = serializers.PrimaryKeyRelatedField(source='repository', read_only=True)
     prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
     repo_name = serializers.SlugRelatedField(source='repository', slug_field='repo_name', read_only=True)
+    order_id = serializers.PrimaryKeyRelatedField(source='order', read_only=True)
 
     class Meta:
         model = RepoMessage
-        fields = ['repo_mess_id', 'repo_mess_info', 'quantity', 'prod_name', 'prod_id', 'repo_name', 'repo_id']
+        fields = ['repo_mess_id', 'repo_mess_info', 'quantity', 'prod_name', 'prod_id', 'repo_name', 'repo_id',
+                  'state', 'order_id']
 
 
 class RepositoryDashboardTransMessSerializer(serializers.ModelSerializer):

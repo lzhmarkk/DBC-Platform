@@ -145,7 +145,7 @@ def api_account(request):
     user = request.user
     if request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
-        admin = Admin.objects.get(admin_id=data.get('admin'))
+        admin = Admin.objects.get(admin_id=data.get('admin_id'))
         serializer = ApiAccountPutSerializer(admin, data=data)
         if serializer.is_valid():
             serializer.save()

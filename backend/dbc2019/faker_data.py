@@ -118,7 +118,7 @@ def create_Repository(num):
 
 def creat_faker_data():
     create_Customer(10)
-    create_Order(50)
+    create_Order(20)
     create_Product(10)
-    create_OrderItem(50)
+    create_OrderItem(80)
     create_Repository(4)

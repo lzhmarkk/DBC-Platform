@@ -283,13 +283,11 @@ class ApiOrderIndexGetSerializer(serializers.Serializer):
 
 
 class ApiOrderIndexPostSerializer(serializers.ModelSerializer):
-    cust_id = serializers.PrimaryKeyRelatedField(source='customer', read_only=True)
+    cust_id = serializers.PrimaryKeyRelatedField(source='customer', queryset=Customer.objects.all())
 
     class Meta:
         model = Order
-        fields = ['cust_id', 'order_info', 'state', 'order_amount', 'order_payee', 'order_payer', 'order_pay_type',
-                  'order_serial', 'order_payee_card', 'order_payee_bank', 'order_payer_card', 'order_payer_bank',
-                  'order_tex', 'order_description']
+        fields = ['cust_id', 'order_info', 'state', 'order_amount', 'order_payee', 'order_payer', 'order_pay_type']
 
     def create(self, validated_data):
         validated_data['order_date'] = datetime.now()
@@ -311,8 +309,14 @@ class ApiOrderIndexPutSerializer(serializers.ModelSerializer):
 
 # url api/order/${id}
 class ApiOrderProductSerializer(serializers.ModelSerializer):
+    prod_id = serializers.PrimaryKeyRelatedField(source='product', read_only=True)
+    prod_name = serializers.SlugRelatedField(source='product', slug_field='prod_name', read_only=True)
+    prod_desc = serializers.SlugRelatedField(source='product', slug_field='prod_desc', read_only=True)
+    prod_unit = serializers.SlugRelatedField(source='product', slug_field='prod_unit', read_only=True)
+    prod_price = serializers.SlugRelatedField(source='product', slug_field='prod_price', read_only=True)
+
     class Meta:
-        model = Product
+        model = OrderItem
         fields = ['prod_id', 'prod_name', 'prod_desc', 'prod_unit', 'prod_price', 'quantity']
 
 

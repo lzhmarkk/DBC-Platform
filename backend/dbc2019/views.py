@@ -95,6 +95,8 @@ def api_order_index(request):
         if serializer.is_valid():
             order = serializer.save()
             order_add_item(prods, order)
+        else:
+            print(serializer.error_messages)
     elif request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
         order = Order.objects.get(order_id=data.get('order_id'))

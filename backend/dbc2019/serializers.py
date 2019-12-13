@@ -248,10 +248,11 @@ class ApiRepositoryGetSerializer(serializers.Serializer):
 class OrderIndexOrderSerializer(serializers.ModelSerializer):
     cust_name = serializers.SlugRelatedField(source='customer', slug_field='cust_name', read_only=True)
     cust_co = serializers.SlugRelatedField(source='customer', slug_field='cust_co', read_only=True)
+    cust_id = serializers.PrimaryKeyRelatedField(source='customer', read_only=True)
 
     class Meta:
         model = Order
-        fields = ['order_id', 'order_date', 'cust_name', 'cust_co', 'state', 'order_info']
+        fields = ['order_id', 'order_date', 'cust_name', 'cust_co', 'state', 'order_info', 'cust_id']
 
 
 class OrderIndexCustomerSerializer(serializers.ModelSerializer):

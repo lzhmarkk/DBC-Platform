@@ -7,7 +7,7 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 from .query import *
-from .faker_data import creat_faker_date
+from .faker_data import creat_faker_data
 
 
 # Create your views here.
@@ -259,5 +259,5 @@ def api_logout(request):
 
 
 def add_example(request):
-    creat_faker_date()
+    creat_faker_data()
     return HttpResponse(status=status.HTTP_200_OK)

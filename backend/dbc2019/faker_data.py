@@ -33,7 +33,7 @@ def get_random_Customer():
 def create_Order(num):
     for i in range(num):
         Order.objects.create(
-            order_date=faker.date_between('-30y', 'now'),
+            order_date=faker.date_between('-1y', 'now'),
             order_amount=random.randint(1, 1000),
             order_payee=faker.name(),
             order_payer=faker.name(),
@@ -65,9 +65,14 @@ def create_Product(num):
         prod_price=1000
     )
     Product.objects.create(
-        prod_name='小火车',
+        prod_name='大苹果',
+        prod_unit='斤',
+        prod_price=12
+    )
+    Product.objects.create(
+        prod_name='phone',
         prod_unit='个',
-        prod_price=20
+        prod_price=1000
     )
 
 
@@ -94,10 +99,26 @@ def create_Repository(num):
         admin=get_random_Admin()
     )
 
+    Repository.objects.create(
+        repo_name='二号仓库',
+        repo_place=faker.address(),
+        repo_capacity=random.randint(500, 1000),
+        repo_occupy=0,
+        admin=get_random_Admin()
+    )
 
-def creat_faker_date():
+    Repository.objects.create(
+        repo_name='三号仓库',
+        repo_place=faker.address(),
+        repo_capacity=random.randint(500, 1000),
+        repo_occupy=0,
+        admin=get_random_Admin()
+    )
+
+
+def creat_faker_data():
     create_Customer(10)
     create_Order(20)
-    create_Product(4)
+    create_Product(10)
     create_OrderItem(50)
     create_Repository(4)

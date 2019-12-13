@@ -45,7 +45,7 @@ const Form1 = (props: IFormProps) => {
         <Form>
             <Form.Item label={"选择转出产品"} help={`当前该仓库还有${getNumber(curProd)}`}>
                 {getFieldDecorator('prod_out_id', {
-                    rules: [{type: "string", required: true, message: "请选择转出产品"}],
+                    rules: [{required: true, message: "请选择转出产品"}],
                 })(<Select style={{minWidth: "160px"}} onChange={handleChange}>
                     {selectOption}
                 </Select>)}
@@ -67,7 +67,7 @@ const Form1 = (props: IFormProps) => {
             </Form.Item>
             <Form.Item label={"描述"}>
                 {getFieldDecorator('repo_mess_info', {
-                    rules: [{type: "string", required: true, message: "请输入描述"}]
+                    rules: [{required: true, message: "请输入描述"}]
                 })(<Input placeholder={"请输入描述"}/>)}
             </Form.Item>
             <Button onClick={handleBack} icon={"step-backward"}>上一步</Button>

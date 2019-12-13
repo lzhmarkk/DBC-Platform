@@ -29,7 +29,7 @@ const Form2 = (props: IFormProps) => {
         <Form>
             <Form.Item label={"选择转入仓库"}>
                 {getFieldDecorator('repo_in_id', {
-                    rules: [{type: "string", required: true, message: "请选择转入仓库"}],
+                    rules: [{required: true, message: "请选择转入仓库"}],
                 })(<Select style={{minWidth: "160px"}}>
                     {selectOption}
                 </Select>)}

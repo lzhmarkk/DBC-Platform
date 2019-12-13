@@ -28,9 +28,9 @@ const PageOrderIndex = () => {
         Axios.post(APIList.order, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("订单新建失败"));
-        update();
     };
 
     const Action = (props: { record: any }) => <div className={styles.hbox}>

@@ -21,17 +21,17 @@ const PageRepositoryOut = () => {
         Axios.put(APIList.repoOut, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("出库状态修改失败"));
-        update();
     };
     const handlePost = (prop: any) => {
         Axios.post(APIList.repoOut, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("出库信息新建失败"));
-        update();
     };
     const update = () => {
         Axios.get(APIList.repoOut, {withCredentials: true})

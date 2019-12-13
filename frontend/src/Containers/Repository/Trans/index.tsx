@@ -22,9 +22,9 @@ const PageRepositoryTrans = () => {
         Axios.post(APIList.repoTrans, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("调配失败"));
-        update();
     };
 
     const update = () => {

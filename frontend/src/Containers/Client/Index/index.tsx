@@ -31,9 +31,9 @@ const PageClientIndex = () => {
         Axios.post(APIList.client, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("客户信息新建失败"));
-        update();
     };
 
     const Action = (props: { record: any }) =>

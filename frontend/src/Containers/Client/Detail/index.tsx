@@ -30,9 +30,9 @@ const PageClientDetail = withRouter((props: any) => {
         Axios.put(APIList.client, prop, {withCredentials: true})
             .then(res => {
                 console.log(res);
+                update();
             })
             .catch(() => message.error("客户信息修改失败"));
-        update();
     };
     const Action = (props: { record: any }) =>
         <div className={styles.hbox}>

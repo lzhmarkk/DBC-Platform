@@ -81,13 +81,13 @@ const INewForm = (props: IFormProps) => {
                 <Form.Item label="业务范围" hasFeedback style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_business_scope', {
                         rules: [{required: true, message: "请输入业务范围"}],
-                    })(<Input style={{width: "400px"}} placeholder={"请输入公司名"}/>)}
+                    })(<Input style={{width: "400px"}} placeholder={"请输入业务范围"}/>)}
                 </Form.Item>
                 <Form.Item label="微信号" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_wechat', {})(<Input style={{width: "400px"}} placeholder={"请输入微信"}/>)}
                 </Form.Item>
                 <Form.Item label="QQ号" style={{marginBottom: "0px"}}>
-                    {getFieldDecorator('cust_qq', {})(<Input style={{width: "400px"}} placeholder={"请输入公司名"}/>)}
+                    {getFieldDecorator('cust_qq', {})(<Input style={{width: "400px"}} placeholder={"请输入QQ号"}/>)}
                 </Form.Item>
                 <Form.Item label="头像">
                     {getFieldDecorator('cust_icon', {

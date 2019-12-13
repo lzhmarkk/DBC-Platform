@@ -6,7 +6,11 @@ from .models import *
 def update_repository_item(repository, product, direction, quantity):
     try:
         repo_items = RepositoryItem.objects.get(Q(repository=repository) & Q(product=product))
-        if direction == 'In':
+        print(repo_items.quantity)
+        if direction == 'IN':
+            print('in')
+            print(quantity)
+
             repo_items.quantity = repo_items.quantity + quantity
             repository.repo_capacity -= quantity
             repository.repo_occupy += quantity
@@ -16,6 +20,7 @@ def update_repository_item(repository, product, direction, quantity):
             repository.repo_capacity += quantity
         repo_items.save()
         repository.save()
+        print(repo_items.quantity)
     except RepositoryItem.DoesNotExist:
         RepositoryItem.objects.create(product=product, repository=repository, quantity=quantity)
         repository.repo_capacity -= quantity

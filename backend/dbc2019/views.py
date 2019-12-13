@@ -30,6 +30,7 @@ def api_repository_in(request):
     if request.method == 'POST':
         data = JSONParser().parse(request).get('data')
         data['direction'] = 'IN'
+        print(data)
         serializer = ApiRepositoryInOutPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()

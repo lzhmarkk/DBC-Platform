@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -118,6 +120,7 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
         fields = ['repo_mess_info', 'direction', 'quantity', 'prod_id', 'repo_id', 'order_id']
 
     def create(self, validated_data):
+        validated_data['repo_mess_datetime'] = datetime.now()
         repo_mess = RepoMessage.objects.create(**validated_data)
 
         # add a work_mess when add repo_mess
@@ -134,7 +137,8 @@ class ApiRepositoryInOutPostSerializer(serializers.ModelSerializer):
                                    direction=direction,
                                    work_mess_info=work_mess_info,
                                    product=product, admin=admin,
-                                   repo_message=repo_mess)
+                                   repo_message=repo_mess,
+                                   work_mess_datetime=datetime.now())
         update_repository_item(repository, product, direction, quantity)
         return repo_mess
 
@@ -171,6 +175,7 @@ class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
         fields = ['repo_out_id', 'repo_in_id', 'prod_out_id', 'quantity', 'trans_mess_info']
 
     def create(self, validated_data):
+        validated_data['trans_mess_datetime'] = datetime.now()
         trans_mess = TransMessage.objects.create(**validated_data)
 
         # add two work_mess point to trans_mess
@@ -188,13 +193,15 @@ class ApiRepositoryTransPostSerializer(serializers.ModelSerializer):
                                    direction='OUT',
                                    admin=admin_out,
                                    product=product,
-                                   trans_message=trans_mess)
+                                   trans_message=trans_mess,
+                                   work_mess_datetime=datetime.now())
         WorkMessage.objects.create(work_mess_info=work_mess_info_in,
                                    quantity=quantity,
                                    direction='IN',
                                    admin=admin_in,
                                    product=product,
-                                   trans_message=trans_mess)
+                                   trans_message=trans_mess,
+                                   work_mess_datetime=datetime.now())
         update_repository_item(repository_out, product, 'Out', quantity)
         update_repository_item(repository_in, product, 'In', quantity)
 
@@ -230,7 +237,8 @@ class RepositoryTransMessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TransMessage
-        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'repo_mess_info', 'quantity']
+        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'repo_mess_info', 'quantity',
+                  'repo_in_id', 'repo_out_id']
 
 
 class ApiRepositoryGetSerializer(serializers.Serializer):
@@ -282,6 +290,7 @@ class ApiOrderIndexPostSerializer(serializers.ModelSerializer):
                   'order_tex', 'order_description']
 
     def create(self, validated_data):
+        validated_data['order_date'] = datetime.now()
         order = Order.objects.create(**validated_data)
 
         return order
@@ -373,7 +382,7 @@ class ApiClientPostSerializer(serializers.ModelSerializer):
 class ApiClientPutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['__all__']
+        fields = '__all__'
 
     def update(self, instance, validated_data):
         instance.cust_name = validated_data.get('cust_name')
@@ -463,7 +472,8 @@ class IndexTransMessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TransMessage
-        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'quantity', 'repo_mess_info']
+        fields = ['trans_mess_id', 'repo_out_name', 'repo_in_name', 'prod_name', 'quantity', 'repo_mess_info',
+                  'repo_in_id', 'repo_out_id']
 
 
 class IndexGraphSerializer(serializers.Serializer):

@@ -33,7 +33,7 @@ def get_random_Customer():
 def create_Order(num):
     for i in range(num):
         Order.objects.create(
-            order_date=faker.date_between('-1y', 'now'),
+            order_date=faker.date_between('-10d', 'now'),
             order_amount=random.randint(1, 1000),
             order_payee=faker.name(),
             order_payer=faker.name(),
@@ -118,7 +118,7 @@ def create_Repository(num):
 
 def creat_faker_data():
     create_Customer(10)
-    create_Order(20)
+    create_Order(50)
     create_Product(10)
     create_OrderItem(50)
     create_Repository(4)

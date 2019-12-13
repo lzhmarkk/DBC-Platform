@@ -30,7 +30,7 @@ class Customer(models.Model):
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    order_date = models.DateField(auto_now=True)
+    order_date = models.DateField()
     state = models.IntegerField(default=0)
     order_info = models.TextField(null=True)
     order_amount = models.IntegerField()
@@ -66,7 +66,7 @@ class OrderItem(models.Model):
 
 class Repository(models.Model):
     repo_id = models.AutoField(primary_key=True)
-    repo_place = models.CharField(max_length=50)
+    repo_place = models.CharField(max_length=100)
     repo_name = models.CharField(max_length=50)
     repo_capacity = models.IntegerField()
     repo_occupy = models.IntegerField(default=0)
@@ -87,7 +87,7 @@ class RepoMessage(models.Model):
     repo_mess_info = models.TextField()
     quantity = models.IntegerField()
     direction = models.CharField(max_length=50)
-    repo_mess_datetime = models.DateTimeField(auto_now=True)
+    repo_mess_datetime = models.DateTimeField()
     state = models.IntegerField(default=0)
 
     repository = models.ForeignKey(Repository, on_delete=models.CASCADE)
@@ -99,7 +99,7 @@ class TransMessage(models.Model):
     trans_mess_id = models.AutoField(primary_key=True)
     trans_mess_info = models.TextField(null=True)
     quantity = models.IntegerField()
-    trans_mess_datetime = models.DateTimeField(auto_now=True)
+    trans_mess_datetime = models.DateTimeField()
     state = models.IntegerField(default=0)
 
     from_repository = models.ForeignKey(Repository, related_name='from_mess', on_delete=models.CASCADE)
@@ -112,7 +112,7 @@ class WorkMessage(models.Model):
     work_mess_info = models.TextField(null=True)
     quantity = models.IntegerField()
     direction = models.CharField(max_length=50)
-    work_mess_datetime = models.DateTimeField(auto_now=True)
+    work_mess_datetime = models.DateTimeField()
 
     admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

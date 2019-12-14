@@ -21,6 +21,7 @@ const PageClientDetail = withRouter((props: any) => {
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
+                console.log("客户详细信息", res.data);
             })
             .catch(() => message.error("客户详细信息获取失败"))
     };

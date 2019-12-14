@@ -38,6 +38,7 @@ const PageRepositoryOut = () => {
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessOut);
+                console.log("出库信息", res.data);
             })
             .catch(() => message.error("出库信息获取失败"))
     };

@@ -31,6 +31,7 @@ const PageRepositoryTrans = () => {
         Axios.get(APIList.repoTrans, {withCredentials: true})
             .then(res => {
                 setRepos(res.data.Repo);
+                console.log("调配信息", res.data);
             })
             .catch(() => message.error("调配备用信息获取失败"))
     };

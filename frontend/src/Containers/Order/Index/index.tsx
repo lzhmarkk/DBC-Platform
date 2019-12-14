@@ -19,6 +19,7 @@ const PageOrderIndex = () => {
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
+                console.log("订单信息", res.data);
             })
             .catch(() => message.error("订单信息获取失败"))
     };

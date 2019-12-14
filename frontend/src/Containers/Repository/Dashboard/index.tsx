@@ -55,6 +55,7 @@ const PageRepositoryDashboard = () => {
         Axios.get(APIList.repoDashboard, {withCredentials: true})
             .then(res => {
                 setData(res.data);
+                console.log("仓库总览信息", res.data);
             })
             .catch(() => message.error("仓库总览信息获取失败"))
     }, []);

@@ -22,6 +22,7 @@ const PageClientIndex = () => {
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Cust);
+                console.log("客户信息", res.data);
             })
             .catch(() => message.error("客户信息获取失败"))
     };

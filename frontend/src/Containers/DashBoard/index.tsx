@@ -45,11 +45,13 @@ const PageDashBoard = (props: any) => {
         Axios.get(APIList.index, {withCredentials: true})
             .then(res => {
                 setData(res.data);
+                console.log("首页信息", res.data);
             })
             .catch(() => message.error("首页信息获取失败"));
         Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
+                console.log("个人信息", res.data);
             })
             .catch(() => message.error("右侧个人信息获取失败"))
     }, []);

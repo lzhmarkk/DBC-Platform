@@ -26,6 +26,7 @@ const PageOrderDetail = withRouter((prop) => {
                 setProdListData(res.data.Prod);
                 setInListData(res.data.RepoMessIn);
                 setOutListData(res.data.RepoMessOut);
+                console.log("订单详细信息", res.data);
             })
             .catch(() => message.error(`订单${id}详细信息获取失败`))
     };

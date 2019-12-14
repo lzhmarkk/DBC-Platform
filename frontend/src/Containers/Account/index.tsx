@@ -16,11 +16,13 @@ const PageAccount = () => {
         Axios.get(APIList.account, {withCredentials: true})
             .then(res => {
                 setAdminData(res.data);
+                console.log("表单信息", res.data);
             })
             .catch(() => message.error("表单信息获取失败"));
         Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
+                console.log("个人信息", res.data);
             })
             .catch(() => message.error("右侧个人信息获取失败"))
     };

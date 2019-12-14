@@ -38,6 +38,7 @@ const PageRepositoryIn = () => {
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessIn);
+                console.log("入库信息", res.data);
             })
             .catch(() => message.error("入库信息获取失败"))
     };

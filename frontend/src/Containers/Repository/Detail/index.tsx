@@ -28,6 +28,7 @@ const PageRepositoryDetail = withRouter((props) => {
             Axios.get(APIList.repoDetail(id), {withCredentials: true})
                 .then(res => {
                     setData(res.data);
+                    console.log("仓库详细信息", res.data);
                 })
                 .catch(() => message.error(`仓库${id}详情获取失败`));
         }

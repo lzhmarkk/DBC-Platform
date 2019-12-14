@@ -3,6 +3,7 @@ const detailApiData = {
     "repo_name": "秘密仓库",
     "repo_capacity": "120",
     "repo_occupy": "10",
+    "repo_place":"东北路4号",
     "RepoItem": [
         {
             "prod_id": "3",

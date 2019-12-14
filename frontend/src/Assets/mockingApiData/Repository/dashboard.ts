@@ -2,19 +2,19 @@ const dashboardApiData = {
     "Repo": [
         {
             "repo_id": "1",
-            "name": "零号仓库",
+            "repo_name": "零号仓库",
             "repo_capacity": "120",
             "repo_occupy": "10"
         },
         {
             "repo_id": "2",
-            "name": "一号仓库",
+            "repo_name": "一号仓库",
             "repo_capacity": "200",
             "repo_occupy": "105"
         },
         {
             "repo_id": "3",
-            "name": "二号仓库",
+            "repo_name": "二号仓库",
             "repo_capacity": "400",
             "repo_occupy": "50"
         }

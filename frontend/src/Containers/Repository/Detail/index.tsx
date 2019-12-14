@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Redirect, withRouter} from "react-router";
-import {Card, Col, message, Row, Table, Tabs} from "antd";
+import {Card, Col, message, Row, Table, Tabs, Typography} from "antd";
 import ReactEcharts from "echarts-for-react";
 import styles from './index.module.scss'
 import {GenColumns, GenColumnsTrans, genGraph, getOption} from "../../../Components/Repository/detail";
@@ -33,43 +33,49 @@ const PageRepositoryDetail = withRouter((props) => {
                 .catch(() => message.error(`仓库${id}详情获取失败`));
         }
     }, []);
-
-    const page = <Row>
-        <Col span={12} className={styles.table}>
-            <ReactEcharts option={getOption(data.repo_occupy, data.repo_capacity, data.repo_name)}/>
-        </Col>
-        <Col span={12} className={styles.table}>
-            <ReactEcharts
-                option={genGraph(data.RepoItem.map(e => e.prod_name), data.RepoItem.map(e => e.quantity))}/>
-        </Col>
-        <Col span={12} className={styles.table}>
-            <Card>
-                <Table pagination={false}
-                       columns={GenColumns()}
-                       dataSource={data.RepoMessIn}
-                       title={() => <h1>入库</h1>}
-                />
-            </Card>
-        </Col>
-        <Col span={12} className={styles.table}>
-            <Card>
-                <Table pagination={false}
-                       columns={GenColumns()}
-                       dataSource={data.RepoMessOut}
-                       title={() => <h1>出库</h1>}
-                />
-            </Card>
-        </Col>
-        <Col span={24} className={styles.card}>
-            <Card>
-                <Table pagination={false}
-                       columns={GenColumnsTrans()}
-                       dataSource={data.RepoMessTrans}
-                       title={() => <h1>调配</h1>}
-                />
-            </Card>
-        </Col>
-    </Row>;
+    const {Title} = Typography;
+    const page = (
+        <div>
+            <Title>{data.repo_name}</Title>
+            <Title level={4}>{data.repo_place}</Title>
+            <Row>
+                <Col span={12} className={styles.table}>
+                    <ReactEcharts option={getOption(data.repo_occupy, data.repo_capacity, data.repo_name)}/>
+                </Col>
+                <Col span={12} className={styles.table}>
+                    <ReactEcharts
+                        option={genGraph(data.RepoItem.map(e => e.prod_name), data.RepoItem.map(e => e.quantity))}/>
+                </Col>
+                <Col span={12} className={styles.table}>
+                    <Card>
+                        <Table pagination={false}
+                               columns={GenColumns()}
+                               dataSource={data.RepoMessIn}
+                               title={() => <h1>入库</h1>}
+                        />
+                    </Card>
+                </Col>
+                <Col span={12} className={styles.table}>
+                    <Card>
+                        <Table pagination={false}
+                               columns={GenColumns()}
+                               dataSource={data.RepoMessOut}
+                               title={() => <h1>出库</h1>}
+                        />
+                    </Card>
+                </Col>
+                <Col span={24} className={styles.card}>
+                    <Card>
+                        <Table pagination={false}
+                               columns={GenColumnsTrans()}
+                               dataSource={data.RepoMessTrans}
+                               title={() => <h1>调配</h1>}
+                        />
+                    </Card>
+                </Col>
+            </Row>
+        </div>
+    );
 
     return id >= 0 ? page : <Redirect to={"/repository/dashboard"}/>;
 });

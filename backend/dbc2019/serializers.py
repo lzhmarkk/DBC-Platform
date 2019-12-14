@@ -272,7 +272,7 @@ class OrderIndexCustomerSerializer(serializers.ModelSerializer):
 
 
 class OrderIndexGraphSerializer(serializers.Serializer):
-    data = serializers.DateField()
+    date = serializers.DateField()
     value = serializers.IntegerField()
 
 

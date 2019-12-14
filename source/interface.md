@@ -541,9 +541,9 @@ GET:
 
 ```json
 GET:{
-        "name":"admin",
-        "admin_icon":"data:image/png;base64,....",
-        "admin_description":"一个程序员"
+    "name":"admin",
+    "admin_icon":"data:image/png;base64,....",
+    "admin_description":"一个程序员",
 }
 ```
 

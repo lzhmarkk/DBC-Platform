@@ -25,7 +25,7 @@ def get_last_year_orders():
     datas = []
     for order in orders:
         data = {
-            'data': order.get('order_date'),
+            'date': order.get('order_date'),
             'value': order.get('order_num')
         }
         datas.append(data)

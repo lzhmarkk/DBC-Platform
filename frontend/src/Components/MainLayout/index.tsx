@@ -64,7 +64,7 @@ const Main = (props: { children: ReactElement }) => {
                         <img src={userInfo.admin_icon} alt={"avatar"}/>
                     </div>
                     <div>
-                        <span>{userInfo.admin_name}</span>
+                        <span>{userInfo.name}</span>
                     </div>
                     <div>
                         <Button icon={"logout"} ghost onClick={() => setLogoutModel(true)}/>

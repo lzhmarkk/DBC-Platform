@@ -424,7 +424,7 @@ class ApiAccountGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Admin
-        fields = ['admin_id', 'identity', 'name', 'admin_description']
+        fields = ['admin_id', 'identity', 'name', 'admin_description', 'admin_icon']
 
 
 class ApiAccountPutSerializer(serializers.ModelSerializer):
@@ -505,5 +505,3 @@ class ApiUserInfoGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ['name', 'admin_icon', 'admin_description']
-
-

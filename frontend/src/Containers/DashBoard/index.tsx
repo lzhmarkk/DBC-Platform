@@ -65,7 +65,7 @@ const PageDashBoard = (props: any) => {
             </Col>
             <Col span={6} className={styles.card}>
                 <Card cover={<img src={userInfo.admin_icon} alt={"logo"}/>}>
-                    <Meta avatar={<Icon type={"github"}/>} title={userInfo.admin_name}
+                    <Meta avatar={<Icon type={"github"}/>} title={userInfo.name}
                           description={userInfo.admin_description}/>
                 </Card>
             </Col>

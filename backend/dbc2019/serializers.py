@@ -297,7 +297,9 @@ class ApiOrderIndexPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['cust_id', 'order_info', 'state', 'order_amount', 'order_payee', 'order_payer', 'order_pay_type']
+        fields = ['cust_id', 'order_info', 'state', 'order_amount', 'order_payee', 'order_payer', 'order_pay_type',
+                  'order_payee_bank', 'order_payee_card', 'order_payer_card', 'order_payer_bank', 'order_tex',
+                  'order_serial']
 
     def create(self, validated_data):
         validated_data['order_date'] = datetime.now()

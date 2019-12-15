@@ -1,8 +1,7 @@
-import React, {ReactNode, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "../index.module.scss"
-import {Table, Button, Modal, Drawer, message} from 'antd';
-import {useDispatch} from "react-redux";
+import {Table, Button, Drawer, message, Spin} from 'antd';
 import GenColumns from "../../../Components/Repository/out";
 import outApiData from "../../../Assets/mockingApiData/Repository/out";
 import INewRepoOutPanel, {IFormPayload} from "../../../Components/Repository/out/form";
@@ -16,6 +15,7 @@ const PageRepositoryOut = () => {
     const [modelOpen, setModelOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
+    const [loading, setLoading] = useState(true);
 
     const handlePut = (prop: any) => {
         Axios.put(APIList.repoOut, prop, {withCredentials: true})
@@ -34,11 +34,13 @@ const PageRepositoryOut = () => {
             .catch(() => message.error("出库信息新建失败"));
     };
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.repoOut, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessOut);
                 console.log("出库信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("出库信息获取失败"))
     };
@@ -56,7 +58,7 @@ const PageRepositoryOut = () => {
         </Button>
     </div>;
     const columns = GenColumns(Action);
-    return (
+    const content = (
         <div>
             <div className={styles.ControlPanel}>
                 <ISearchPanel
@@ -127,7 +129,7 @@ const PageRepositoryOut = () => {
                                       handlePost(newRepoMess);
                                   }}/>
             </Drawer>
-        </div>
-    )
+        </div>);
+    return loading ? <Spin/> : content;
 };
 export default PageRepositoryOut;

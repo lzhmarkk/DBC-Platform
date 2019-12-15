@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Redirect, withRouter} from "react-router";
-import {Card, Col, message, Row, Table, Tabs, Typography} from "antd";
+import {Card, Col, message, Row, Spin, Table, Typography} from "antd";
 import ReactEcharts from "echarts-for-react";
 import styles from './index.module.scss'
 import {GenColumns, GenColumnsTrans, genGraph, getOption} from "../../../Components/Repository/detail";
@@ -21,14 +21,18 @@ export interface IDetailData {
 
 const PageRepositoryDetail = withRouter((props) => {
     const [data, setData] = useState(detailApiData);
+    const [loading, setLoading] = useState(true);
+
     const id = props.match.params.id;
 
     useEffect(() => {
+        setLoading(true);
         if (id) {
             Axios.get(APIList.repoDetail(id), {withCredentials: true})
                 .then(res => {
                     setData(res.data);
                     console.log("仓库详细信息", res.data);
+                    setLoading(false);
                 })
                 .catch(() => message.error(`仓库${id}详情获取失败`));
         }
@@ -77,6 +81,6 @@ const PageRepositoryDetail = withRouter((props) => {
         </div>
     );
 
-    return id >= 0 ? page : <Redirect to={"/repository/dashboard"}/>;
+    return loading ? <Spin/> : id >= 0 ? page : <Redirect to={"/repository/dashboard"}/>;
 });
 export default PageRepositoryDetail;

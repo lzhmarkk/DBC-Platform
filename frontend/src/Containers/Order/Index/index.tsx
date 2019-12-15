@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "./index.module.scss"
-import {Table, Button, Drawer, message, Card} from 'antd';
+import {Table, Button, Drawer, message, Card, Spin} from 'antd';
 import {GenColumns, getButton, getGraph} from "../../../Components/Order";
 import IOrderPanel, {IFormPayload} from "../../../Components/Order/form";
 import orderApiData from "../../../Assets/mockingApiData/Order/order";
@@ -13,13 +13,16 @@ const PageOrderIndex = () => {
     const [apiData, setApiData] = useState(orderApiData);
     const [listData, setListData] = useState(orderApiData.Order);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.order, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
                 console.log("订单信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("订单信息获取失败"))
     };
@@ -48,7 +51,7 @@ const PageOrderIndex = () => {
         )
     };
     const columns = GenColumns(Action);
-    return (
+    const content = (
         <div>
             <div style={{paddingBottom: "60px"}}>
                 <Card title={"订单变化曲线"} type={"inner"}>
@@ -114,6 +117,7 @@ const PageOrderIndex = () => {
                              }}/>
             </Drawer>
         </div>
-    )
+    );
+    return loading ? <Spin/> : content;
 };
 export default PageOrderIndex;

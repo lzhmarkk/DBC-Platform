@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import INewRepoInPanel, {IFormPayload} from "../../../Components/Repository/in/form";
 import styles from "../index.module.scss"
-import {Table, Button, Drawer, message} from 'antd';
+import {Table, Button, Drawer, message, Spin} from 'antd';
 import GenColumns from "../../../Components/Repository/in";
 import inApiData from "../../../Assets/mockingApiData/Repository/in";
 import Axios from "axios";
@@ -10,12 +10,12 @@ import {APIList} from "../../../API";
 import IEditMessModel from "../../../Components/Repository";
 
 const PageRepositoryIn = () => {
-
     const [apiData, setApiData] = useState(inApiData);
     const [listData, setListData] = useState(apiData.RepoMessIn);
     const [modelOpen, setModelOpen] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [curRepoMess, setCurRepoMess] = useState(undefined);
+    const [loading, setLoading] = useState(true);
 
     const handlePost = (prop: any) => {
         Axios.post(APIList.repoIn, prop, {withCredentials: true})
@@ -34,11 +34,13 @@ const PageRepositoryIn = () => {
             .catch(() => message.error("入库状态修改失败"));
     };
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.repoIn, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.RepoMessIn);
                 console.log("入库信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("入库信息获取失败"))
     };
@@ -56,7 +58,7 @@ const PageRepositoryIn = () => {
         </Button>
     </div>;
     const columns = GenColumns(Action);
-    return (
+    const content = (
         <div>
             <div className={styles.ControlPanel}>
                 <ISearchPanel
@@ -129,6 +131,7 @@ const PageRepositoryIn = () => {
                                  }}/>
             </Drawer>
         </div>
-    )
+    );
+    return loading ? <Spin/> : content;
 };
 export default PageRepositoryIn;

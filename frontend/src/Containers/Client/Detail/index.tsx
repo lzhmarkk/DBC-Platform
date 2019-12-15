@@ -3,7 +3,7 @@ import {withRouter} from "react-router";
 import IEditClientModel, {IEditClientFormPayload} from "../../../Components/Client/form";
 import Axios from "axios";
 import {APIList} from "../../../API";
-import {Button, Card, Col, Descriptions, message, Row, Table} from "antd";
+import {Button, Card, Col, Descriptions, message, Row, Spin, Table} from "antd";
 import clientDetailApiData from "../../../Assets/mockingApiData/Client/detail";
 import {GenOrderColumns} from "../../../Components/Client";
 import {getButton} from "../../../Components/Order";
@@ -15,13 +15,16 @@ const PageClientDetail = withRouter((props: any) => {
     const [modelOpen, setModelOpen] = useState(false);
     const [apiData, setApiData] = useState(clientDetailApiData);
     const [listData, setListData] = useState(clientDetailApiData.Order);
+    const [loading, setLoading] = useState(true);
 
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.clientDetail(id), {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Order);
                 console.log("客户详细信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("客户详细信息获取失败"))
     };
@@ -40,7 +43,7 @@ const PageClientDetail = withRouter((props: any) => {
             {getButton(props, () => window.location.href = `/order/${props.record.order_id}`)}
         </div>;
     const column = GenOrderColumns(Action);
-    return (
+    const content = (
         <div>
             <Row>
                 <Button onClick={() => setModelOpen(true)}
@@ -108,7 +111,8 @@ const PageClientDetail = withRouter((props: any) => {
                                   handlePut(editClient);
                               }}/>
         </div>
-    )
+    );
+    return loading ? <Spin/> : content;
 });
 
 export default PageClientDetail;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import ISearchPanel from "../../../Components/SearchPanel";
 import styles from "./index.module.scss"
-import {Table, Button, message, Card} from 'antd';
+import {Table, Button, message, Card, Spin} from 'antd';
 import Axios from "axios";
 import {APIList} from "../../../API";
 import clientApiData from "../../../Assets/mockingApiData/Client/client";
@@ -16,13 +16,16 @@ const PageClientIndex = () => {
     const [apiData, setApiData] = useState(clientApiData);
     const [listData, setListData] = useState(clientApiData.Cust);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.client, {withCredentials: true})
             .then(res => {
                 setApiData(res.data);
                 setListData(res.data.Cust);
                 console.log("客户信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("客户信息获取失败"))
     };
@@ -52,7 +55,7 @@ const PageClientIndex = () => {
         )
     };
     const columns = GenColumns(Action);
-    return (
+    const content = (
         <div>
             <div style={{paddingBottom: "60px"}}>
                 <Card title={"合作伙伴"} type={"inner"}>
@@ -105,7 +108,7 @@ const PageClientIndex = () => {
                     handlePost(newClient);
                 }}
             />
-        </div>
-    )
+        </div>);
+    return loading ? <Spin/> : content;
 };
 export default PageClientIndex;

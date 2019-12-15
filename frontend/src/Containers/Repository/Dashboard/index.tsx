@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import ReactEcharts from "echarts-for-react";
 import styles from "./index.module.scss"
 import getOption from "../../../Components/Repository/dashboard";
-import {Button, Col, message, Row, Tabs} from "antd";
+import {Button, Col, message, Row, Spin, Tabs} from "antd";
 import RepoDetailTabs from "../../../Components/Repository/dashboard/Tabs/conf";
 import dashboardApiData from "../../../Assets/mockingApiData/Repository/dashboard";
 import {APIList} from "../../../API";
@@ -21,6 +21,7 @@ export interface IDetailData {
 const PageRepositoryDashboard = () => {
     const [data, setData] = useState(dashboardApiData);
     const [collapse, setCollapse] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const repo = data.Repo;
     const tabData: IDetailData = {
@@ -57,17 +58,19 @@ const PageRepositoryDashboard = () => {
             .catch(() => message.error("仓库新建失败"));
     };
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.repoDashboard, {withCredentials: true})
             .then(res => {
                 setData(res.data);
                 console.log("仓库总览信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("仓库总览信息获取失败"))
     };
 
     useEffect(update, []);
 
-    return (
+    const content = (
         <div>
             {
                 collapse ?
@@ -95,5 +98,6 @@ const PageRepositoryDashboard = () => {
             </Tabs>
         </div>
     );
+    return loading ? <Spin/> : content;
 };
 export default PageRepositoryDashboard;

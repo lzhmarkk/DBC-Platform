@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {getGraph, getOption, ICardPanel} from "../../Components/Dashboard";
 import ReactEcharts from "echarts-for-react";
-import {Calendar, Card, Col, Icon, message, Row, Tabs} from "antd";
+import {Calendar, Card, Col, Icon, message, Row, Spin, Tabs} from "antd";
 import styles from './index.module.scss'
 import {IDetailData} from "../../Components/Dashboard/Tabs";
 import RepoDetailTabs from "../../Components/Dashboard/Tabs/conf";
@@ -14,9 +14,11 @@ import apiUserInfo from "../../Assets/mockingApiData/userInfo";
 const {TabPane} = Tabs;
 const {Meta} = Card;
 
-const PageDashBoard = (props: any) => {
+const PageDashBoard = () => {
     const [data, setData] = useState(indexApiData);
     const [userInfo, setUserInfo] = useState(apiUserInfo);
+    const [loading, setLoading] = useState(true);
+
     const messages = data.Messages.slice(0, 5);
     const tabData: IDetailData = {
         "RepoMessIn": data.RepoMessIn,
@@ -42,21 +44,24 @@ const PageDashBoard = (props: any) => {
     </TabPane>);
 
     useEffect(() => {
+        setLoading(true);
         Axios.get(APIList.index, {withCredentials: true})
             .then(res => {
                 setData(res.data);
                 console.log("首页信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("首页信息获取失败"));
         Axios.get(APIList.userInfo, {withCredentials: true})
             .then(res => {
                 setUserInfo(res.data);
                 console.log("个人信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("右侧个人信息获取失败"))
     }, []);
 
-    return (
+    const content = (
         <Row>
             <Col span={8} className={styles.card}> <ICardPanel messages={messages}/></Col>
             <Col span={10} className={styles.card}>
@@ -85,6 +90,7 @@ const PageDashBoard = (props: any) => {
                 <Calendar fullscreen={false}/>
             </Col>
         </Row>
-    )
+    );
+    return loading ? <Spin/> : content;
 };
 export default PageDashBoard;

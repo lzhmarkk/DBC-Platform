@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Steps, Button, Result, message} from "antd";
+import {Steps, Button, Result, message, Spin} from "antd";
 import Step0form from "../../../Components/Repository/Trans/form0";
 import Step1form from "../../../Components/Repository/Trans/form1";
 import Step2form from "../../../Components/Repository/Trans/form2";
-import Step3form from "../../../Components/Repository/Trans/form3";
 import styles from "../index.module.scss"
 import transApiData from "../../../Assets/mockingApiData/Repository/trans";
 import Axios from "axios";
@@ -17,6 +16,7 @@ const PageRepositoryTrans = () => {
     const [step, setStep] = useState(0);
     const [formInfo, setFormInfo] = useState<any>({});
     const [repoOut, setRepoOut] = useState<any>(repos[0]);
+    const [loading, setLoading] = useState(true);
 
     const handlePost = (prop: any) => {
         Axios.post(APIList.repoTrans, prop, {withCredentials: true})
@@ -28,10 +28,12 @@ const PageRepositoryTrans = () => {
     };
 
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.repoTrans, {withCredentials: true})
             .then(res => {
                 setRepos(res.data.Repo);
                 console.log("调配信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error("调配备用信息获取失败"))
     };
@@ -81,7 +83,7 @@ const PageRepositoryTrans = () => {
         {/*todo:subtitle*/}
         <Result
             status="success"
-            title="成功发起调库申请"
+            title="成功发起调配申请"
             //subTitle={`从${formInfo.repo_out_id}调动${formInfo.quantity}个/箱${formInfo.prod_out_id}到${formInfo.repo_in_id}`}
             extra={[
                 <Link to={"/repository/in"} key={"in"}>
@@ -96,7 +98,7 @@ const PageRepositoryTrans = () => {
             ]}
         />
     </div>;
-    return (
+    const content = (
         <div className={styles.root}>
             <Steps current={step} style={{padding: "20px 20px"}}>
                 <Step title="选择转出仓库" description="请选择产品从哪个仓库被移出"/>
@@ -108,6 +110,7 @@ const PageRepositoryTrans = () => {
                 {step == 0 ? step0Form : step == 1 ? step1Form : step == 2 ? step2Form : step3Form}
             </div>
         </div>
-    )
+    );
+    return loading ? <Spin/> : content;
 };
 export default PageRepositoryTrans;

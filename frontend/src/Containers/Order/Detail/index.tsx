@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {withRouter} from "react-router";
 import Axios from "axios";
 import {APIList} from "../../../API";
-import {Button, Card, Col, Descriptions, Drawer, Icon, message, Row, Table, Tabs} from "antd";
+import {Button, Card, Col, Descriptions, Drawer, Icon, message, Row, Spin, Table, Tabs} from "antd";
 import orderDetailApiData from "../../../Assets/mockingApiData/Order/detail";
 import {genProdColumns, genProdGraph, genRepoMessColumns, genTags} from "../../../Components/Order";
 import ReactEcharts from "echarts-for-react";
@@ -16,10 +16,12 @@ const PageOrderDetail = withRouter((prop) => {
     const [prodListData, setProdListData] = useState(orderDetailApiData.Prod);
     const [inListData, setInListData] = useState(orderDetailApiData.RepoMessIn);
     const [outListData, setOutListData] = useState(orderDetailApiData.RepoMessOut);
+    const [loading, setLoading] = useState(true);
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const update = () => {
+        setLoading(true);
         Axios.get(APIList.orderDetail(id), {withCredentials: true})
             .then(res => {
                 setData(res.data);
@@ -27,6 +29,7 @@ const PageOrderDetail = withRouter((prop) => {
                 setInListData(res.data.RepoMessIn);
                 setOutListData(res.data.RepoMessOut);
                 console.log("订单详细信息", res.data);
+                setLoading(false);
             })
             .catch(() => message.error(`订单${id}详细信息获取失败`))
     };
@@ -92,7 +95,7 @@ const PageOrderDetail = withRouter((prop) => {
             <Descriptions.Item label={"税"}>{data.order_tex}</Descriptions.Item>
             <Descriptions.Item label={"备注"} span={3}>{data.order_description}</Descriptions.Item>
         </Descriptions>;
-    return (
+    const content = (
         <div>
             <Button onClick={() => setDrawerOpen(true)}
                     type={"primary"} className={styles.button}>
@@ -172,5 +175,6 @@ const PageOrderDetail = withRouter((prop) => {
             </Drawer>
         </div>
     );
+    return loading ? <Spin/> : content;
 });
 export default PageOrderDetail

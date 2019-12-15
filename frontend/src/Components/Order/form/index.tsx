@@ -125,7 +125,6 @@ const IOrderForm = (props: IFormProps) => {
             <Row>
                 <Form.Item label={`描述`} style={{marginBottom: "0px"}}>
                     {getFieldDecorator(`prod_desc${k}`, {
-                        rules: [{required: true, message: "请输入描述"}],
                         initialValue: onNew ? undefined : props.init.Prod[k - 1].prod_desc
                     })(<Input placeholder={`描述`} disabled={state != "1"}/>)}
                 </Form.Item>

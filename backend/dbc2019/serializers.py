@@ -24,7 +24,7 @@ class RepositoryDashboardRepositorySerializer(serializers.ModelSerializer):
 
 
 class RepositoryDashboardWorkMessSerializer(serializers.ModelSerializer):
-    admin_id = serializers.PrimaryKeyRelatedField(source='admin',read_only=True)
+    admin_id = serializers.PrimaryKeyRelatedField(source='admin', read_only=True)
 
     class Meta:
         model = WorkMessage
@@ -87,7 +87,7 @@ class RepositoryInOutRepoMessSerializer(serializers.ModelSerializer):
     class Meta:
         model = RepoMessage
         fields = ['repo_mess_id', 'repo_mess_info', 'quantity',
-                  'prod_name', 'prod_id', 'repo_name', 'repo_id', 'order_id']
+                  'prod_name', 'prod_id', 'repo_name', 'repo_id', 'order_id', 'state']
 
 
 class RepositoryInOutRepositorySerializer(serializers.ModelSerializer):
@@ -453,7 +453,7 @@ class ApiAccountPutSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.user.set_password(validated_data.get('password'))
-        instance.admin_icon = validated_data.get('admin_icon')
+        instance.admin_icon = validated_data.get('admin_icon', instance.admin_icon)
         instance.admin_desc = validated_data.get('admin_desc')
         instance.save()
         return instance

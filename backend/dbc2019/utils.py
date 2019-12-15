@@ -12,18 +12,18 @@ def update_repository_item(repository, product, direction, quantity):
             print(quantity)
 
             repo_items.quantity = repo_items.quantity + quantity
-            repository.repo_capacity -= quantity
+            # repository.repo_capacity -= quantity
             repository.repo_occupy += quantity
         else:
             repo_items.quantity = repo_items.quantity - quantity
             repository.repo_occupy -= quantity
-            repository.repo_capacity += quantity
+            # repository.repo_capacity += quantity
         repo_items.save()
         repository.save()
         print(repo_items.quantity)
     except RepositoryItem.DoesNotExist:
         RepositoryItem.objects.create(product=product, repository=repository, quantity=quantity)
-        repository.repo_capacity -= quantity
+        # repository.repo_capacity -= quantity
         repository.repo_occupy += quantity
         repository.save()
 

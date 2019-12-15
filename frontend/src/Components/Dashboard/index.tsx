@@ -8,7 +8,7 @@ export interface ICardProp {
 const {Meta} = Card;
 export const ICardPanel = (props: ICardProp) => {
     const items = props.messages.map((e) => <Card hoverable>
-        <Meta avatar={<Icon type="user"/>} title={e.admin_id} description={e.work_mess_info}/>
+        <Meta avatar={<Icon type="user"/>} title={`${e.admin_id}号管理员`} description={e.work_mess_info}/>
     </Card>);
     return (<Card title={"最近消息"} type={"inner"} style={{height: "500px"}}>
         {items}

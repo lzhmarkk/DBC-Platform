@@ -56,7 +56,6 @@ const PageDashBoard = () => {
             .then(res => {
                 setUserInfo(res.data);
                 console.log("个人信息", res.data);
-                setLoading(false);
             })
             .catch(() => message.error("右侧个人信息获取失败"))
     }, []);

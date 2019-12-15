@@ -16,19 +16,20 @@ from .faker_data import creat_faker_data
 def api_repository_dashboard(request):
     user = request.user
     if request.method == 'POST':
-        data = JSONParser().parse(request).get('data')
+        data = JSONParser().parse(request)  # .get('data')
         print(data)
         serializer = ApiRepositoryDashboardPostSerializer(data=data)
         if serializer.is_valid():
             repository = serializer.save()
             repository.admin = user.admin
+            repository.save()
 
     data = {
         'repo': Repository.objects.all(),
-        'work_mess': WorkMessage.objects.all(),
-        'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
-        'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
-        'trans_mess': TransMessage.objects.all()
+        'work_mess': WorkMessage.objects.all()[:5],
+        'repo_mess_in': RepoMessage.objects.filter(direction='IN')[:5],
+        'repo_mess_out': RepoMessage.objects.filter(direction='OUT')[:5],
+        'trans_mess': TransMessage.objects.all()[:5]
     }
     print(Repository.objects.all())
     serializer = ApiRepositoryDashboardGetSerializer(data)
@@ -47,6 +48,12 @@ def api_repository_in(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        print("thisi", data)
+        repo_mess_in = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
+        repo_mess_in.state = data.get('state')
+        repo_mess_in.save()
 
     data = {
         'repo_mess_in': RepoMessage.objects.filter(direction='IN'),
@@ -69,6 +76,11 @@ def api_repository_out(request):
             serializer.save()
         else:
             return JsonResponse(serializer.errors)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request).get('data')
+        repo_mess_out = RepoMessage.objects.get(repo_mess_id=data.get('repo_mess_id'))
+        repo_mess_out.state = data.get('state')
+        repo_mess_out.save()
 
     data = {
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),

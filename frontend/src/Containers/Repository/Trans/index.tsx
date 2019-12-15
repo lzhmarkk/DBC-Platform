@@ -71,7 +71,7 @@ const PageRepositoryTrans = () => {
                         "repo_out_id": formInfo.repo_out_id,
                         "prod_out_id": formInfo.prod_out_id,
                         "quantity": formInfo.quantity,
-                        "repo_mess_info": formInfo.repo_mess_info,
+                        "trans_mess_info": formInfo.repo_mess_info,
                         "repo_in_id": e.repo_in_id,
                     }
                 };

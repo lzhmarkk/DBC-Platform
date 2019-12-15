@@ -105,7 +105,7 @@ const IEditForm = (props: IFormProps) => {
                     {getFieldDecorator('cust_phone', {
                         rules: [
                             {required: true, message: "请输入手机或固话"},
-                            {pattern: /^\d*$/, message: "请输入正确的格式"}
+                            {pattern: /^[\d-x]*$/, message: "请输入正确的格式"}
                         ],
                         initialValue: initValue == undefined ? "" : initValue.cust_phone
                     })(<Input addonBefore={<div>+86</div>} style={{width: "400px"}} placeholder={"请输入手机或固话"}
@@ -114,16 +114,14 @@ const IEditForm = (props: IFormProps) => {
                 </Form.Item>
                 <Form.Item label="职务" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_duty', {
-                        rules: [{required: true, message: "请输入职务"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_duty
                     })(<Input style={{width: "400px"}} placeholder={"请输入职务"} disabled={!changeDuty}/>)}
                     <Button icon={"lock"} onClick={() => setChangeDuty(!changeDuty)}/>
                 </Form.Item>
                 <Form.Item label="业务范围" style={{marginBottom: "0px"}}>
                     {getFieldDecorator('cust_business_scope', {
-                        rules: [{required: true, message: "请输入业务范围"}],
                         initialValue: initValue == undefined ? "" : initValue.cust_business_scope
-                    })(<Input style={{width: "400px"}} placeholder={"请输入公司名"} disabled={!changeScope}/>)}
+                    })(<Input style={{width: "400px"}} placeholder={"请输入业务范围"} disabled={!changeScope}/>)}
                     <Button icon={"lock"} onClick={() => setChangeScope(!changeScope)}/>
                 </Form.Item>
                 <Form.Item label="微信号" style={{marginBottom: "0px"}}>

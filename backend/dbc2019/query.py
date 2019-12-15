@@ -21,7 +21,7 @@ def get_most_order_cust(num):
 def get_last_year_orders():
     orders = Order.objects.values('order_date') \
         .filter(order_date__year__gte=(datetime.now().year - 1)) \
-        .annotate(order_num=Count('order_id'))
+        .annotate(order_num=Count('order_id')).order_by('order_date')
     datas = []
     for order in orders:
         data = {

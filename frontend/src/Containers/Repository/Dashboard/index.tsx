@@ -7,7 +7,7 @@ import RepoDetailTabs from "../../../Components/Repository/dashboard/Tabs/conf";
 import dashboardApiData from "../../../Assets/mockingApiData/Repository/dashboard";
 import {APIList} from "../../../API";
 import Axios from 'axios'
-import INewRepoForm, {IFormPayload} from "../../../Components/Repository/dashboard/Form";
+import INewRepoForm, {IFormPayload} from "../../../Components/Repository/dashboard/Form/index";
 
 const {TabPane} = Tabs;
 

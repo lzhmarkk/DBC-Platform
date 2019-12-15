@@ -13,6 +13,15 @@ from .faker_data import creat_faker_data
 # Create your views here.
 @csrf_exempt
 def api_repository_dashboard(request):
+    user = request.user
+    if request.method == 'POST':
+        data = JSONParser().parse(request).get('data')
+        print(data)
+        serializer = ApiRepositoryDashboardPostSerializer(data=data)
+        if serializer.is_valid():
+            repository = serializer.save()
+            repository.admin = user.admin
+
     data = {
         'repo': Repository.objects.all(),
         'work_mess': WorkMessage.objects.all(),
@@ -20,6 +29,7 @@ def api_repository_dashboard(request):
         'repo_mess_out': RepoMessage.objects.filter(direction='OUT'),
         'trans_mess': TransMessage.objects.all()
     }
+    print(Repository.objects.all())
     serializer = ApiRepositoryDashboardGetSerializer(data)
 
     return JsonResponse(serializer.data)
@@ -166,6 +176,7 @@ def api_client_index(request):
             serializer.save()
     elif request.method == 'PUT':
         data = JSONParser().parse(request).get('data')
+        print(data)
         customer = Customer.objects.get(cust_id=data.get('cust_id'))
         serializer = ApiClientPutSerializer(customer, data=data)
         if serializer.is_valid():

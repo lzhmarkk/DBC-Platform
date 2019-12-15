@@ -66,6 +66,16 @@ class ApiRepositoryDashboardGetSerializer(serializers.Serializer):
     RepoMessTrans = RepositoryDashboardTransMessSerializer(source='trans_mess', many=True)
 
 
+class ApiRepositoryDashboardPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Repository
+        fields = ['repo_name', 'repo_capacity', 'repo_place']
+
+    def create(self, validated_data):
+        repository = Repository.objects.create(**validated_data)
+        return repository
+
+
 # url api/repository/in,out
 class RepositoryInOutRepoMessSerializer(serializers.ModelSerializer):
     prod_id = serializers.PrimaryKeyRelatedField(source='product', queryset=Product.objects.all())
@@ -396,6 +406,11 @@ class ApiClientPutSerializer(serializers.ModelSerializer):
         instance.cust_co = validated_data.get('cust_co')
         instance.cust_address = validated_data.get('cust_address')
         instance.cust_phone = validated_data.get('cust_phone')
+        instance.cust_wechat = validated_data.get('cust_wechat')
+        instance.cust_qq = validated_data.get('cust_qq', instance.cust_qq)
+        instance.duty = validated_data.get('cust_duty')
+        instance.cust_business_scope = validated_data.get('cust_business_scope')
+        instance.cust_icon = validated_data.get('cust_icon', instance.cust_icon)
         instance.save()
         return instance
 

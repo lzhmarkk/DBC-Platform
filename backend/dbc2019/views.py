@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
@@ -251,7 +252,7 @@ def api_login(request):
 def api_signup(request):
     data = JSONParser().parse(request)
     user = User.objects.create_user(username=data.get('username'),
-                                    password=data.get('password'), email=data.get('email'))
+                                    password=data.get('password'), email=data.get('email', None))
     admin = Admin.objects.create(phone_num=data.get('phone_num'), user=user)
     login(request, user)
     return HttpResponse(status=status.HTTP_200_OK)

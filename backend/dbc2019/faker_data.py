@@ -31,6 +31,7 @@ def get_random_Customer():
 
 
 def create_Order(num):
+    infos = ['日常订单', '马上完成', '重要订单']
     for i in range(num):
         Order.objects.create(
             order_date=faker.date_between('-10d', 'now'),
@@ -44,6 +45,7 @@ def create_Order(num):
             order_serial=faker.ssn(),
             order_tex=random.randint(0, 20),
             order_pay_type='现金',
+            order_info=infos[random.randint(0, 2)],
             customer=get_random_Customer()
         )
 
